@@ -243,13 +243,7 @@ layout: null
 
     .ad-header { margin: 30px auto 0; }
     .ad-after-grid { margin: 30px auto; }
-    .ad-footer { margin: 0 auto 24px; }
-
-    /* Ad di dalam grid: span full width */
-    .ad-in-grid {
-      grid-column: 1 / -1;
-      margin: 10px auto;
-    }
+    .ad-footer { margin: 0 auto 32px; }
 
     /* === GRID === */
     .grid {
@@ -509,27 +503,6 @@ layout: null
       font-size: 0.82rem;
       line-height: 1.6;
       color: var(--text-muted);
-    }
-
-    .footer-links {
-      max-width: 760px;
-      margin: 0 auto 24px;
-      text-align: center;
-      font-size: 0.85rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-    }
-    .footer-links a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    .footer-links a:hover { text-decoration: underline; }
-    .footer-links span {
-      color: var(--text-muted);
-      opacity: 0.5;
     }
 
     .footer-collapse {
@@ -831,7 +804,7 @@ layout: null
     {% endfor %}
   </div>
 
-  <!-- AD SLOT 3: SETELAH GRID -->
+  <!-- AD SLOT 2: SETELAH GRID -->
   <div class="ad-slot ad-after-grid">
     <!-- Ganti dengan kode iklan 300x250 -->
   </div>
@@ -856,18 +829,10 @@ layout: null
 
   <footer>
 
-    <!-- AD SLOT 4: FOOTER ATAS -->
+    <!-- AD SLOT 3: FOOTER ATAS -->
     <div class="ad-slot ad-footer">
       <!-- Ganti dengan kode iklan 300x250 -->
     </div>
-
-    <nav class="footer-links" aria-label="Legal">
-      <a href="/privacy-policy.html">Privacy Policy</a>
-      <span aria-hidden="true">·</span>
-      <a href="/terms-and-conditions.html">Terms &amp; Conditions</a>
-      <span aria-hidden="true">·</span>
-      <a href="/contact.html">Contact</a>
-    </nav>
 
     <details class="footer-collapse">
       <summary>18+ Disclaimer</summary>
