@@ -242,19 +242,13 @@ layout: null
     }
 
     .ad-header { margin: 30px auto 0; }
-    .ad-inline { margin: 30px auto; }
-    .ad-below-pagination { margin: 30px auto; }
+    .ad-after-grid { margin: 30px auto; }
     .ad-footer { margin: 0 auto 24px; }
 
-    .ad-sidebar {
-      position: fixed;
-      top: 100px;
-      right: 20px;
-      z-index: 50;
-    }
-
-    @media (max-width: 1400px) {
-      .ad-sidebar { display: none; }
+    /* Ad di dalam grid: span full width */
+    .ad-in-grid {
+      grid-column: 1 / -1;
+      margin: 10px auto;
     }
 
     /* === GRID === */
@@ -764,11 +758,6 @@ layout: null
     </div>
   </div>
 
-  <!-- AD SLOT 2: SIDEBAR (sticky, desktop only) -->
-  <aside class="ad-slot ad-sidebar">
-    <!-- Ganti dengan kode iklan 300x250 -->
-  </aside>
-
   <header>
     <h1>My Blog</h1>
     <div class="header-actions">
@@ -842,17 +831,12 @@ layout: null
     {% endfor %}
   </div>
 
-  <!-- AD SLOT 3: SETELAH GRID (selalu tampil) -->
-  <div class="ad-slot ad-inline">
+  <!-- AD SLOT 3: SETELAH GRID -->
+  <div class="ad-slot ad-after-grid">
     <!-- Ganti dengan kode iklan 300x250 -->
   </div>
 
   <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
-
-  <!-- AD SLOT 4: BAWAH PAGINASI -->
-  <div class="ad-slot ad-below-pagination">
-    <!-- Ganti dengan kode iklan 300x250 -->
-  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -872,7 +856,7 @@ layout: null
 
   <footer>
 
-    <!-- AD SLOT 5: FOOTER ATAS -->
+    <!-- AD SLOT 4: FOOTER ATAS -->
     <div class="ad-slot ad-footer">
       <!-- Ganti dengan kode iklan 300x250 -->
     </div>
@@ -1348,4 +1332,3 @@ layout: null
 
 </body>
 </html>
-  
