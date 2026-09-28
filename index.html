@@ -243,11 +243,25 @@ layout: null
     .ad-after-grid { margin: 30px auto; }
     .ad-footer { margin: 0 auto 32px; }
 
+    /* Iklan di dalam grid */
     .ad-in-grid {
-      grid-column: 1 / -1;
-      margin: 10px auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 300 / 250;
+      margin: 0;
+      max-width: 100%;
+      grid-column: auto;
     }
 
+    @media (max-width: 699px) {
+      .ad-in-grid {
+        max-width: 300px;
+        margin: 0 auto;
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* === GRID === */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1212,6 +1226,8 @@ layout: null
       function updateGrid(page) {
         var start = (page - 1) * PER_PAGE;
         var end = start + PER_PAGE;
+        var isDesktop = window.matchMedia('(min-width: 700px)').matches;
+        var adsPerBreak = isDesktop ? 3 : 1;
 
         // Hapus iklan in-grid lama
         document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
@@ -1232,10 +1248,13 @@ layout: null
           if (show) {
             visibleCount++;
             if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
-              var ad = document.createElement('div');
-              ad.className = 'ad-slot ad-in-grid';
-              ad.innerHTML = AD_HTML;
-              el.parentNode.insertBefore(ad, el.nextSibling);
+              var anchor = el.nextSibling;
+              for (var k = 0; k < adsPerBreak; k++) {
+                var ad = document.createElement('div');
+                ad.className = 'ad-slot ad-in-grid';
+                ad.innerHTML = AD_HTML;
+                el.parentNode.insertBefore(ad, anchor);
+              }
             }
           }
         });
@@ -1296,6 +1315,16 @@ layout: null
 
       window.addEventListener('popstate', function () {
         show(getPageFromURL(), true);
+      });
+
+      // Resize: rerender iklan saat lebar layar berubah
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          var current = getPageFromURL();
+          updateGrid(current);
+        }, 250);
       });
 
       nav.addEventListener('click', function (e) {
