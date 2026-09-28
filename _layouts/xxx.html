@@ -277,10 +277,13 @@ layout: null
       width: 20px; height: 20px; stroke: currentColor;
       fill: none; stroke-width: 2;
     }
+
     .related-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
+
     .related-card {
       position: relative; display: block; border-radius: 10px;
       overflow: hidden; background: var(--btn-bg);
@@ -306,26 +309,37 @@ layout: null
     .related-card .play svg { width: 20px; height: 20px; margin-left: 2px; }
     .related-card:hover .play { background: rgba(0,0,0,0.7); }
 
+    /* === AD DI RELATED GRID === */
     .related-ad {
       grid-column: 1 / -1;
-      display: grid; grid-template-columns: 1fr;
-      gap: 12px; justify-items: center;
-      width: 100%; margin: 10px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      justify-items: center;
+      width: 100%;
+      margin: 10px 0;
     }
     .related-ad .ad-slot {
-      width: 100%; max-width: 300px; height: auto;
-      aspect-ratio: 300 / 250; margin: 0;
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      aspect-ratio: 300 / 250;
+      margin: 0;
     }
-    @media (min-width: 700px) {
+
+    @media (min-width: 701px) {
       .related-ad {
         grid-template-columns: repeat(3, 1fr);
         justify-items: stretch;
       }
       .related-ad .ad-slot {
-        max-width: 100%; width: 100%; aspect-ratio: 300 / 250;
+        max-width: 100%;
+        width: 100%;
+        aspect-ratio: 300 / 250;
       }
     }
 
+    /* === RELATED MORE === */
     .related-more-wrap {
       display: flex; justify-content: center; margin-top: 24px;
     }
@@ -549,9 +563,12 @@ layout: null
     .cookie-btn:hover { opacity: 0.9; }
     .cookie-btn:active { transform: scale(0.97); }
 
+    @media (max-width: 700px) {
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 480px) {
       body { margin: 20px auto; padding: 0 16px; font-size: 0.95rem; }
-      .related-grid { grid-template-columns: repeat(2, 1fr); }
       .ad-slot {
         width: 100%; max-width: 300px; height: auto;
         aspect-ratio: 300 / 250;
@@ -1163,7 +1180,7 @@ layout: null
     (function () {
       var tpl = document.getElementById('ad-related-template');
       if (!tpl) return;
-      var isDesktop = window.matchMedia('(min-width: 700px)').matches;
+      var isDesktop = window.matchMedia('(min-width: 701px)').matches;
       var adsPerBreak = isDesktop ? 3 : 1;
 
       document.querySelectorAll('.related-ad').forEach(function (slot) {
@@ -1230,7 +1247,7 @@ layout: null
         resizeTimer = setTimeout(function () {
           var tpl = document.getElementById('ad-related-template');
           if (!tpl) return;
-          var isDesktop = window.matchMedia('(min-width: 700px)').matches;
+          var isDesktop = window.matchMedia('(min-width: 701px)').matches;
           var adsPerBreak = isDesktop ? 3 : 1;
           document.querySelectorAll('.related-ad').forEach(function (slot) {
             slot.dataset.filled = '0';
