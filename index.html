@@ -11,6 +11,12 @@ layout: null
   <link rel="canonical" id="canonicalLink" href="">
   <meta name="robots" content="index, follow">
 
+  <meta name="rating" content="adult">
+  <meta name="rating" content="mature">
+  <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
+  <meta name="content-rating" content="adult">
+  <meta name="audience" content="adult">
+
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
@@ -77,7 +83,6 @@ layout: null
       transition: background 0.2s ease, color 0.2s ease;
     }
 
-    /* === HEADER === */
     header {
       display: flex;
       align-items: center;
@@ -125,7 +130,6 @@ layout: null
     }
     .hamburger svg { display: block; }
 
-    /* === MENU PANEL === */
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -154,6 +158,7 @@ layout: null
       flex-direction: column;
       gap: 4px;
       box-shadow: -6px 0 24px var(--shadow);
+      overflow-y: auto;
     }
     .menu.open { transform: translateX(0); }
 
@@ -196,7 +201,6 @@ layout: null
 
     body.menu-open { overflow: hidden; }
 
-    /* === GRID === */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -326,7 +330,6 @@ layout: null
       }
     }
 
-    /* === PAGINATION === */
     .pagination {
       display: flex;
       justify-content: center;
@@ -367,28 +370,25 @@ layout: null
       cursor: default;
     }
 
-    /* === COOKIE BANNER === */
     .cookie-banner {
       position: fixed;
       bottom: 16px;
       left: 16px;
       right: 16px;
-      max-width: 420px;
+      max-width: 520px;
       margin: 0 auto;
       background: var(--bg-card);
       color: var(--text);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       box-shadow: 0 8px 28px var(--shadow);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.5;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 12px;
       z-index: 300;
-      transform: translateY(0);
-      opacity: 1;
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .cookie-banner.hide {
@@ -396,26 +396,35 @@ layout: null
       transform: translateY(20px);
       pointer-events: none;
     }
-    .cookie-banner p {
-      margin: 0;
-      flex: 1;
+    .cookie-text p { margin: 0; }
+    .cookie-text a { color: var(--link); text-decoration: underline; }
+
+    .cookie-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
     }
-    .cookie-ok {
-      background: var(--link);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
+    .cookie-btn {
       padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      flex-shrink: 0;
       transition: transform 0.1s ease, opacity 0.15s ease;
     }
-    .cookie-ok:hover { opacity: 0.9; }
-    .cookie-ok:active { transform: scale(0.96); }
+    .cookie-reject {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .cookie-accept {
+      background: var(--link);
+      color: #fff;
+    }
+    .cookie-btn:hover { opacity: 0.9; }
+    .cookie-btn:active { transform: scale(0.97); }
 
-    /* === WHATSAPP FLOAT (kecil, mepet bawah) === */
     .wa-float {
       position: fixed;
       bottom: 10px;
@@ -437,9 +446,7 @@ layout: null
       transform: scale(1.08);
       box-shadow: 0 6px 18px rgba(37, 211, 102, 0.55);
     }
-    .wa-float:active {
-      transform: scale(0.95);
-    }
+    .wa-float:active { transform: scale(0.95); }
     .wa-float svg {
       width: 22px;
       height: 22px;
@@ -464,11 +471,8 @@ layout: null
       transition: opacity 0.2s ease;
       box-shadow: 0 4px 12px var(--shadow);
     }
-    .wa-float:hover::before {
-      opacity: 1;
-    }
+    .wa-float:hover::before { opacity: 1; }
 
-    /* === TOAST === */
     .toast {
       position: fixed;
       bottom: 24px;
@@ -491,7 +495,208 @@ layout: null
       transform: translateX(-50%) translateY(0);
     }
 
-    /* === RESPONSIVE === */
+    /* === FOOTER === */
+    footer {
+      margin-top: 60px;
+      padding: 32px 0 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      max-width: 760px;
+      margin: 0 auto 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+    .footer-links span {
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* === COLLAPSIBLE FOOTER SECTIONS === */
+    .footer-collapse {
+      max-width: 760px;
+      margin: 0 auto 8px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .footer-collapse summary {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+    .footer-collapse summary::-webkit-details-marker { display: none; }
+    .footer-collapse summary:hover { background: var(--btn-bg); }
+
+    .footer-collapse summary::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+    .footer-collapse[open] summary::after {
+      transform: rotate(-135deg);
+    }
+
+    .footer-collapse-content {
+      padding: 4px 16px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .footer-collapse-content p {
+      margin: 8px 0;
+    }
+    .footer-collapse-content p strong { color: var(--text); }
+    .footer-collapse-content ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+    .footer-collapse-content li {
+      margin-bottom: 4px;
+    }
+    .footer-collapse-content a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .footer-collapse-content a:hover { text-decoration: underline; }
+
+    .footer-bottom {
+      max-width: 760px;
+      margin: 24px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .footer-bottom p { margin: 0 0 4px; }
+    .footer-note { opacity: 0.7; }
+
+    /* === AGE GATE === */
+    .age-gate {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .age-gate-box {
+      max-width: 500px;
+      background: #15171c;
+      padding: 32px 26px;
+      border-radius: 16px;
+      border: 1px solid #2a2e37;
+    }
+    .age-gate-box h2 { margin: 0 0 14px; font-size: 1.35rem; }
+    .age-gate-box p {
+      color: #b8bcc2;
+      line-height: 1.55;
+      font-size: 0.95rem;
+      margin: 0 0 16px;
+    }
+    .age-gate-warning {
+      background: #1c1f26;
+      border-left: 3px solid #e8a33d;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .age-gate-warning strong {
+      color: #e8a33d;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .age-gate-warning ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #b8bcc2;
+    }
+    .age-gate-warning li {
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+    .age-gate-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      background: #1c1f26;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      color: #e8e8e8;
+    }
+    .age-gate-check input {
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: #25D366;
+    }
+    .age-gate-actions {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0 12px;
+    }
+    .age-yes, .age-no {
+      flex: 1;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: transform 0.1s ease, opacity 0.15s ease;
+    }
+    .age-yes { background: #25D366; color: #fff; }
+    .age-yes:disabled { opacity: 0.4; cursor: not-allowed; }
+    .age-no { background: #2a2e37; color: #e8e8e8; }
+    .age-yes:not(:disabled):hover, .age-no:hover { opacity: 0.9; }
+    .age-yes:not(:disabled):active, .age-no:active { transform: scale(0.98); }
+    .age-gate-legal {
+      font-size: 0.75rem;
+      color: #6a6e76;
+      text-align: center;
+      margin: 0 !important;
+    }
+
     @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
       .card .play { width: 52px; height: 52px; }
@@ -500,7 +705,7 @@ layout: null
         left: 12px;
         right: 12px;
         bottom: 56px;
-        padding: 12px 14px;
+        padding: 14px 16px;
         font-size: 0.85rem;
       }
       .wa-float {
@@ -509,17 +714,57 @@ layout: null
         width: 40px;
         height: 40px;
       }
-      .wa-float svg {
-        width: 20px;
-        height: 20px;
+      .wa-float svg { width: 20px; height: 20px; }
+      .wa-float::before { display: none; }
+      footer {
+        font-size: 0.78rem;
+        padding: 24px 0 20px;
       }
-      .wa-float::before {
-        display: none;
+      .footer-collapse summary {
+        padding: 11px 14px;
+        font-size: 0.82rem;
+      }
+      .footer-collapse-content {
+        padding: 4px 14px 14px;
+        font-size: 0.78rem;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- AGE GATE -->
+  <div class="age-gate" id="ageGate" role="dialog" aria-modal="true">
+    <div class="age-gate-box">
+      <h2>Age Verification Required</h2>
+      <p>This website contains adult material intended for adults only.</p>
+
+      <div class="age-gate-warning">
+        <strong>By entering, you confirm that:</strong>
+        <ul>
+          <li>You are at least 18 years old (or the age of majority in your jurisdiction)</li>
+          <li>Viewing adult content is legal where you are located</li>
+          <li>You will not share this content with minors</li>
+          <li>You consent to viewing adult material</li>
+        </ul>
+      </div>
+
+      <label class="age-gate-check">
+        <input type="checkbox" id="ageCheck">
+        <span>I have read and agree to the above</span>
+      </label>
+
+      <div class="age-gate-actions">
+        <button class="age-yes" id="ageYes" type="button" disabled>Enter</button>
+        <button class="age-no" id="ageNo" type="button">Exit</button>
+      </div>
+
+      <p class="age-gate-legal">
+        Your choice is stored locally on your device.
+        See <a href="/privacy-policy.html" style="color:#6cb6ff;">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
 
   <header>
     <h1>My Blog</h1>
@@ -593,9 +838,18 @@ layout: null
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie notice">
-    <p>This site uses cookies to improve your experience.</p>
-    <button class="cookie-ok" id="cookieOk">OK</button>
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
+    <div class="cookie-text">
+      <p>
+        We use cookies to operate this site, remember your preferences, and
+        measure traffic. You can accept or reject non-essential cookies.
+        <a href="/privacy-policy.html">Learn more</a>.
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-reject" id="cookieReject" type="button">Reject</button>
+      <button class="cookie-btn cookie-accept" id="cookieOk" type="button">Accept</button>
+    </div>
   </div>
 
   <a class="wa-float"
@@ -608,7 +862,153 @@ layout: null
     </svg>
   </a>
 
+  <footer>
+    <!-- LINK KE HALAMAN YANG SUDAH ADA DI MENU -->
+    <nav class="footer-links" aria-label="Legal">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/terms-and-conditions.html">Terms &amp; Conditions</a>
+      <span aria-hidden="true">·</span>
+      <a href="/contact.html">Contact</a>
+    </nav>
+
+    <!-- COLLAPSIBLE: DISCLAIMER -->
+    <details class="footer-collapse">
+      <summary>18+ Disclaimer</summary>
+      <div class="footer-collapse-content">
+        <p>
+          <strong>18+ ONLY.</strong> This website contains adult material intended
+          for adults only. By accessing this site, you confirm that you are at
+          least 18 years old (or the age of majority in your jurisdiction), that
+          viewing adult content is legal where you are located, and that you
+          consent to viewing such material.
+        </p>
+        <p>
+          All content is fictional and for entertainment purposes only. Any
+          resemblance to actual persons, living or dead, is coincidental. All
+          characters depicted are 18 years of age or older. We do not condone
+          illegal activity.
+        </p>
+        <p>
+          This site is not intended for users in jurisdictions where adult content
+          is prohibited. It is your responsibility to ensure access is legal in
+          your country, state, or region.
+        </p>
+      </div>
+    </details>
+
+    <!-- COLLAPSIBLE: DMCA -->
+    <details class="footer-collapse">
+      <summary>DMCA / Copyright</summary>
+      <div class="footer-collapse-content">
+        <p>
+          We respect the intellectual property rights of others. If you believe
+          your copyrighted work has been used on this site without authorization,
+          you may submit a DMCA takedown notice.
+        </p>
+        <p><strong>How to submit:</strong></p>
+        <ul>
+          <li>Identification of the copyrighted work</li>
+          <li>URL of the allegedly infringing material</li>
+          <li>Your full name and contact information</li>
+          <li>A statement of good faith belief that the use is not authorized</li>
+          <li>A statement under penalty of perjury that the information is accurate</li>
+          <li>Your physical or electronic signature</li>
+        </ul>
+        <p>
+          Send your notice to <a href="mailto:dmca@example.com">dmca@example.com</a>.
+          We respond to valid DMCA notices within 72 hours. Repeat infringers
+          will be blocked from accessing the site.
+        </p>
+      </div>
+    </details>
+
+    <!-- COLLAPSIBLE: COOKIES -->
+    <details class="footer-collapse">
+      <summary>Cookie Policy</summary>
+      <div class="footer-collapse-content">
+        <p>This site uses the following cookies:</p>
+        <ul>
+          <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
+          <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
+          <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
+        </ul>
+        <p>
+          No third-party tracking cookies are used. No analytics services are
+          integrated. Your data does not leave your browser except as described
+          above.
+        </p>
+      </div>
+    </details>
+
+    <!-- COLLAPSIBLE: CONTACT -->
+    <details class="footer-collapse">
+      <summary>Contact</summary>
+      <div class="footer-collapse-content">
+        <p>For DMCA notices, legal inquiries, or any other concerns:</p>
+        <p>
+          Email: <a href="mailto:contact@example.com">contact@example.com</a><br>
+          DMCA: <a href="mailto:dmca@example.com">dmca@example.com</a><br>
+          Response time: within 72 hours
+        </p>
+      </div>
+    </details>
+
+    <div class="footer-bottom">
+      <p>© 2026 My Blog. All rights reserved.</p>
+      <p class="footer-note">Last updated: September 2026</p>
+    </div>
+  </footer>
+
   <script>
+    /* === AGE GATE === */
+    (function () {
+      var KEY = 'age-verified-v1';
+      var MAX_AGE_DAYS = 30;
+
+      function getCookie(name) {
+        var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return m ? m.pop() : '';
+      }
+
+      function setCookie(name, value, days) {
+        var d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = name + '=' + value + ';expires=' + d.toUTCString() +
+                          ';path=/;SameSite=Lax' +
+                          (location.protocol === 'https:' ? ';Secure' : '');
+      }
+
+      var gate = document.getElementById('ageGate');
+      if (!gate) return;
+
+      if (localStorage.getItem(KEY) === '1' || getCookie(KEY) === '1') {
+        gate.remove();
+        return;
+      }
+
+      document.body.style.overflow = 'hidden';
+
+      var check = document.getElementById('ageCheck');
+      var yes = document.getElementById('ageYes');
+
+      check.addEventListener('change', function () {
+        yes.disabled = !check.checked;
+      });
+
+      yes.addEventListener('click', function () {
+        if (!check.checked) return;
+        localStorage.setItem(KEY, '1');
+        setCookie(KEY, '1', MAX_AGE_DAYS);
+        gate.remove();
+        document.body.style.overflow = '';
+      });
+
+      document.getElementById('ageNo').addEventListener('click', function () {
+        window.location.href = 'https://www.google.com';
+      });
+    })();
+
     /* === THEME TOGGLE === */
     (function () {
       var root = document.documentElement;
@@ -671,7 +1071,7 @@ layout: null
       });
     })();
 
-    /* === DURATION (acak tapi konsisten per card) === */
+    /* === DURATION === */
     (function () {
       function hashCode(str) {
         var h = 0;
@@ -690,7 +1090,6 @@ layout: null
       document.querySelectorAll('.post-item').forEach(function (card) {
         var el = card.querySelector('[data-duration]');
         if (!el) return;
-
         var seed = card.getAttribute('data-url') || card.getAttribute('data-title') || '';
         var h = hashCode(seed);
         var seconds = 60 + (h % 841);
@@ -698,7 +1097,7 @@ layout: null
       });
     })();
 
-    /* === SHARE BUTTON === */
+    /* === SHARE === */
     (function () {
       var toast = document.getElementById('toast');
       var toastTimer;
@@ -766,31 +1165,33 @@ layout: null
       }
     })();
 
-    /* === COOKIE BANNER (tombol OK) === */
+    /* === COOKIE CONSENT === */
     (function () {
-      var KEY = 'cookie-notice-dismissed';
+      var KEY = 'cookie-consent';
       var banner = document.getElementById('cookieBanner');
-      var okBtn = document.getElementById('cookieOk');
-
       if (!banner) return;
 
-      if (localStorage.getItem(KEY) === '1') {
+      var existing = localStorage.getItem(KEY);
+      if (existing === 'accepted' || existing === 'rejected') {
         banner.remove();
         return;
       }
 
-      function dismiss() {
+      function decide(choice) {
+        localStorage.setItem(KEY, choice);
         banner.classList.add('hide');
-        localStorage.setItem(KEY, '1');
-        setTimeout(function () {
-          banner.remove();
-        }, 300);
+        setTimeout(function () { banner.remove(); }, 300);
       }
 
-      okBtn.addEventListener('click', dismiss);
+      document.getElementById('cookieOk').addEventListener('click', function () {
+        decide('accepted');
+      });
+      document.getElementById('cookieReject').addEventListener('click', function () {
+        decide('rejected');
+      });
     })();
 
-    /* === PAGINATION (?pag=N, dynamic SEO) === */
+    /* === PAGINATION === */
     (function () {
       var PER_PAGE = 6;
       var SITE_NAME = 'My Blog';
@@ -884,7 +1285,6 @@ layout: null
 
       function drawPagination(current) {
         nav.innerHTML = '';
-
         nav.appendChild(makeLink('‹', current - 1, { disabled: current === 1 }));
 
         var pages = [];
