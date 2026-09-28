@@ -1,8 +1,8 @@
-name: Mirror Upstream (Force Except Workflows Ads Index)
+name: Mirror Upstream (Force Except Workflows + Index + Posts)
 
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -24,53 +24,59 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Save local workflows ads and index
+      - name: Save local files
         run: |
-          mkdir -p /tmp/workflows
-          mkdir -p /tmp/ads
+          mkdir -p /tmp/backup
 
+          # Backup workflows
           if [ -d ".github/workflows" ]; then
-            cp -r .github/workflows /tmp/workflows/
+            cp -r .github/workflows /tmp/backup/
           fi
 
-          if [ -d "_includes/ads" ]; then
-            cp -r _includes/ads /tmp/ads/
-          fi
-
+          # Backup index.html
           if [ -f "index.html" ]; then
-            cp index.html /tmp/index.html
+            cp index.html /tmp/backup/
+          fi
+
+          # Backup _posts
+          if [ -d "_posts" ]; then
+            cp -r _posts /tmp/backup/
           fi
 
       - name: Add upstream
         run: |
-          git remote add upstream https://github.com/nengmaya538/nengmaya538.github.io.git
+          git remote remove upstream || true
+          git remote add upstream https://github.com/newage0000001/newage0000001.github.io.git
           git fetch upstream
 
       - name: Hard reset to upstream
         run: |
           git reset --hard upstream/master
 
-      - name: Restore workflows ads and index
+      - name: Restore excluded files
         run: |
+          # Restore workflows
           rm -rf .github/workflows
-          rm -rf _includes/ads
 
-          if [ -d "/tmp/workflows/workflows" ]; then
+          if [ -d "/tmp/backup/workflows" ]; then
             mkdir -p .github
-            cp -r /tmp/workflows/workflows .github/
+            cp -r /tmp/backup/workflows .github/
           fi
 
-          if [ -d "/tmp/ads/ads" ]; then
-            mkdir -p _includes
-            cp -r /tmp/ads/ads _includes/
+          # Restore index.html
+          if [ -f "/tmp/backup/index.html" ]; then
+            cp /tmp/backup/index.html index.html
           fi
 
-          if [ -f "/tmp/index.html" ]; then
-            cp /tmp/index.html index.html
+          # Restore _posts
+          rm -rf _posts
+
+          if [ -d "/tmp/backup/_posts" ]; then
+            cp -r /tmp/backup/_posts _posts
           fi
 
       - name: Force push to fork
         run: |
           git add .
-          git commit -m "Force sync except workflows ads and index" || echo "No changes"
+          git commit -m "Force sync except workflows, index.html and _posts" || echo "No changes"
           git push origin master --force
