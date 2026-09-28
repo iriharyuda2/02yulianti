@@ -1,0 +1,693 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — My Blog</title>
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+  <meta name="rating" content="adult">
+  <meta name="rating" content="mature">
+  <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
+  <meta name="content-rating" content="adult">
+  <meta name="audience" content="adult">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:image" content="{{ page.image | absolute_url }}">
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #ffffff; --bg-card: #ffffff; --text: #222222; --text-muted: #888888;
+      --border: #eeeeee; --link: #0366d6; --shadow: rgba(0,0,0,0.08);
+      --btn-bg: #f4f4f4; --btn-text: #222222;
+      --play-bg: rgba(0,0,0,0.45); --play-fg: rgba(255,255,255,0.9);
+      --menu-bg: #ffffff; --overlay: rgba(0,0,0,0.4);
+      --ad-bg: #f4f4f4; --ad-border: #dddddd;
+      --code-bg: #f6f8fa; --quote-border: #dddddd;
+    }
+    [data-theme="dark"] {
+      --bg: #0f1115; --bg-card: #181b22; --text: #e8e8e8; --text-muted: #9aa0a6;
+      --border: #2a2e37; --link: #6cb6ff; --shadow: rgba(0,0,0,0.4);
+      --btn-bg: #232733; --btn-text: #e8e8e8;
+      --play-bg: rgba(0,0,0,0.5); --play-fg: rgba(255,255,255,0.85);
+      --menu-bg: #181b22; --overlay: rgba(0,0,0,0.6);
+      --ad-bg: #1c1f26; --ad-border: #2a2e37;
+      --code-bg: #1c1f26; --quote-border: #2a2e37;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+                   "Noto Sans", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", sans-serif;
+      background: var(--bg); color: var(--text);
+      max-width: 800px; margin: 40px auto; padding: 0 20px;
+      line-height: 1.7;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--border); padding-bottom: 10px;
+      gap: 12px; margin-bottom: 24px;
+    }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header h1 a { color: var(--text); text-decoration: none; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+
+    .toggle, .hamburger {
+      background: var(--btn-bg); color: var(--btn-text);
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; font-size: 0.95rem; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; transition: background 0.2s ease, transform 0.1s ease;
+      white-space: nowrap;
+    }
+    .toggle:hover, .hamburger:hover { transform: scale(1.05); }
+    .toggle:active, .hamburger:active { transform: scale(0.97); }
+    .toggle svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+    .hamburger {
+      width: 42px; height: 42px; padding: 0; border-radius: 12px;
+    }
+    .hamburger svg { display: block; }
+
+    .menu-overlay {
+      position: fixed; inset: 0; background: var(--overlay);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease; z-index: 90;
+    }
+    .menu-overlay.open { opacity: 1; visibility: visible; }
+    .menu {
+      position: fixed; top: 0; right: 0; height: 100%;
+      width: 280px; max-width: 85vw;
+      background: var(--menu-bg); border-left: 1px solid var(--border);
+      padding: 24px 20px; transform: translateX(100%);
+      transition: transform 0.28s ease; z-index: 100;
+      display: flex; flex-direction: column; gap: 4px;
+      box-shadow: -6px 0 24px var(--shadow); overflow-y: auto;
+    }
+    .menu.open { transform: translateX(0); }
+    .menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .menu-header strong { font-size: 1.05rem; }
+    .menu-close {
+      background: transparent; border: none; color: var(--text);
+      cursor: pointer; padding: 4px; display: inline-flex;
+      align-items: center; justify-content: center; border-radius: 8px;
+      transition: background 0.15s ease;
+    }
+    .menu-close:hover { background: var(--btn-bg); }
+    .menu a {
+      color: var(--text); text-decoration: none; padding: 12px 14px;
+      border-radius: 8px; font-size: 0.98rem;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .menu a:hover { background: var(--btn-bg); color: var(--link); }
+    body.menu-open { overflow: hidden; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.9rem; margin-bottom: 16px;
+      transition: color 0.15s ease;
+    }
+    .back-link:hover { color: var(--link); }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .post-header {
+      margin-bottom: 24px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .post-header h1 {
+      margin: 0; font-size: 1.8rem; line-height: 1.3; font-weight: 800;
+    }
+
+    .post-content { font-size: 1rem; line-height: 1.75; }
+    .post-content p { margin: 0 0 1.1em; }
+    .post-content h2 { margin: 1.8em 0 0.6em; font-size: 1.4rem; font-weight: 700; }
+    .post-content h3 { margin: 1.5em 0 0.5em; font-size: 1.15rem; font-weight: 700; }
+    .post-content a {
+      color: var(--link); text-decoration: underline; text-underline-offset: 2px;
+    }
+    .post-content img {
+      max-width: 100%; height: auto; border-radius: 10px;
+      display: block; margin: 1.5em auto;
+    }
+    .post-content ul, .post-content ol {
+      padding-left: 1.5em; margin: 0 0 1.1em;
+    }
+    .post-content li { margin-bottom: 0.4em; }
+    .post-content blockquote {
+      border-left: 3px solid var(--quote-border);
+      padding: 0.5em 0 0.5em 1em; margin: 1.5em 0;
+      color: var(--text-muted); font-style: italic;
+    }
+    .post-content code {
+      background: var(--code-bg); padding: 2px 6px;
+      border-radius: 4px; font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .post-content pre {
+      background: var(--code-bg); padding: 16px;
+      border-radius: 8px; overflow-x: auto; margin: 1.5em 0;
+    }
+    .post-content pre code { background: transparent; padding: 0; }
+    .post-content hr {
+      border: none; border-top: 1px solid var(--border); margin: 2em 0;
+    }
+
+    .post-actions {
+      display: flex; gap: 10px; margin-top: 40px;
+      padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--btn-bg); color: var(--btn-text);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 16px; cursor: pointer; font-size: 0.9rem;
+      font-weight: 600; text-decoration: none;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .action-btn:hover {
+      background: var(--link); color: #fff;
+      border-color: var(--link); transform: translateY(-2px);
+    }
+    .action-btn svg {
+      width: 16px; height: 16px; fill: none;
+      stroke: currentColor; stroke-width: 2;
+    }
+
+    /* === RELATED POSTS === */
+    .related {
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .related-title {
+      margin: 0 0 20px; font-size: 1.15rem; font-weight: 700;
+      color: var(--text); display: flex; align-items: center; gap: 8px;
+    }
+    .related-title svg {
+      width: 20px; height: 20px; stroke: currentColor;
+      fill: none; stroke-width: 2;
+    }
+    .related-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .related-card {
+      position: relative; display: block; border-radius: 10px;
+      overflow: hidden; background: var(--btn-bg);
+      text-decoration: none; aspect-ratio: 1 / 1;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .related-card:hover {
+      transform: translateY(-3px); box-shadow: 0 6px 18px var(--shadow);
+    }
+    .related-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .related-card .play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px; display: flex;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.9);
+      border-radius: 50%; pointer-events: none;
+      transition: background 0.2s ease;
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+    }
+    .related-card .play svg { width: 20px; height: 20px; margin-left: 2px; }
+    .related-card:hover .play { background: rgba(0,0,0,0.7); }
+
+    /* === AD DI RELATED GRID === */
+    .related-ad {
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; justify-items: center;
+      width: 100%; margin: 10px 0;
+    }
+    .related-ad .ad-slot {
+      width: 100%; max-width: 300px; height: auto;
+      aspect-ratio: 300 / 250; margin: 0;
+    }
+    @media (min-width: 700px) {
+      .related-ad {
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: stretch;
+      }
+      .related-ad .ad-slot {
+        max-width: 100%; width: 100%; aspect-ratio: 300 / 250;
+      }
+    }
+
+    /* === RELATED MORE === */
+    .related-more-wrap {
+      display: flex; justify-content: center; margin-top: 24px;
+    }
+    .related-more {
+      background: var(--btn-bg); color: var(--btn-text);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 24px; cursor: pointer; font-size: 0.9rem;
+      font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .related-more:hover {
+      background: var(--link); color: #fff;
+      border-color: var(--link); transform: translateY(-2px);
+    }
+    .related-more:active { transform: translateY(0); }
+    .related-more svg {
+      width: 16px; height: 16px; stroke: currentColor;
+      fill: none; stroke-width: 2;
+    }
+    .related-more.hidden { display: none; }
+    .related-card.hidden { display: none; }
+    .related-ad.hidden { display: none; }
+
+    /* === ADS === */
+    .ad-slot {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--ad-bg); border: 1px dashed var(--ad-border);
+      border-radius: 10px; width: 300px; height: 250px;
+      margin: 30px auto; overflow: hidden; position: relative;
+    }
+    .ad-slot > * {
+      display: block; width: 100%; height: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--btn-bg); color: var(--btn-text);
+      border: 1px solid var(--border); padding: 10px 18px;
+      border-radius: 10px; font-size: 0.9rem;
+      box-shadow: 0 6px 24px var(--shadow);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease; z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 480px) {
+      body { margin: 20px auto; padding: 0 16px; font-size: 0.95rem; }
+      .post-header h1 { font-size: 1.5rem; }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+      .ad-slot {
+        width: 100%; max-width: 300px; height: auto;
+        aspect-ratio: 300 / 250;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><a href="/">My Blog</a></h1>
+    <div class="header-actions">
+      <button class="toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <span id="themeLabel">Dark</span>
+      </button>
+
+      <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <aside class="menu" id="menu" aria-hidden="true">
+    <div class="menu-header">
+      <strong>Menu</strong>
+      <button class="menu-close" id="menuClose" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/terms-and-conditions.html">Terms and Conditions</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </aside>
+
+  <a class="back-link" href="/">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Back to home
+  </a>
+
+  <article>
+    <div class="post-header">
+      <h1>{{ page.title }}</h1>
+    </div>
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    <!-- AD: AFTER VIDEO -->
+    <div class="ad-slot">
+      {% include /ads/banner/01.html %}
+    </div>
+
+    <div class="post-actions">
+      <a class="action-btn" href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back to home
+      </a>
+
+      <button class="action-btn" id="shareBtn" data-url="{{ page.url }}" data-title="{{ page.title }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        Share
+      </button>
+    </div>
+  </article>
+
+  <!-- === RELATED POSTS (UNIK + LOAD MORE + AD) === -->
+  {% assign initial_show = 6 %}
+  {% assign related_count = 0 %}
+  {% assign seen = "," %}
+
+  {% if page.categories and page.categories.size > 0 %}
+    {% for category in page.categories %}
+      {% assign same_cat_posts = site.categories[category] %}
+      {% if same_cat_posts %}
+        {% for post in same_cat_posts %}
+          {% assign check = "," | append: post.url | append: "," %}
+          {% if post.url != page.url %}
+            {% unless seen contains check %}
+              {% assign seen = seen | append: post.url | append: "," %}
+
+              {% if related_count == 0 %}
+              <section class="related" id="relatedSection">
+                <h2 class="related-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  Related Posts
+                </h2>
+                <div class="related-grid" id="relatedGrid">
+              {% endif %}
+
+                  <a class="related-card{% if related_count >= initial_show %} hidden{% endif %}"
+                     href="{{ post.url }}"
+                     aria-label="{{ post.title }}"
+                     data-index="{{ related_count }}">
+                    {% if post.image %}
+                      <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                    {% endif %}
+                    <span class="play" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </span>
+                  </a>
+
+              {% assign display_index = related_count | plus: 1 %}
+              {% assign mod = display_index | modulo: 6 %}
+              {% if mod == 0 %}
+                  <div class="related-ad{% if related_count >= initial_show %} hidden{% endif %}" data-ad-index="{{ display_index }}">
+                    <!-- Diisi oleh JS -->
+                  </div>
+              {% endif %}
+
+              {% assign related_count = related_count | plus: 1 %}
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+    {% if related_count > 0 %}
+                </div>
+                {% if related_count > initial_show %}
+                <div class="related-more-wrap" id="relatedMoreWrap">
+                  <button class="related-more" id="relatedMoreBtn" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                    More
+                  </button>
+                </div>
+                {% endif %}
+              </section>
+    {% endif %}
+  {% endif %}
+
+  <!-- AD: AFTER RELATED -->
+  {% if related_count > 0 %}
+  <div class="ad-slot">
+    {% include /ads/banner/02.html %}
+  </div>
+  {% endif %}
+
+  <template id="ad-related-template">
+    <div class="ad-slot">
+      {% include /ads/banner/01.html %}
+    </div>
+  </template>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById('themeToggle');
+      var iconMoon = document.getElementById('iconMoon');
+      var iconSun = document.getElementById('iconSun');
+      var label = document.getElementById('themeLabel');
+      function apply(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+          iconMoon.style.display = 'none';
+          iconSun.style.display = 'inline-block';
+          label.textContent = 'Light';
+        } else {
+          iconMoon.style.display = 'inline-block';
+          iconSun.style.display = 'none';
+          label.textContent = 'Dark';
+        }
+      }
+      apply(root.getAttribute('data-theme') || 'light');
+      btn.addEventListener('click', function () {
+        var current = root.getAttribute('data-theme');
+        apply(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+
+    (function () {
+      var menu = document.getElementById('menu');
+      var overlay = document.getElementById('menuOverlay');
+      var openBtn = document.getElementById('menuBtn');
+      var closeBtn = document.getElementById('menuClose');
+      function open() {
+        menu.classList.add('open');
+        overlay.classList.add('open');
+        menu.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+      }
+      function close() {
+        menu.classList.remove('open');
+        overlay.classList.remove('open');
+        menu.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+      }
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+      });
+    })();
+
+    (function () {
+      var toast = document.getElementById('toast');
+      var btn = document.getElementById('shareBtn');
+      var toastTimer;
+      if (!btn) return;
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2000);
+      }
+      btn.addEventListener('click', function () {
+        var url = window.location.origin + btn.getAttribute('data-url');
+        var title = btn.getAttribute('data-title') || document.title;
+        var data = { title: title, url: url };
+        if (navigator.share) {
+          navigator.share(data).catch(function () {});
+          return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () {
+            showToast('Link copied');
+          }).catch(function () {
+            fallbackCopy(url);
+          });
+          return;
+        }
+        fallbackCopy(url);
+      });
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast('Link copied');
+        } catch (err) {
+          showToast('Copy failed');
+        }
+        document.body.removeChild(ta);
+      }
+    })();
+
+    /* === RELATED: ISI IKLAN === */
+    (function () {
+      var tpl = document.getElementById('ad-related-template');
+      if (!tpl) return;
+      var isDesktop = window.matchMedia('(min-width: 700px)').matches;
+      var adsPerBreak = isDesktop ? 3 : 1;
+
+      document.querySelectorAll('.related-ad').forEach(function (slot) {
+        if (slot.dataset.filled === '1') return;
+        slot.innerHTML = '';
+        for (var k = 0; k < adsPerBreak; k++) {
+          var clone = tpl.content.cloneNode(true);
+          clone.querySelectorAll('script').forEach(function (oldScript) {
+            var newScript = document.createElement('script');
+            if (oldScript.src) newScript.src = oldScript.src;
+            else newScript.textContent = oldScript.textContent;
+            Array.from(oldScript.attributes).forEach(function (attr) {
+              if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+            });
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+          });
+          slot.appendChild(clone);
+        }
+        slot.dataset.filled = '1';
+      });
+    })();
+
+    /* === RELATED: LOAD MORE === */
+    (function () {
+      var PER_BATCH = 6;
+      var grid = document.getElementById('relatedGrid');
+      var btn = document.getElementById('relatedMoreBtn');
+      var wrap = document.getElementById('relatedMoreWrap');
+      if (!grid || !btn) return;
+
+      var allHidden = Array.prototype.slice.call(
+        grid.querySelectorAll('.related-card.hidden, .related-ad.hidden')
+      );
+      allHidden.sort(function (a, b) {
+        if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+        if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+        return 0;
+      });
+
+      var cursor = 0;
+      btn.addEventListener('click', function () {
+        var shownCards = 0;
+        var end = cursor;
+        while (end < allHidden.length && shownCards < PER_BATCH) {
+          if (allHidden[end].classList.contains('related-card')) shownCards++;
+          end++;
+        }
+        for (var i = cursor; i < end; i++) {
+          allHidden[i].classList.remove('hidden');
+        }
+        cursor = end;
+        if (cursor >= allHidden.length) {
+          btn.classList.add('hidden');
+          if (wrap) wrap.style.display = 'none';
+        }
+      });
+    })();
+
+    /* === RESIZE: re-render iklan related === */
+    (function () {
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          var tpl = document.getElementById('ad-related-template');
+          if (!tpl) return;
+          var isDesktop = window.matchMedia('(min-width: 700px)').matches;
+          var adsPerBreak = isDesktop ? 3 : 1;
+          document.querySelectorAll('.related-ad').forEach(function (slot) {
+            slot.dataset.filled = '0';
+            slot.innerHTML = '';
+            for (var k = 0; k < adsPerBreak; k++) {
+              var clone = tpl.content.cloneNode(true);
+              clone.querySelectorAll('script').forEach(function (oldScript) {
+                var newScript = document.createElement('script');
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                Array.from(oldScript.attributes).forEach(function (attr) {
+                  if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+                });
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+              });
+              slot.appendChild(clone);
+            }
+            slot.dataset.filled = '1';
+          });
+        }, 400);
+      });
+    })();
+  </script>
+
+</body>
+</html>
