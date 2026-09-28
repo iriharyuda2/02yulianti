@@ -2,13 +2,17 @@
 layout: null
 ---
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Saya</title>
+  <title>My Blog</title>
+  <meta name="description" content="A personal blog.">
+  <meta property="og:title" content="My Blog">
+  <meta property="og:description" content="A personal blog.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Anti-flash: set tema sebelum render -->
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
@@ -19,19 +23,19 @@ layout: null
   </script>
 
   <style>
-    /* === VARIABEL WARNA === */
     :root,
     [data-theme="light"] {
       --bg: #ffffff;
       --bg-card: #ffffff;
       --text: #222222;
       --text-muted: #888888;
-      --text-body: #555555;
       --border: #eeeeee;
       --link: #0366d6;
       --shadow: rgba(0, 0, 0, 0.08);
       --btn-bg: #f4f4f4;
       --btn-text: #222222;
+      --play-bg: rgba(0, 0, 0, 0.45);
+      --play-fg: rgba(255, 255, 255, 0.9);
     }
 
     [data-theme="dark"] {
@@ -39,18 +43,22 @@ layout: null
       --bg-card: #181b22;
       --text: #e8e8e8;
       --text-muted: #9aa0a6;
-      --text-body: #b8bcc2;
       --border: #2a2e37;
       --link: #6cb6ff;
       --shadow: rgba(0, 0, 0, 0.4);
       --btn-bg: #232733;
       --btn-text: #e8e8e8;
+      --play-bg: rgba(0, 0, 0, 0.5);
+      --play-fg: rgba(255, 255, 255, 0.85);
     }
 
     * { box-sizing: border-box; }
 
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+                   "Helvetica Neue", Arial,
+                   "Noto Sans", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR",
+                   sans-serif;
       background: var(--bg);
       color: var(--text);
       max-width: 1100px;
@@ -59,7 +67,7 @@ layout: null
       transition: background 0.2s ease, color 0.2s ease;
     }
 
-    /* === HEADER + TOGGLE === */
+    /* === HEADER === */
     header {
       display: flex;
       align-items: center;
@@ -68,11 +76,7 @@ layout: null
       padding-bottom: 10px;
       gap: 12px;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-    }
+    header h1 { margin: 0; font-size: 1.6rem; }
 
     .toggle {
       background: var(--btn-bg);
@@ -89,15 +93,9 @@ layout: null
       transition: background 0.2s ease, transform 0.1s ease;
       white-space: nowrap;
     }
-
     .toggle:hover { transform: scale(1.05); }
     .toggle:active { transform: scale(0.97); }
-
-    .toggle svg {
-      display: inline-block;
-      vertical-align: middle;
-      flex-shrink: 0;
-    }
+    .toggle svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
 
     /* === GRID === */
     .grid {
@@ -108,16 +106,16 @@ layout: null
     }
 
     .card {
+      position: relative;
+      display: block;
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
       background: var(--bg-card);
       transition: transform 0.15s ease, box-shadow 0.15s ease,
                   background 0.2s ease, border-color 0.2s ease;
-      display: flex;
-      flex-direction: column;
+      text-decoration: none;
     }
-
     .card:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 18px var(--shadow);
@@ -130,48 +128,76 @@ layout: null
       display: block;
     }
 
-    .card-body {
-      padding: 14px 16px;
+    /* === PLAY ICON OVERLAY === */
+    .card .play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--play-bg);
+      color: var(--play-fg);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .card .play svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 3px; /* optis: segitiga play keliatan center */
+    }
+    .card:hover .play {
+      background: rgba(0, 0, 0, 0.65);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    /* === PAGINATION === */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 6px;
+      margin: 40px 0 20px;
+      flex-wrap: wrap;
     }
-
-    .card h2 {
-      margin: 0;
-      font-size: 1.05rem;
-      line-height: 1.3;
+    .pagination button {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      min-width: 36px;
     }
-
-    .card h2 a {
-      color: var(--link);
-      text-decoration: none;
+    .pagination button.active {
+      background: var(--link);
+      color: #fff;
+      border-color: var(--link);
     }
-
-    .card h2 a:hover { text-decoration: underline; }
-
-    .card .tanggal {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: var(--text-body);
+    .pagination button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
     @media (max-width: 420px) {
       .grid { grid-template-columns: 1fr; }
+      .card .play { width: 52px; height: 52px; }
+      .card .play svg { width: 22px; height: 22px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Blog Saya</h1>
-    <button class="toggle" id="themeToggle" aria-label="Ganti tema">
+    <h1>My Blog</h1>
+    <button class="toggle" id="themeToggle" aria-label="Toggle theme">
       <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
@@ -183,24 +209,25 @@ layout: null
     </button>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="grid">
     {% for post in site.posts %}
-    <article class="card">
+    <a class="card post-item" href="{{ post.url }}" aria-label="{{ post.title }}">
       {% if post.image %}
-        <a href="{{ post.url }}">
-          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-        </a>
+        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
       {% endif %}
-      <div class="card-body">
-        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-        <div class="tanggal">{{ post.date | date: "%d %B %Y" }}</div>
-        <p>{{ post.excerpt | strip_html | truncatewords: 18 }}</p>
-      </div>
-    </article>
+      <span class="play" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </span>
+    </a>
     {% endfor %}
   </div>
 
+  <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
   <script>
+    /* === THEME TOGGLE === */
     (function () {
       var root = document.documentElement;
       var btn = document.getElementById('themeToggle');
@@ -228,6 +255,45 @@ layout: null
         var current = root.getAttribute('data-theme');
         apply(current === 'dark' ? 'light' : 'dark');
       });
+    })();
+
+    /* === PAGINATION === */
+    (function () {
+      var PER_PAGE = 6;
+      var items = document.querySelectorAll('.post-item');
+      var nav = document.getElementById('pagination');
+      var total = Math.ceil(items.length / PER_PAGE);
+      var current = 1;
+
+      if (total <= 1) { nav.remove(); return; }
+
+      function show(page) {
+        current = page;
+        items.forEach(function (el, i) {
+          var start = (page - 1) * PER_PAGE;
+          var end = start + PER_PAGE;
+          el.style.display = (i >= start && i < end) ? '' : 'none';
+        });
+        draw();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function draw() {
+        var html = '';
+        html += '<button ' + (current === 1 ? 'disabled' : '') + ' data-p="' + (current - 1) + '">‹</button>';
+        for (var i = 1; i <= total; i++) {
+          html += '<button class="' + (i === current ? 'active' : '') + '" data-p="' + i + '">' + i + '</button>';
+        }
+        html += '<button ' + (current === total ? 'disabled' : '') + ' data-p="' + (current + 1) + '">›</button>';
+        nav.innerHTML = html;
+      }
+
+      nav.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-p]');
+        if (btn && !btn.disabled) show(parseInt(btn.dataset.p, 10));
+      });
+
+      show(1);
     })();
   </script>
 
