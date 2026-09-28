@@ -220,21 +220,10 @@ layout: null
       position: relative;
     }
 
-    .ad-slot::before {
-      content: "Ad 300×250";
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      opacity: 0.45;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      position: absolute;
-      pointer-events: none;
-    }
-
     .ad-slot > * {
       display: block;
-      width: 300px;
-      height: 250px;
+      width: 100%;
+      height: 100%;
       position: relative;
       z-index: 1;
     }
@@ -697,10 +686,6 @@ layout: null
         height: auto;
         aspect-ratio: 300 / 250;
       }
-      .ad-slot > * {
-        width: 100%;
-        height: 100%;
-      }
     }
   </style>
 </head>
@@ -827,7 +812,7 @@ layout: null
   <footer>
 
     <div class="ad-slot ad-footer">
-      <!-- Ganti dengan kode iklan 300x250 -->
+      {% include /ads/banner/02.html %}
     </div>
 
     <details class="footer-collapse">
@@ -910,6 +895,13 @@ layout: null
     </details>
 
   </footer>
+
+  <!-- TEMPLATE IKLAN IN-GRID (JUICYADS) -->
+  <template id="ad-template-inline">
+    <div class="ad-slot ad-in-grid">
+      {% include /ads/banner/01.html %}
+    </div>
+  </template>
 
   <script>
     /* === AGE GATE === */
@@ -1146,7 +1138,6 @@ layout: null
     (function () {
       var PER_PAGE = 30;
       var AD_EVERY = 6;
-      var AD_HTML = '<!-- GANTI DENGAN KODE IKLAN 300x250 ANDA -->';
       var SITE_NAME = 'My Blog';
       var SITE_DESC = 'A personal blog.';
       var BASE_URL = window.location.origin + window.location.pathname.replace(/\/$/, '');
@@ -1219,9 +1210,13 @@ layout: null
         var isDesktop = window.matchMedia('(min-width: 700px)').matches;
         var adsPerBreak = isDesktop ? 3 : 1;
 
+        // Hapus iklan in-grid lama
         document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
           ad.remove();
         });
+
+        var tpl = document.getElementById('ad-template-inline');
+        if (!tpl) return;
 
         var visibleCount = 0;
         var visibleTotal = 0;
@@ -1239,10 +1234,20 @@ layout: null
             if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
               var anchor = el.nextSibling;
               for (var k = 0; k < adsPerBreak; k++) {
-                var ad = document.createElement('div');
-                ad.className = 'ad-slot ad-in-grid';
-                ad.innerHTML = AD_HTML;
-                el.parentNode.insertBefore(ad, anchor);
+                var clone = tpl.content.cloneNode(true);
+
+                // Re-create script (karena <script> di clone nggak otomatis jalan)
+                clone.querySelectorAll('script').forEach(function (oldScript) {
+                  var newScript = document.createElement('script');
+                  if (oldScript.src) newScript.src = oldScript.src;
+                  else newScript.textContent = oldScript.textContent;
+                  Array.from(oldScript.attributes).forEach(function (attr) {
+                    if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+                  });
+                  oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
+
+                el.parentNode.insertBefore(clone, anchor);
               }
             }
           }
