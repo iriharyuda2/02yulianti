@@ -36,6 +36,10 @@ layout: null
       --play-fg: rgba(255, 255, 255, 0.9);
       --menu-bg: #ffffff;
       --overlay: rgba(0, 0, 0, 0.4);
+      --duration-bg: rgba(0, 0, 0, 0.7);
+      --duration-fg: #ffffff;
+      --share-bg: rgba(255, 255, 255, 0.9);
+      --share-fg: #222222;
     }
 
     [data-theme="dark"] {
@@ -52,6 +56,10 @@ layout: null
       --play-fg: rgba(255, 255, 255, 0.85);
       --menu-bg: #181b22;
       --overlay: rgba(0, 0, 0, 0.6);
+      --duration-bg: rgba(0, 0, 0, 0.75);
+      --duration-fg: #ffffff;
+      --share-bg: rgba(40, 44, 54, 0.9);
+      --share-fg: #e8e8e8;
     }
 
     * { box-sizing: border-box; }
@@ -69,6 +77,7 @@ layout: null
       transition: background 0.2s ease, color 0.2s ease;
     }
 
+    /* === HEADER === */
     header {
       display: flex;
       align-items: center;
@@ -116,6 +125,7 @@ layout: null
     }
     .hamburger svg { display: block; }
 
+    /* === MENU PANEL === */
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -186,6 +196,7 @@ layout: null
 
     body.menu-open { overflow: hidden; }
 
+    /* === GRID === */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -202,19 +213,27 @@ layout: null
       background: var(--bg-card);
       transition: transform 0.15s ease, box-shadow 0.15s ease,
                   background 0.2s ease, border-color 0.2s ease;
-      text-decoration: none;
     }
     .card:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 18px var(--shadow);
     }
+
+    .card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
     .card img {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       display: block;
+      background: var(--btn-bg);
     }
 
+    /* === PLAY ICON === */
     .card .play {
       position: absolute;
       top: 50%;
@@ -232,6 +251,7 @@ layout: null
       transition: background 0.2s ease, transform 0.2s ease;
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
+      z-index: 2;
     }
     .card .play svg {
       width: 28px;
@@ -243,6 +263,73 @@ layout: null
       transform: translate(-50%, -50%) scale(1.08);
     }
 
+    /* === DURATION BADGE === */
+    .card .duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: var(--duration-bg);
+      color: var(--duration-fg);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      z-index: 3;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* === SHARE BUTTON === */
+    .card .share {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      background: var(--share-bg);
+      color: var(--share-fg);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      z-index: 4;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease,
+                  background 0.2s ease;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .card:hover .share,
+    .card .share:focus-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card .share:hover {
+      background: var(--link);
+      color: #fff;
+    }
+    .card .share svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (hover: none) {
+      .card .share {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === PAGINATION === */
     .pagination {
       display: flex;
       justify-content: center;
@@ -283,10 +370,168 @@ layout: null
       cursor: default;
     }
 
-    @media (max-width: 420px) {
+    /* === COOKIE BANNER === */
+    .cookie-banner {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 28px var(--shadow);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 300;
+      transform: translateY(0);
+      opacity: 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .cookie-banner.hide {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+    .cookie-banner p {
+      margin: 0;
+      flex: 1;
+    }
+    .cookie-banner a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .cookie-close:hover {
+      background: var(--btn-bg);
+      color: var(--text);
+    }
+    .cookie-close svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    /* === WHATSAPP FLOAT === */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      z-index: 250;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 26px rgba(37, 211, 102, 0.55);
+    }
+    .wa-float:active {
+      transform: scale(0.96);
+    }
+    .wa-float svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+      fill: currentColor;
+    }
+    .wa-float::before {
+      content: "Chat via WhatsApp";
+      position: absolute;
+      right: 68px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    .wa-float:hover::before {
+      opacity: 1;
+    }
+
+    /* === TOAST === */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 24px var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 200;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
       .card .play { width: 52px; height: 52px; }
       .card .play svg { width: 22px; height: 22px; }
+      .cookie-banner {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        padding: 12px 14px;
+        font-size: 0.85rem;
+      }
+      .wa-float {
+        bottom: 80px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+      }
+      .wa-float svg {
+        width: 26px;
+        height: 26px;
+      }
+      .wa-float::before {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -335,20 +580,57 @@ layout: null
 
   <div class="grid" id="grid">
     {% for post in site.posts %}
-    <a class="card post-item" href="{{ post.url }}" aria-label="{{ post.title }}">
-      {% if post.image %}
-        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-      {% endif %}
-      <span class="play" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
+    <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}">
+      <a class="card-link" href="{{ post.url }}" aria-label="{{ post.title }}">
+        {% if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+        {% endif %}
+        <span class="play" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+        <span class="duration" data-duration></span>
+      </a>
+      <button class="share" type="button" aria-label="Share" data-share>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
         </svg>
-      </span>
-    </a>
+      </button>
+    </div>
     {% endfor %}
   </div>
 
   <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <p>
+      This site uses cookies to improve your experience.
+      <a href="/privacy-policy.html">Learn more</a>
+    </p>
+    <button class="cookie-close" id="cookieClose" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <a class="wa-float"
+     href="https://wa.me/6285770366055?text=Hi%2C%20I%20have%20a%20question"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat via WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
 
   <script>
     /* === THEME TOGGLE === */
@@ -413,7 +695,126 @@ layout: null
       });
     })();
 
-    /* === PAGINATION (?pag=N, fully dynamic SEO) === */
+    /* === DURATION (acak tapi konsisten per card) === */
+    (function () {
+      function hashCode(str) {
+        var h = 0;
+        for (var i = 0; i < str.length; i++) {
+          h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+        }
+        return Math.abs(h);
+      }
+
+      function formatDuration(seconds) {
+        var m = Math.floor(seconds / 60);
+        var s = seconds % 60;
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      document.querySelectorAll('.post-item').forEach(function (card) {
+        var el = card.querySelector('[data-duration]');
+        if (!el) return;
+
+        var seed = card.getAttribute('data-url') || card.getAttribute('data-title') || '';
+        var h = hashCode(seed);
+        var seconds = 60 + (h % 841); // 1:00 – 15:00
+        el.textContent = formatDuration(seconds);
+      });
+    })();
+
+    /* === SHARE BUTTON === */
+    (function () {
+      var toast = document.getElementById('toast');
+      var toastTimer;
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2000);
+      }
+
+      function getShareURL(card) {
+        var path = card.getAttribute('data-url') || '';
+        return window.location.origin + path;
+      }
+
+      function getShareTitle(card) {
+        return card.getAttribute('data-title') || document.title;
+      }
+
+      document.querySelectorAll('[data-share]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          var card = btn.closest('.post-item');
+          var url = getShareURL(card);
+          var title = getShareTitle(card);
+          var data = { title: title, url: url };
+
+          if (navigator.share) {
+            navigator.share(data).catch(function () {});
+            return;
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () {
+              showToast('Link copied');
+            }).catch(function () {
+              fallbackCopy(url);
+            });
+            return;
+          }
+
+          fallbackCopy(url);
+        });
+      });
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast('Link copied');
+        } catch (err) {
+          showToast('Copy failed');
+        }
+        document.body.removeChild(ta);
+      }
+    })();
+
+    /* === COOKIE BANNER === */
+    (function () {
+      var KEY = 'cookie-notice-dismissed';
+      var banner = document.getElementById('cookieBanner');
+      var closeBtn = document.getElementById('cookieClose');
+
+      if (!banner) return;
+
+      if (localStorage.getItem(KEY) === '1') {
+        banner.remove();
+        return;
+      }
+
+      function dismiss() {
+        banner.classList.add('hide');
+        localStorage.setItem(KEY, '1');
+        setTimeout(function () {
+          banner.remove();
+        }, 300);
+      }
+
+      closeBtn.addEventListener('click', dismiss);
+    })();
+
+    /* === PAGINATION (?pag=N, dynamic SEO) === */
     (function () {
       var PER_PAGE = 6;
       var SITE_NAME = 'My Blog';
@@ -472,13 +873,7 @@ layout: null
           : SITE_DESC.replace(/\.$/, '') + ' — page ' + page + ' of ' + total + '.';
 
         document.title = title;
-
         upsertMeta('name', 'description', desc);
-        upsertMeta('property', 'og:title', title);
-        upsertMeta('property', 'og:description', desc);
-        upsertMeta('property', 'og:url', pageURL(page));
-        upsertMeta('property', 'og:type', 'website');
-
         upsertLink('canonical', pageURL(page));
 
         if (page > 1) upsertLink('prev', pageURL(page - 1));
@@ -505,7 +900,6 @@ layout: null
         } else {
           el = document.createElement('a');
           el.href = page === 1 ? './' : '?pag=' + page;
-          el.setAttribute('rel', page < opts.current ? 'prev' : 'next');
         }
         if (opts.active) el.classList.add('active');
         el.textContent = text;
@@ -515,10 +909,7 @@ layout: null
       function drawPagination(current) {
         nav.innerHTML = '';
 
-        nav.appendChild(makeLink('‹', current - 1, {
-          disabled: current === 1,
-          current: current
-        }));
+        nav.appendChild(makeLink('‹', current - 1, { disabled: current === 1 }));
 
         var pages = [];
         if (total <= 7) {
@@ -540,14 +931,11 @@ layout: null
             span.textContent = '…';
             nav.appendChild(span);
           } else {
-            nav.appendChild(makeLink(p, p, { active: p === current, current: current }));
+            nav.appendChild(makeLink(p, p, { active: p === current }));
           }
         });
 
-        nav.appendChild(makeLink('›', current + 1, {
-          disabled: current === total,
-          current: current
-        }));
+        nav.appendChild(makeLink('›', current + 1, { disabled: current === total }));
       }
 
       function show(page, scroll) {
