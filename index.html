@@ -87,7 +87,6 @@ layout: null
       transition: background 0.2s ease, color 0.2s ease;
     }
 
-    /* === HEADER === */
     header {
       display: flex;
       align-items: center;
@@ -135,7 +134,6 @@ layout: null
     }
     .hamburger svg { display: block; }
 
-    /* === MENU PANEL === */
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -245,7 +243,11 @@ layout: null
     .ad-after-grid { margin: 30px auto; }
     .ad-footer { margin: 0 auto 32px; }
 
-    /* === GRID === */
+    .ad-in-grid {
+      grid-column: 1 / -1;
+      margin: 10px auto;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -375,7 +377,6 @@ layout: null
       }
     }
 
-    /* === PAGINATION === */
     .pagination {
       display: flex;
       justify-content: center;
@@ -416,7 +417,6 @@ layout: null
       cursor: default;
     }
 
-    /* === COOKIE BANNER === */
     .cookie-banner {
       position: fixed;
       bottom: 16px;
@@ -472,7 +472,6 @@ layout: null
     .cookie-btn:hover { opacity: 0.9; }
     .cookie-btn:active { transform: scale(0.97); }
 
-    /* === TOAST === */
     .toast {
       position: fixed;
       bottom: 24px;
@@ -495,7 +494,6 @@ layout: null
       transform: translateX(-50%) translateY(0);
     }
 
-    /* === FOOTER === */
     footer {
       margin-top: 60px;
       padding: 32px 0;
@@ -566,7 +564,6 @@ layout: null
     }
     .footer-collapse-content a:hover { text-decoration: underline; }
 
-    /* === AGE GATE === */
     .age-gate {
       position: fixed;
       inset: 0;
@@ -659,7 +656,6 @@ layout: null
       margin: 0 !important;
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
       .card .play { width: 52px; height: 52px; }
@@ -698,7 +694,6 @@ layout: null
 </head>
 <body>
 
-  <!-- AGE GATE -->
   <div class="age-gate" id="ageGate" role="dialog" aria-modal="true">
     <div class="age-gate-box">
       <h2>Age Verification Required</h2>
@@ -772,7 +767,6 @@ layout: null
     <a href="/privacy-policy.html">Privacy Policy</a>
   </aside>
 
-  <!-- AD SLOT 1: HEADER BAWAH -->
   <div class="ad-slot ad-header">
     <!-- Ganti dengan kode iklan 300x250 -->
   </div>
@@ -804,7 +798,6 @@ layout: null
     {% endfor %}
   </div>
 
-  <!-- AD SLOT 2: SETELAH GRID -->
   <div class="ad-slot ad-after-grid">
     <!-- Ganti dengan kode iklan 300x250 -->
   </div>
@@ -829,7 +822,6 @@ layout: null
 
   <footer>
 
-    <!-- AD SLOT 3: FOOTER ATAS -->
     <div class="ad-slot ad-footer">
       <!-- Ganti dengan kode iklan 300x250 -->
     </div>
@@ -1148,7 +1140,9 @@ layout: null
 
     /* === PAGINATION === */
     (function () {
-      var PER_PAGE = 6;
+      var PER_PAGE = 30;
+      var AD_EVERY = 6;
+      var AD_HTML = '<!-- GANTI DENGAN KODE IKLAN 300x250 ANDA -->';
       var SITE_NAME = 'My Blog';
       var SITE_DESC = 'A personal blog.';
       var BASE_URL = window.location.origin + window.location.pathname.replace(/\/$/, '');
@@ -1216,10 +1210,34 @@ layout: null
       }
 
       function updateGrid(page) {
+        var start = (page - 1) * PER_PAGE;
+        var end = start + PER_PAGE;
+
+        // Hapus iklan in-grid lama
+        document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
+          ad.remove();
+        });
+
+        var visibleCount = 0;
+        var visibleTotal = 0;
+
         items.forEach(function (el, i) {
-          var start = (page - 1) * PER_PAGE;
-          var end = start + PER_PAGE;
-          el.style.display = (i >= start && i < end) ? '' : 'none';
+          if (i >= start && i < end) visibleTotal++;
+        });
+
+        items.forEach(function (el, i) {
+          var show = (i >= start && i < end);
+          el.style.display = show ? '' : 'none';
+
+          if (show) {
+            visibleCount++;
+            if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
+              var ad = document.createElement('div');
+              ad.className = 'ad-slot ad-in-grid';
+              ad.innerHTML = AD_HTML;
+              el.parentNode.insertBefore(ad, el.nextSibling);
+            }
+          }
         });
       }
 
