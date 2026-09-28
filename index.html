@@ -239,8 +239,6 @@ layout: null
       z-index: 1;
     }
 
-    .ad-header { margin: 30px auto 0; }
-    .ad-after-grid { margin: 30px auto; }
     .ad-footer { margin: 0 auto 32px; }
 
     /* Iklan di dalam grid */
@@ -781,10 +779,6 @@ layout: null
     <a href="/privacy-policy.html">Privacy Policy</a>
   </aside>
 
-  <div class="ad-slot ad-header">
-    <!-- Ganti dengan kode iklan 300x250 -->
-  </div>
-
   <div class="grid" id="grid">
     {% for post in site.posts %}
       <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}">
@@ -810,10 +804,6 @@ layout: null
         </button>
       </div>
     {% endfor %}
-  </div>
-
-  <div class="ad-slot ad-after-grid">
-    <!-- Ganti dengan kode iklan 300x250 -->
   </div>
 
   <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
@@ -1229,7 +1219,6 @@ layout: null
         var isDesktop = window.matchMedia('(min-width: 700px)').matches;
         var adsPerBreak = isDesktop ? 3 : 1;
 
-        // Hapus iklan in-grid lama
         document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
           ad.remove();
         });
@@ -1317,13 +1306,11 @@ layout: null
         show(getPageFromURL(), true);
       });
 
-      // Resize: rerender iklan saat lebar layar berubah
       var resizeTimer;
       window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
-          var current = getPageFromURL();
-          updateGrid(current);
+          updateGrid(getPageFromURL());
         }, 250);
       });
 
