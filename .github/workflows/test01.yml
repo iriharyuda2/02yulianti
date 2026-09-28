@@ -1,0 +1,76 @@
+name: Mirror Upstream (Force Except Workflows Ads Index)
+
+on:
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Save local workflows ads and index
+        run: |
+          mkdir -p /tmp/workflows
+          mkdir -p /tmp/ads
+
+          if [ -d ".github/workflows" ]; then
+            cp -r .github/workflows /tmp/workflows/
+          fi
+
+          if [ -d "_includes/ads" ]; then
+            cp -r _includes/ads /tmp/ads/
+          fi
+
+          if [ -f "index.html" ]; then
+            cp index.html /tmp/index.html
+          fi
+
+      - name: Add upstream
+        run: |
+          git remote add upstream https://github.com/nengmaya538/nengmaya538.github.io.git
+          git fetch upstream
+
+      - name: Hard reset to upstream
+        run: |
+          git reset --hard upstream/master
+
+      - name: Restore workflows ads and index
+        run: |
+          rm -rf .github/workflows
+          rm -rf _includes/ads
+
+          if [ -d "/tmp/workflows/workflows" ]; then
+            mkdir -p .github
+            cp -r /tmp/workflows/workflows .github/
+          fi
+
+          if [ -d "/tmp/ads/ads" ]; then
+            mkdir -p _includes
+            cp -r /tmp/ads/ads _includes/
+          fi
+
+          if [ -f "/tmp/index.html" ]; then
+            cp /tmp/index.html index.html
+          fi
+
+      - name: Force push to fork
+        run: |
+          git add .
+          git commit -m "Force sync except workflows ads and index" || echo "No changes"
+          git push origin master --force
