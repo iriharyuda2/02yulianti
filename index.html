@@ -36,6 +36,8 @@ layout: null
       --btn-text: #222222;
       --play-bg: rgba(0, 0, 0, 0.45);
       --play-fg: rgba(255, 255, 255, 0.9);
+      --menu-bg: #ffffff;
+      --overlay: rgba(0, 0, 0, 0.4);
     }
 
     [data-theme="dark"] {
@@ -50,6 +52,8 @@ layout: null
       --btn-text: #e8e8e8;
       --play-bg: rgba(0, 0, 0, 0.5);
       --play-fg: rgba(255, 255, 255, 0.85);
+      --menu-bg: #181b22;
+      --overlay: rgba(0, 0, 0, 0.6);
     }
 
     * { box-sizing: border-box; }
@@ -78,7 +82,14 @@ layout: null
     }
     header h1 { margin: 0; font-size: 1.6rem; }
 
-    .toggle {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle,
+    .hamburger {
       background: var(--btn-bg);
       color: var(--btn-text);
       border: 1px solid var(--border);
@@ -89,13 +100,99 @@ layout: null
       line-height: 1;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       transition: background 0.2s ease, transform 0.1s ease;
       white-space: nowrap;
     }
-    .toggle:hover { transform: scale(1.05); }
-    .toggle:active { transform: scale(0.97); }
+    .toggle:hover,
+    .hamburger:hover { transform: scale(1.05); }
+    .toggle:active,
+    .hamburger:active { transform: scale(0.97); }
     .toggle svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+
+    .hamburger {
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border-radius: 12px;
+    }
+    .hamburger svg { display: block; }
+
+    /* === MENU PANEL === */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      z-index: 90;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 280px;
+      max-width: 85vw;
+      background: var(--menu-bg);
+      border-left: 1px solid var(--border);
+      padding: 24px 20px;
+      transform: translateX(100%);
+      transition: transform 0.28s ease;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: -6px 0 24px var(--shadow);
+    }
+    .menu.open { transform: translateX(0); }
+
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .menu-header strong {
+      font-size: 1.05rem;
+    }
+    .menu-close {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: background 0.15s ease;
+    }
+    .menu-close:hover { background: var(--btn-bg); }
+
+    .menu a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .menu a:hover {
+      background: var(--btn-bg);
+      color: var(--link);
+    }
+
+    body.menu-open { overflow: hidden; }
 
     /* === GRID === */
     .grid {
@@ -120,7 +217,6 @@ layout: null
       transform: translateY(-3px);
       box-shadow: 0 6px 18px var(--shadow);
     }
-
     .card img {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -128,7 +224,6 @@ layout: null
       display: block;
     }
 
-    /* === PLAY ICON OVERLAY === */
     .card .play {
       position: absolute;
       top: 50%;
@@ -150,7 +245,7 @@ layout: null
     .card .play svg {
       width: 28px;
       height: 28px;
-      margin-left: 3px; /* optis: segitiga play keliatan center */
+      margin-left: 3px;
     }
     .card:hover .play {
       background: rgba(0, 0, 0, 0.65);
@@ -197,17 +292,45 @@ layout: null
 
   <header>
     <h1>My Blog</h1>
-    <button class="toggle" id="themeToggle" aria-label="Toggle theme">
-      <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-      <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-      </svg>
-      <span id="themeLabel">Dark</span>
-    </button>
+    <div class="header-actions">
+      <button class="toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <span id="themeLabel">Dark</span>
+      </button>
+
+      <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
   </header>
+
+  <!-- MENU OVERLAY + PANEL -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <aside class="menu" id="menu" aria-hidden="true">
+    <div class="menu-header">
+      <strong>Menu</strong>
+      <button class="menu-close" id="menuClose" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/terms-and-conditions.html">Terms and Conditions</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </aside>
 
   <div class="grid" id="grid">
     {% for post in site.posts %}
@@ -254,6 +377,38 @@ layout: null
       btn.addEventListener('click', function () {
         var current = root.getAttribute('data-theme');
         apply(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+
+    /* === MENU === */
+    (function () {
+      var menu = document.getElementById('menu');
+      var overlay = document.getElementById('menuOverlay');
+      var openBtn = document.getElementById('menuBtn');
+      var closeBtn = document.getElementById('menuClose');
+
+      function open() {
+        menu.classList.add('open');
+        overlay.classList.add('open');
+        menu.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+      }
+
+      function close() {
+        menu.classList.remove('open');
+        overlay.classList.remove('open');
+        menu.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+      }
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', close);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
       });
     })();
 
