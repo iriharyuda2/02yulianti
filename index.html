@@ -46,6 +46,8 @@ layout: null
       --duration-fg: #ffffff;
       --share-bg: rgba(255, 255, 255, 0.9);
       --share-fg: #222222;
+      --ad-bg: #f4f4f4;
+      --ad-border: #dddddd;
     }
 
     [data-theme="dark"] {
@@ -66,6 +68,8 @@ layout: null
       --duration-fg: #ffffff;
       --share-bg: rgba(40, 44, 54, 0.9);
       --share-fg: #e8e8e8;
+      --ad-bg: #1c1f26;
+      --ad-border: #2a2e37;
     }
 
     * { box-sizing: border-box; }
@@ -203,6 +207,56 @@ layout: null
 
     body.menu-open { overflow: hidden; }
 
+    /* === AD SLOTS === */
+    .ad-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ad-bg);
+      border: 1px dashed var(--ad-border);
+      border-radius: 10px;
+      width: 300px;
+      height: 250px;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ad-slot::before {
+      content: "Ad 300×250";
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      opacity: 0.45;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .ad-slot > * {
+      display: block;
+      width: 300px;
+      height: 250px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ad-header { margin: 30px auto 0; }
+    .ad-inline { margin: 30px auto; }
+    .ad-below-pagination { margin: 30px auto; }
+    .ad-footer { margin: 0 auto 24px; }
+
+    .ad-sidebar {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      z-index: 50;
+    }
+
+    @media (max-width: 1400px) {
+      .ad-sidebar { display: none; }
+    }
+
     /* === GRID === */
     .grid {
       display: grid;
@@ -240,7 +294,6 @@ layout: null
       background: var(--btn-bg);
     }
 
-    /* === PLAY ICON === */
     .card .play {
       position: absolute;
       top: 50%;
@@ -270,7 +323,6 @@ layout: null
       transform: translate(-50%, -50%) scale(1.08);
     }
 
-    /* === DURATION === */
     .card .duration {
       position: absolute;
       bottom: 10px;
@@ -290,7 +342,6 @@ layout: null
       font-variant-numeric: tabular-nums;
     }
 
-    /* === SHARE === */
     .card .share {
       position: absolute;
       top: 10px;
@@ -487,7 +538,6 @@ layout: null
       opacity: 0.5;
     }
 
-    /* === COLLAPSIBLE SECTIONS === */
     .footer-collapse {
       max-width: 760px;
       margin: 0 auto 8px;
@@ -536,17 +586,13 @@ layout: null
       line-height: 1.6;
       color: var(--text-muted);
     }
-    .footer-collapse-content p {
-      margin: 8px 0;
-    }
+    .footer-collapse-content p { margin: 8px 0; }
     .footer-collapse-content p strong { color: var(--text); }
     .footer-collapse-content ul {
       margin: 8px 0;
       padding-left: 20px;
     }
-    .footer-collapse-content li {
-      margin-bottom: 4px;
-    }
+    .footer-collapse-content li { margin-bottom: 4px; }
     .footer-collapse-content a {
       color: var(--link);
       text-decoration: none;
@@ -670,6 +716,16 @@ layout: null
         padding: 4px 14px 14px;
         font-size: 0.78rem;
       }
+      .ad-slot {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        aspect-ratio: 300 / 250;
+      }
+      .ad-slot > * {
+        width: 100%;
+        height: 100%;
+      }
     }
   </style>
 </head>
@@ -707,6 +763,11 @@ layout: null
       </p>
     </div>
   </div>
+
+  <!-- AD SLOT 2: SIDEBAR (sticky, desktop only) -->
+  <aside class="ad-slot ad-sidebar">
+    <!-- Ganti dengan kode iklan 300x250 -->
+  </aside>
 
   <header>
     <h1>My Blog</h1>
@@ -749,34 +810,49 @@ layout: null
     <a href="/privacy-policy.html">Privacy Policy</a>
   </aside>
 
+  <!-- AD SLOT 1: HEADER BAWAH -->
+  <div class="ad-slot ad-header">
+    <!-- Ganti dengan kode iklan 300x250 -->
+  </div>
+
   <div class="grid" id="grid">
     {% for post in site.posts %}
-    <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}">
-      <a class="card-link" href="{{ post.url }}" aria-label="{{ post.title }}">
-        {% if post.image %}
-          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-        {% endif %}
-        <span class="play" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
+      <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}">
+        <a class="card-link" href="{{ post.url }}" aria-label="{{ post.title }}">
+          {% if post.image %}
+            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+          {% endif %}
+          <span class="play" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </span>
+          <span class="duration" data-duration></span>
+        </a>
+        <button class="share" type="button" aria-label="Share" data-share>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
           </svg>
-        </span>
-        <span class="duration" data-duration></span>
-      </a>
-      <button class="share" type="button" aria-label="Share" data-share>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="5" r="3"/>
-          <circle cx="6" cy="12" r="3"/>
-          <circle cx="18" cy="19" r="3"/>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-        </svg>
-      </button>
-    </div>
+        </button>
+      </div>
     {% endfor %}
   </div>
 
+  <!-- AD SLOT 3: SETELAH GRID (selalu tampil) -->
+  <div class="ad-slot ad-inline">
+    <!-- Ganti dengan kode iklan 300x250 -->
+  </div>
+
   <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
+  <!-- AD SLOT 4: BAWAH PAGINASI -->
+  <div class="ad-slot ad-below-pagination">
+    <!-- Ganti dengan kode iklan 300x250 -->
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -796,6 +872,11 @@ layout: null
 
   <footer>
 
+    <!-- AD SLOT 5: FOOTER ATAS -->
+    <div class="ad-slot ad-footer">
+      <!-- Ganti dengan kode iklan 300x250 -->
+    </div>
+
     <nav class="footer-links" aria-label="Legal">
       <a href="/privacy-policy.html">Privacy Policy</a>
       <span aria-hidden="true">·</span>
@@ -804,7 +885,6 @@ layout: null
       <a href="/contact.html">Contact</a>
     </nav>
 
-    <!-- COLLAPSIBLE: 18+ DISCLAIMER -->
     <details class="footer-collapse">
       <summary>18+ Disclaimer</summary>
       <div class="footer-collapse-content">
@@ -829,7 +909,6 @@ layout: null
       </div>
     </details>
 
-    <!-- COLLAPSIBLE: DMCA -->
     <details class="footer-collapse">
       <summary>DMCA / Copyright</summary>
       <div class="footer-collapse-content">
@@ -856,7 +935,6 @@ layout: null
       </div>
     </details>
 
-    <!-- COLLAPSIBLE: COOKIE POLICY -->
     <details class="footer-collapse">
       <summary>Cookie Policy</summary>
       <div class="footer-collapse-content">
@@ -874,7 +952,6 @@ layout: null
       </div>
     </details>
 
-    <!-- COLLAPSIBLE: CONTACT -->
     <details class="footer-collapse">
       <summary>Contact</summary>
       <div class="footer-collapse-content">
@@ -1271,3 +1348,4 @@ layout: null
 
 </body>
 </html>
+  
