@@ -361,18 +361,20 @@ layout: null
       position: relative; z-index: 1;
     }
 
-    /* === DISQUS === */
+    /* === DISQUS (dark permanen) === */
     .disqus-section {
       margin-top: 48px;
-      padding-top: 32px;
+      padding: 28px 20px 24px;
       border-top: 1px solid var(--border);
+      border-radius: 12px;
+      background: #15171c;
     }
 
     .disqus-title {
       margin: 0 0 20px;
       font-size: 1.15rem;
       font-weight: 700;
-      color: var(--text);
+      color: #e8e8e8;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -381,14 +383,19 @@ layout: null
     .disqus-title svg {
       width: 20px;
       height: 20px;
-      stroke: currentColor;
+      stroke: #e8e8e8;
       fill: none;
       stroke-width: 2;
     }
 
     #disqus_thread {
-      color: var(--text);
+      color: #e8e8e8;
       min-height: 50px;
+    }
+
+    [data-theme="dark"] .disqus-section {
+      background: #15171c;
+      border: 1px solid #2a2e37;
     }
 
     /* === TOAST === */
@@ -561,6 +568,9 @@ layout: null
       footer { font-size: 0.78rem; padding: 24px 0; }
       .footer-collapse summary { padding: 11px 14px; font-size: 0.82rem; }
       .footer-collapse-content { padding: 4px 14px 14px; font-size: 0.78rem; }
+      .disqus-section {
+        padding: 20px 14px 18px;
+      }
     }
   </style>
 </head>
