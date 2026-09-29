@@ -128,23 +128,29 @@ layout: null
 
     .ad-in-grid {
       grid-column: 1 / -1;
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      justify-items: center;
+      width: 100%;
       margin: 10px 0;
     }
-    .ad-in-grid .ad-slot,
-    .ad-in-grid.ad-slot {
-      width: 300px;
-      height: 250px;
-      max-width: 100%;
+    .ad-in-grid .ad-slot {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      aspect-ratio: 300 / 250;
       margin: 0;
     }
-    @media (max-width: 480px) {
-      .ad-in-grid .ad-slot,
-      .ad-in-grid.ad-slot {
+
+    @media (min-width: 701px) {
+      .ad-in-grid {
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: stretch;
+      }
+      .ad-in-grid .ad-slot {
+        max-width: 100%;
         width: 100%;
-        max-width: 300px;
-        height: auto;
         aspect-ratio: 300 / 250;
       }
     }
@@ -213,27 +219,30 @@ layout: null
       .card .share { opacity: 1; transform: translateY(0); }
     }
 
-    .pagination {
-      display: flex; justify-content: center; align-items: center;
-      gap: 6px; margin: 40px 0 20px; flex-wrap: wrap;
+    /* === LOAD MORE === */
+    .load-more-wrap {
+      display: flex; justify-content: center; margin: 30px 0 20px;
     }
-    .pagination a, .pagination span {
+    .load-more {
       background: var(--btn-bg); color: var(--btn-text);
-      border: 1px solid var(--border); border-radius: 8px;
-      padding: 6px 12px; font-size: 0.9rem; min-width: 36px;
-      text-align: center; text-decoration: none; display: inline-block;
-      line-height: 1.4; transition: background 0.15s ease, transform 0.1s ease;
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 30px; cursor: pointer; font-size: 0.95rem;
+      font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform 0.1s ease, background 0.15s ease;
     }
-    .pagination a:hover { transform: translateY(-2px); }
-    .pagination .active {
-      background: var(--link); color: #fff; border-color: var(--link);
+    .load-more:hover {
+      background: var(--link); color: #fff;
+      border-color: var(--link); transform: translateY(-2px);
     }
-    .pagination .disabled {
-      opacity: 0.4; cursor: not-allowed; pointer-events: none;
+    .load-more:active { transform: translateY(0); }
+    .load-more:disabled {
+      opacity: 0.5; cursor: not-allowed;
     }
-    .pagination .dots {
-      background: transparent; border: none; cursor: default;
+    .load-more svg {
+      width: 16px; height: 16px; stroke: currentColor;
+      fill: none; stroke-width: 2;
     }
+    .load-more.hidden { display: none; }
 
     .cookie-banner {
       position: fixed; bottom: 16px; left: 16px; right: 16px;
@@ -451,8 +460,8 @@ layout: null
   </aside>
 
   <div class="grid" id="grid">
-    {% for post in site.posts %}
-      <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}">
+    {% for post in site.posts limit: 100 %}
+      <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}" data-index="{{ forloop.index0 }}">
         <a class="card-link" href="{{ post.url }}" aria-label="{{ post.title }}">
           {% if post.image %}
             <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
@@ -477,7 +486,14 @@ layout: null
     {% endfor %}
   </div>
 
-  <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+  <div class="load-more-wrap" id="loadMoreWrap">
+    <button class="load-more" id="loadMoreBtn" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+      <span>Load More</span>
+    </button>
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -548,19 +564,22 @@ layout: null
     </details>
   </footer>
 
-  <!-- TEMPLATE IKLAN IN-GRID (berurutan dari 02) -->
-  <template id="ad-template-02">
-    <div class="ad-slot ad-in-grid">{% include /ads/banner/02.html %}</div>
-  </template>
-  <template id="ad-template-03">
-    <div class="ad-slot ad-in-grid">{% include /ads/banner/03.html %}</div>
-  </template>
-  <template id="ad-template-04">
-    <div class="ad-slot ad-in-grid">{% include /ads/banner/04.html %}</div>
-  </template>
-  <template id="ad-template-05">
-    <div class="ad-slot ad-in-grid">{% include /ads/banner/05.html %}</div>
-  </template>
+  <!-- TEMPLATE IKLAN IN-GRID (16 break, tiap break 3 banner) -->
+  {% for b in (1..16) %}
+    {% assign b1 = b | minus: 1 | times: 3 | plus: 2 %}
+    {% assign b2 = b1 | plus: 1 %}
+    {% assign b3 = b1 | plus: 2 %}
+    {% assign b1_pad = b1 | prepend: '0' | slice: -2, 2 %}
+    {% assign b2_pad = b2 | prepend: '0' | slice: -2, 2 %}
+    {% assign b3_pad = b3 | prepend: '0' | slice: -2, 2 %}
+    <template id="ad-template-break-{{ b }}">
+      <div class="ad-in-grid">
+        <div class="ad-slot">{% include /ads/banner/{{ b1_pad }}.html %}</div>
+        <div class="ad-slot">{% include /ads/banner/{{ b2_pad }}.html %}</div>
+        <div class="ad-slot">{% include /ads/banner/{{ b3_pad }}.html %}</div>
+      </div>
+    </template>
+  {% endfor %}
 
   <script>
     (function () {
@@ -757,163 +776,92 @@ layout: null
       });
     })();
 
-    /* === PAGINATION + IKLAN IN-GRID === */
+    /* === LOAD MORE + IKLAN IN-GRID === */
     (function () {
-      var PER_PAGE = 30;
-      var AD_EVERY = 6;
-      var AD_ORDER = ['02', '03', '04', '05'];
-      var SITE_NAME = 'My Blog';
-      var BASE_URL = window.location.origin + window.location.pathname.replace(/\/$/, '');
-      var items = document.querySelectorAll('.post-item');
-      var nav = document.getElementById('pagination');
-      var total = Math.ceil(items.length / PER_PAGE);
+      var PER_BATCH = 12;      // post per batch
+      var AD_EVERY = 6;        // iklan setiap 6 post
 
-      if (total <= 1) { nav.remove(); return; }
+      var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
+      var loadBtn = document.getElementById('loadMoreBtn');
+      var loadWrap = document.getElementById('loadMoreWrap');
 
-      function pageURL(n) {
-        return n === 1 ? BASE_URL + '/' : BASE_URL + '/?pag=' + n;
-      }
-      function getPageFromURL() {
-        var params = new URLSearchParams(window.location.search);
-        var p = parseInt(params.get('pag'), 10);
-        if (isNaN(p) || p < 1) return 1;
-        if (p > total) return total;
-        return p;
-      }
-      function upsertLink(rel, href) {
-        var el = document.head.querySelector('link[rel="' + rel + '"]');
-        if (!el) {
-          el = document.createElement('link');
-          el.rel = rel;
-          document.head.appendChild(el);
+      var revealedCount = 0;   // jumlah post yang sudah tampil
+      var adsRenderedUpTo = 0; // jumlah post yang sudah dihitung untuk iklan
+
+      // Hide semua post dulu
+      items.forEach(function (item) {
+        item.style.display = 'none';
+      });
+
+      function renderAdsForVisible() {
+        var isDesktop = window.matchMedia('(min-width: 701px)').matches;
+
+        // Hitung berapa break yang seharusnya sudah muncul
+        var totalVisible = revealedCount;
+        var breakTarget = Math.floor(totalVisible / AD_EVERY);
+
+        // Kalau post terakhir pas kelipatan 6, jangan render iklan setelahnya
+        if (totalVisible % AD_EVERY === 0 && totalVisible === items.length) {
+          breakTarget = breakTarget - 1;
         }
-        el.href = href;
-      }
-      function removeLink(rel) {
-        var el = document.head.querySelector('link[rel="' + rel + '"]');
-        if (el) el.remove();
-      }
-      function updateHead(page) {
-        var title = page === 1 ? SITE_NAME : SITE_NAME + ' — Page ' + page + ' of ' + total;
-        document.title = title;
-        upsertLink('canonical', pageURL(page));
-        if (page > 1) upsertLink('prev', pageURL(page - 1));
-        else removeLink('prev');
-        if (page < total) upsertLink('next', pageURL(page + 1));
-        else removeLink('next');
-      }
 
-      function updateGrid(page) {
-        var start = (page - 1) * PER_PAGE;
-        var end = start + PER_PAGE;
+        // Render banner untuk break yang belum di-render
+        while (adsRenderedUpTo < breakTarget) {
+          var postIdx = (adsRenderedUpTo + 1) * AD_EVERY - 1; // index post terakhir di break itu
+          var el = items[postIdx];
+          if (!el) break;
 
-        document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
-          ad.remove();
-        });
+          var breakNum = adsRenderedUpTo + 1;
+          var tpl = document.getElementById('ad-template-break-' + breakNum);
+          adsRenderedUpTo++;
 
-        var visibleCount = 0;
-        var visibleTotal = 0;
-        items.forEach(function (el, i) {
-          if (i >= start && i < end) visibleTotal++;
-        });
+          if (!tpl) continue;
 
-        var adIndex = 0;
+          var clone = tpl.content.cloneNode(true);
 
-        items.forEach(function (el, i) {
-          var show = (i >= start && i < end);
-          el.style.display = show ? '' : 'none';
-
-          if (show) {
-            visibleCount++;
-            if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
-              var bannerNum = AD_ORDER[adIndex % AD_ORDER.length];
-              adIndex++;
-
-              var tpl = document.getElementById('ad-template-' + bannerNum);
-              if (!tpl) return;
-
-              var clone = tpl.content.cloneNode(true);
-              clone.querySelectorAll('script').forEach(function (oldScript) {
-                var newScript = document.createElement('script');
-                if (oldScript.src) newScript.src = oldScript.src;
-                else newScript.textContent = oldScript.textContent;
-                Array.from(oldScript.attributes).forEach(function (attr) {
-                  if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
-                });
-                oldScript.parentNode.replaceChild(newScript, oldScript);
-              });
-              el.parentNode.insertBefore(clone, el.nextSibling);
+          // Kalau mobile, hapus slot ke-2 dan ke-3
+          if (!isDesktop) {
+            var slots = clone.querySelectorAll('.ad-slot');
+            for (var s = 1; s < slots.length; s++) {
+              slots[s].remove();
             }
           }
-        });
-      }
 
-      function makeLink(text, page, opts) {
-        opts = opts || {};
-        var el;
-        if (opts.disabled) {
-          el = document.createElement('span');
-          el.className = 'disabled';
-        } else {
-          el = document.createElement('a');
-          el.href = page === 1 ? './' : '?pag=' + page;
+          // Re-create script
+          clone.querySelectorAll('script').forEach(function (oldScript) {
+            var newScript = document.createElement('script');
+            if (oldScript.src) newScript.src = oldScript.src;
+            else newScript.textContent = oldScript.textContent;
+            Array.from(oldScript.attributes).forEach(function (attr) {
+              if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+            });
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+          });
+
+          el.parentNode.insertBefore(clone, el.nextSibling);
         }
-        if (opts.active) el.classList.add('active');
-        el.textContent = text;
-        return el;
       }
 
-      function drawPagination(current) {
-        nav.innerHTML = '';
-        nav.appendChild(makeLink('‹', current - 1, { disabled: current === 1 }));
-        var pages = [];
-        if (total <= 7) {
-          for (var i = 1; i <= total; i++) pages.push(i);
-        } else {
-          pages.push(1);
-          if (current > 3) pages.push('...');
-          var from = Math.max(2, current - 1);
-          var to = Math.min(total - 1, current + 1);
-          for (var j = from; j <= to; j++) pages.push(j);
-          if (current < total - 2) pages.push('...');
-          pages.push(total);
+      function revealMore() {
+        var end = Math.min(revealedCount + PER_BATCH, items.length);
+        for (var i = revealedCount; i < end; i++) {
+          items[i].style.display = '';
         }
-        pages.forEach(function (p) {
-          if (p === '...') {
-            var span = document.createElement('span');
-            span.className = 'dots';
-            span.textContent = '…';
-            nav.appendChild(span);
-          } else {
-            nav.appendChild(makeLink(p, p, { active: p === current }));
-          }
-        });
-        nav.appendChild(makeLink('›', current + 1, { disabled: current === total }));
+        revealedCount = end;
+
+        // Render iklan untuk break yang baru muncul
+        renderAdsForVisible();
+
+        // Sembunyikan tombol kalau semua sudah tampil
+        if (revealedCount >= items.length) {
+          if (loadWrap) loadWrap.style.display = 'none';
+        }
       }
 
-      function show(page, scroll) {
-        updateGrid(page);
-        drawPagination(page);
-        updateHead(page);
-        if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      loadBtn.addEventListener('click', revealMore);
 
-      window.addEventListener('popstate', function () {
-        show(getPageFromURL(), true);
-      });
-
-      nav.addEventListener('click', function (e) {
-        var link = e.target.closest('a[href]');
-        if (!link) return;
-        var href = link.getAttribute('href');
-        if (href.indexOf('?pag=') !== 0 && href !== './') return;
-        e.preventDefault();
-        var url = href === './' ? window.location.pathname : '?pag=' + href.split('=')[1];
-        history.pushState({}, '', url);
-        show(getPageFromURL(), true);
-      });
-
-      show(getPageFromURL(), false);
+      // Initial: tampilkan batch pertama
+      revealMore();
     })();
   </script>
 
