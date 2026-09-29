@@ -37,7 +37,6 @@ layout: null
       --share-bg: rgba(255,255,255,0.9); --share-fg: #222222;
       --ad-bg: #f4f4f4; --ad-border: #dddddd;
     }
-
     [data-theme="dark"] {
       --bg: #0f1115; --bg-card: #181b22; --text: #e8e8e8; --text-muted: #9aa0a6;
       --border: #2a2e37; --link: #6cb6ff; --shadow: rgba(0,0,0,0.4);
@@ -70,8 +69,9 @@ layout: null
       background: var(--btn-bg); color: var(--btn-text);
       border: 1px solid var(--border); border-radius: 999px;
       padding: 8px 14px; cursor: pointer; font-size: 0.95rem; line-height: 1;
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      transition: background 0.2s ease, transform 0.1s ease; white-space: nowrap;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; transition: background 0.2s ease, transform 0.1s ease;
+      white-space: nowrap;
     }
     .toggle:hover, .hamburger:hover { transform: scale(1.05); }
     .toggle:active, .hamburger:active { transform: scale(0.97); }
@@ -85,9 +85,9 @@ layout: null
       transition: opacity 0.25s ease, visibility 0.25s ease; z-index: 90;
     }
     .menu-overlay.open { opacity: 1; visibility: visible; }
-
     .menu {
-      position: fixed; top: 0; right: 0; height: 100%; width: 280px; max-width: 85vw;
+      position: fixed; top: 0; right: 0; height: 100%;
+      width: 280px; max-width: 85vw;
       background: var(--menu-bg); border-left: 1px solid var(--border);
       padding: 24px 20px; transform: translateX(100%);
       transition: transform 0.28s ease; z-index: 100;
@@ -127,11 +127,26 @@ layout: null
     .ad-footer { margin: 0 auto 32px; }
 
     .ad-in-grid {
-      width: 100%; height: auto; aspect-ratio: 300 / 250;
-      margin: 0; max-width: 100%; grid-column: auto;
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
     }
-    @media (max-width: 699px) {
-      .ad-in-grid { max-width: 300px; margin: 0 auto; grid-column: 1 / -1; }
+    .ad-in-grid .ad-slot,
+    .ad-in-grid.ad-slot {
+      width: 300px;
+      height: 250px;
+      max-width: 100%;
+      margin: 0;
+    }
+    @media (max-width: 480px) {
+      .ad-in-grid .ad-slot,
+      .ad-in-grid.ad-slot {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        aspect-ratio: 300 / 250;
+      }
     }
 
     .grid {
@@ -298,9 +313,7 @@ layout: null
     .footer-collapse-content p strong { color: var(--text); }
     .footer-collapse-content ul { margin: 8px 0; padding-left: 20px; }
     .footer-collapse-content li { margin-bottom: 4px; }
-    .footer-collapse-content a {
-      color: var(--link); text-decoration: none;
-    }
+    .footer-collapse-content a { color: var(--link); text-decoration: none; }
     .footer-collapse-content a:hover { text-decoration: underline; }
 
     .age-gate {
@@ -320,9 +333,7 @@ layout: null
       background: #1c1f26; border-left: 3px solid #e8a33d;
       padding: 14px 16px; border-radius: 8px; margin: 16px 0; font-size: 0.9rem;
     }
-    .age-gate-warning strong {
-      color: #e8a33d; display: block; margin-bottom: 8px;
-    }
+    .age-gate-warning strong { color: #e8a33d; display: block; margin-bottom: 8px; }
     .age-gate-warning ul { margin: 0; padding-left: 20px; color: #b8bcc2; }
     .age-gate-warning li { margin-bottom: 6px; line-height: 1.45; }
     .age-gate-check {
@@ -365,10 +376,10 @@ layout: null
       }
     }
   </style>
+
   {% include head.html %}
 </head>
 <body>
-<div loading="lazy">
 
   <div class="age-gate" id="ageGate" role="dialog" aria-modal="true">
     <div class="age-gate-box">
@@ -486,7 +497,7 @@ layout: null
 
   <footer>
     <div class="ad-slot ad-footer">
-      {% include /ads/banner/02.html %}
+      {% include /ads/banner/01.html %}
     </div>
 
     <details class="footer-collapse">
@@ -537,10 +548,18 @@ layout: null
     </details>
   </footer>
 
-  <template id="ad-template-inline">
-    <div class="ad-slot ad-in-grid">
-      {% include /ads/banner/01.html %}
-    </div>
+  <!-- TEMPLATE IKLAN IN-GRID (berurutan dari 02) -->
+  <template id="ad-template-02">
+    <div class="ad-slot ad-in-grid">{% include /ads/banner/02.html %}</div>
+  </template>
+  <template id="ad-template-03">
+    <div class="ad-slot ad-in-grid">{% include /ads/banner/03.html %}</div>
+  </template>
+  <template id="ad-template-04">
+    <div class="ad-slot ad-in-grid">{% include /ads/banner/04.html %}</div>
+  </template>
+  <template id="ad-template-05">
+    <div class="ad-slot ad-in-grid">{% include /ads/banner/05.html %}</div>
   </template>
 
   <script>
@@ -738,9 +757,11 @@ layout: null
       });
     })();
 
+    /* === PAGINATION + IKLAN IN-GRID === */
     (function () {
       var PER_PAGE = 30;
       var AD_EVERY = 6;
+      var AD_ORDER = ['02', '03', '04', '05'];
       var SITE_NAME = 'My Blog';
       var BASE_URL = window.location.origin + window.location.pathname.replace(/\/$/, '');
       var items = document.querySelectorAll('.post-item');
@@ -758,15 +779,6 @@ layout: null
         if (isNaN(p) || p < 1) return 1;
         if (p > total) return total;
         return p;
-      }
-      function upsertMeta(attr, key, content) {
-        var el = document.head.querySelector('meta[' + attr + '="' + key + '"]');
-        if (!el) {
-          el = document.createElement('meta');
-          el.setAttribute(attr, key);
-          document.head.appendChild(el);
-        }
-        el.setAttribute('content', content);
       }
       function upsertLink(rel, href) {
         var el = document.head.querySelector('link[rel="' + rel + '"]');
@@ -794,15 +806,10 @@ layout: null
       function updateGrid(page) {
         var start = (page - 1) * PER_PAGE;
         var end = start + PER_PAGE;
-        var isDesktop = window.matchMedia('(min-width: 700px)').matches;
-        var adsPerBreak = isDesktop ? 3 : 1;
 
         document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
           ad.remove();
         });
-
-        var tpl = document.getElementById('ad-template-inline');
-        if (!tpl) return;
 
         var visibleCount = 0;
         var visibleTotal = 0;
@@ -810,26 +817,32 @@ layout: null
           if (i >= start && i < end) visibleTotal++;
         });
 
+        var adIndex = 0;
+
         items.forEach(function (el, i) {
           var show = (i >= start && i < end);
           el.style.display = show ? '' : 'none';
+
           if (show) {
             visibleCount++;
             if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
-              var anchor = el.nextSibling;
-              for (var k = 0; k < adsPerBreak; k++) {
-                var clone = tpl.content.cloneNode(true);
-                clone.querySelectorAll('script').forEach(function (oldScript) {
-                  var newScript = document.createElement('script');
-                  if (oldScript.src) newScript.src = oldScript.src;
-                  else newScript.textContent = oldScript.textContent;
-                  Array.from(oldScript.attributes).forEach(function (attr) {
-                    if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
-                  });
-                  oldScript.parentNode.replaceChild(newScript, oldScript);
+              var bannerNum = AD_ORDER[adIndex % AD_ORDER.length];
+              adIndex++;
+
+              var tpl = document.getElementById('ad-template-' + bannerNum);
+              if (!tpl) return;
+
+              var clone = tpl.content.cloneNode(true);
+              clone.querySelectorAll('script').forEach(function (oldScript) {
+                var newScript = document.createElement('script');
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                Array.from(oldScript.attributes).forEach(function (attr) {
+                  if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
                 });
-                el.parentNode.insertBefore(clone, anchor);
-              }
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+              });
+              el.parentNode.insertBefore(clone, el.nextSibling);
             }
           }
         });
@@ -889,14 +902,6 @@ layout: null
         show(getPageFromURL(), true);
       });
 
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          updateGrid(getPageFromURL());
-        }, 250);
-      });
-
       nav.addEventListener('click', function (e) {
         var link = e.target.closest('a[href]');
         if (!link) return;
@@ -912,8 +917,8 @@ layout: null
     })();
   </script>
 
-{% include /ads/gobloggugel/umum.html %}
-{% include footer.html %}
-</div>
+  {% include /ads/gobloggugel/umum.html %}
+  {% include footer.html %}
+
 </body>
 </html>
