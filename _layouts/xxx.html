@@ -80,9 +80,7 @@ layout: null
     .toggle:hover, .hamburger:hover { transform: scale(1.05); }
     .toggle:active, .hamburger:active { transform: scale(0.97); }
     .toggle svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
-    .hamburger {
-      width: 42px; height: 42px; padding: 0; border-radius: 12px;
-    }
+    .hamburger { width: 42px; height: 42px; padding: 0; border-radius: 12px; }
     .hamburger svg { display: block; }
 
     .menu-overlay {
@@ -165,7 +163,6 @@ layout: null
       border: none;
     }
 
-    /* === SHARE === */
     .post-share {
       position: relative;
       margin: 24px 0 0;
@@ -264,7 +261,6 @@ layout: null
       display: block;
     }
 
-    /* === RELATED POSTS === */
     .related {
       margin-top: 48px; padding-top: 32px;
       border-top: 1px solid var(--border);
@@ -309,37 +305,27 @@ layout: null
     .related-card .play svg { width: 20px; height: 20px; margin-left: 2px; }
     .related-card:hover .play { background: rgba(0,0,0,0.7); }
 
-    /* === AD DI RELATED GRID === */
     .related-ad {
       grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      justify-items: center;
-      width: 100%;
+      display: flex;
+      justify-content: center;
       margin: 10px 0;
     }
     .related-ad .ad-slot {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      aspect-ratio: 300 / 250;
+      width: 300px;
+      height: 250px;
+      max-width: 100%;
       margin: 0;
     }
-
-    @media (min-width: 701px) {
-      .related-ad {
-        grid-template-columns: repeat(3, 1fr);
-        justify-items: stretch;
-      }
+    @media (max-width: 480px) {
       .related-ad .ad-slot {
-        max-width: 100%;
         width: 100%;
+        max-width: 300px;
+        height: auto;
         aspect-ratio: 300 / 250;
       }
     }
 
-    /* === RELATED MORE === */
     .related-more-wrap {
       display: flex; justify-content: center; margin-top: 24px;
     }
@@ -363,7 +349,6 @@ layout: null
     .related-card.hidden { display: none; }
     .related-ad.hidden { display: none; }
 
-    /* === ADS === */
     .ad-slot {
       display: flex; align-items: center; justify-content: center;
       background: var(--ad-bg); border: 1px dashed var(--ad-border);
@@ -375,7 +360,6 @@ layout: null
       position: relative; z-index: 1;
     }
 
-    /* === DISQUS === */
     .disqus-section {
       margin-top: 48px;
       padding: 28px 20px 24px;
@@ -412,7 +396,6 @@ layout: null
       border: 1px solid #2a2e37;
     }
 
-    /* === TOAST === */
     .toast {
       position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%) translateY(20px);
@@ -425,7 +408,6 @@ layout: null
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* === FOOTER === */
     footer {
       margin-top: 60px;
       padding: 32px 0;
@@ -487,7 +469,6 @@ layout: null
     .footer-collapse-content a { color: var(--link); text-decoration: none; }
     .footer-collapse-content a:hover { text-decoration: underline; }
 
-    /* === AGE GATE === */
     .age-gate {
       position: fixed; inset: 0; background: #0a0a0a; color: #fff;
       display: flex; align-items: center; justify-content: center;
@@ -505,9 +486,7 @@ layout: null
       background: #1c1f26; border-left: 3px solid #e8a33d;
       padding: 14px 16px; border-radius: 8px; margin: 16px 0; font-size: 0.9rem;
     }
-    .age-gate-warning strong {
-      color: #e8a33d; display: block; margin-bottom: 8px;
-    }
+    .age-gate-warning strong { color: #e8a33d; display: block; margin-bottom: 8px; }
     .age-gate-warning ul { margin: 0; padding-left: 20px; color: #b8bcc2; }
     .age-gate-warning li { margin-bottom: 6px; line-height: 1.45; }
     .age-gate-check {
@@ -533,7 +512,6 @@ layout: null
       font-size: 0.75rem; color: #6a6e76; text-align: center; margin: 0 !important;
     }
 
-    /* === COOKIE BANNER === */
     .cookie-banner {
       position: fixed; bottom: 16px; left: 16px; right: 16px;
       max-width: 520px; margin: 0 auto;
@@ -590,11 +568,11 @@ layout: null
       }
     }
   </style>
+
   {% include head.html %}
 </head>
 <body>
 
-  <!-- AGE GATE -->
   <div class="age-gate" id="ageGate" role="dialog" aria-modal="true">
     <div class="age-gate-box">
       <h2>Age Verification Required</h2>
@@ -623,7 +601,6 @@ layout: null
     </div>
   </div>
 
-  <!-- COOKIE BANNER -->
   <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
     <div class="cookie-text">
       <p>
@@ -679,513 +656,10 @@ layout: null
     <a href="/privacy-policy.html">Privacy Policy</a>
   </aside>
 
-  <!-- CONTENT -->
   <div class="post-content">
-  <div id="multiSourceVastIframe01">
-
-<div id="vastBox01">
-<video id="vastVideo01" playsinline muted controls preload="auto"></video>
-<div id="vastStatus01">Loading ad...</div>
-</div>
-
-<div id="videoBox01">
-
-<div id="changeServerTitle01">Change Server</div>
-
-<div id="serverNotice01">
-If the video doesn't play, please try another server.
-</div>
-
-<div id="serverButtons01"></div>
-
-<div id="iframeContainer01"></div>
-
-</div>
-
-</div>
-
-<style>
-#multiSourceVastIframe01{
-width:100%;
-max-width:900px;
-margin:0 auto;
-}
-
-#vastBox01{
-position:relative;
-width:100%;
-aspect-ratio:16/9;
-background:#000;
-overflow:hidden;
-}
-
-#vastVideo01{
-width:100%;
-height:100%;
-display:block;
-background:#000;
-object-fit:contain;
-}
-
-#vastStatus01{
-position:absolute;
-left:10px;
-bottom:10px;
-z-index:5;
-padding:5px 8px;
-background:rgba(0,0,0,.7);
-color:#fff;
-font-size:11px;
-border-radius:3px;
-}
-
-#videoBox01{
-display:none;
-width:100%;
-}
-
-#changeServerTitle01{
-font-size:14px;
-font-weight:600;
-margin-top:8px;
-margin-bottom:3px;
-}
-
-#serverNotice01{
-font-size:12px;
-opacity:.7;
-margin-bottom:8px;
-}
-
-#serverButtons01{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-bottom:10px;
-}
-
-#serverButtons01 button{
-appearance:none;
-border:0;
-border-radius:4px;
-padding:7px 12px;
-background:#333;
-color:#fff;
-font-size:13px;
-line-height:1.2;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-}
-
-#serverButtons01 button:hover{
-background:#555;
-}
-
-#serverButtons01 button.active{
-background:#777;
-}
-
-#iframeContainer01{
-width:100%;
-aspect-ratio:16/9;
-background:#000;
-overflow:hidden;
-}
-
-#iframeContainer01 iframe{
-width:100%;
-height:100%;
-display:block;
-border:0;
-margin:0;
-padding:0;
-}
-</style>
-
-<script>
-(function(){
-
-var servers01=[
     {{ content }}
-    ];
-
-var vastURLs01=[
-"https://vast.vstserv.com/vast?spot_id=2028954",
-"https://vast.vstserv.com/vast?spot_id=2028965",
-"https://vast.vstserv.com/vast?spot_id=2028966"
-];
-
-var vastURL01=
-vastURLs01[
-Math.floor(
-Math.random()*vastURLs01.length
-)
-];
-
-var vastBox01=
-document.getElementById("vastBox01");
-
-var vastVideo01=
-document.getElementById("vastVideo01");
-
-var vastStatus01=
-document.getElementById("vastStatus01");
-
-var videoBox01=
-document.getElementById("videoBox01");
-
-var buttons01=
-document.getElementById("serverButtons01");
-
-var iframeContainer01=
-document.getElementById("iframeContainer01");
-
-var started01=false;
-
-function showVideo01(){
-
-if(started01)return;
-
-started01=true;
-
-vastVideo01.pause();
-
-vastBox01.style.display="none";
-
-videoBox01.style.display="block";
-
-loadServer01(0);
-
-}
-
-function loadServer01(index){
-
-if(!servers01[index])return;
-
-iframeContainer01.innerHTML="";
-
-var iframe01=
-document.createElement("iframe");
-
-iframe01.src=servers01[index];
-
-iframe01.setAttribute(
-"allow",
-"autoplay; fullscreen; picture-in-picture"
-);
-
-iframe01.setAttribute(
-"allowfullscreen",
-""
-);
-
-iframe01.setAttribute(
-"frameborder",
-"0"
-);
-
-iframe01.setAttribute(
-"scrolling",
-"no"
-);
-
-iframeContainer01.appendChild(
-iframe01
-);
-
-var buttons=
-buttons01.querySelectorAll(
-"button"
-);
-
-buttons.forEach(function(button){
-
-button.classList.remove(
-"active"
-);
-
-});
-
-if(buttons[index]){
-
-buttons[index].classList.add(
-"active"
-);
-
-}
-
-}
-
-servers01.forEach(function(
-server,
-index
-){
-
-var button01=
-document.createElement("button");
-
-button01.type="button";
-
-button01.textContent=
-"Server "+
-String(index+1).padStart(2,"0");
-
-button01.setAttribute(
-"data-server",
-index
-);
-
-if(index===0){
-
-button01.classList.add(
-"active"
-);
-
-}
-
-buttons01.appendChild(
-button01
-);
-
-});
-
-buttons01.addEventListener(
-"click",
-function(event){
-
-var button01=
-event.target.closest(
-"button"
-);
-
-if(!button01)return;
-
-var index01=
-parseInt(
-button01.getAttribute(
-"data-server"
-),
-10
-);
-
-loadServer01(index01);
-
-}
-);
-
-function status01(text){
-
-vastStatus01.textContent=
-text;
-
-}
-
-status01(
-"Loading ad..."
-);
-
-fetch(
-vastURL01,
-{
-method:"GET",
-mode:"cors"
-}
-)
-.then(function(response){
-
-if(!response.ok){
-
-throw new Error(
-"HTTP "+response.status
-);
-
-}
-
-return response.text();
-
-})
-.then(function(text){
-
-var xml01=
-new DOMParser()
-.parseFromString(
-text,
-"text/xml"
-);
-
-var ad01=
-xml01.querySelector(
-"Ad"
-);
-
-if(!ad01){
-
-throw new Error(
-"No Ad"
-);
-
-}
-
-var mediaFiles01=
-ad01.querySelectorAll(
-"MediaFile"
-);
-
-if(!mediaFiles01.length){
-
-throw new Error(
-"No MediaFile"
-);
-
-}
-
-var mediaURL01="";
-
-for(
-var i01=0;
-i01<mediaFiles01.length;
-i01++
-){
-
-var mediaFile01=
-mediaFiles01[i01];
-
-var type01=
-(
-mediaFile01.getAttribute(
-"type"
-)||""
-)
-.toLowerCase();
-
-var url01=
-(
-mediaFile01.textContent||
-""
-).trim();
-
-if(!url01)continue;
-
-if(
-type01.indexOf(
-"mp4"
-)!==-1
-){
-
-mediaURL01=url01;
-
-break;
-
-}
-
-if(!mediaURL01){
-
-mediaURL01=url01;
-
-}
-
-}
-
-if(!mediaURL01){
-
-throw new Error(
-"No media URL"
-);
-
-}
-
-vastVideo01.src=
-mediaURL01;
-
-vastVideo01.load();
-
-status01(
-"Advertisement"
-);
-
-var playPromise01=
-vastVideo01.play();
-
-if(
-playPromise01&&
-playPromise01.catch
-){
-
-playPromise01.catch(
-function(){
-
-status01(
-"Press Play to start the ad"
-);
-
-}
-);
-
-}
-
-})
-.catch(function(){
-
-status01(
-"Ad unavailable"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-500
-);
-
-});
-
-vastVideo01.addEventListener(
-"ended",
-function(){
-
-status01(
-"Advertisement finished"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-300
-);
-
-}
-);
-
-vastVideo01.addEventListener(
-"error",
-function(){
-
-status01(
-"Ad unavailable"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-500
-);
-
-}
-);
-
-})();
-</script>
   </div>
 
-  <!-- SHARE -->
   <div class="post-share" id="postShare">
     <button class="share-btn" id="shareBtn" type="button" aria-haspopup="true" aria-expanded="false">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1274,7 +748,7 @@ showVideo01();
     </div>
   </div>
 
-  <!-- AD: AFTER VIDEO -->
+  <!-- AD: SETELAH VIDEO (banner 01) -->
   <div class="ad-slot">
     {% include /ads/banner/01.html %}
   </div>
@@ -1352,10 +826,10 @@ showVideo01();
     {% endif %}
   {% endif %}
 
-  <!-- AD: AFTER RELATED -->
+  <!-- AD: SETELAH RELATED (banner 06) -->
   {% if related_count > 0 %}
   <div class="ad-slot">
-    {% include /ads/banner/02.html %}
+    {% include /ads/banner/06.html %}
   </div>
   {% endif %}
 
@@ -1384,17 +858,24 @@ showVideo01();
     <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
   </section>
 
-  <!-- TEMPLATE IKLAN UNTUK RELATED -->
-  <template id="ad-related-template">
-    <div class="ad-slot">
-      {% include /ads/banner/01.html %}
-    </div>
+  <!-- TEMPLATE IKLAN UNTUK RELATED (berurutan dari 02) -->
+  <template id="ad-related-02">
+    <div class="ad-slot">{% include /ads/banner/02.html %}</div>
+  </template>
+  <template id="ad-related-03">
+    <div class="ad-slot">{% include /ads/banner/03.html %}</div>
+  </template>
+  <template id="ad-related-04">
+    <div class="ad-slot">{% include /ads/banner/04.html %}</div>
+  </template>
+  <template id="ad-related-05">
+    <div class="ad-slot">{% include /ads/banner/05.html %}</div>
   </template>
 
   <!-- FOOTER -->
   <footer>
     <div class="ad-slot ad-footer">
-      {% include /ads/banner/02.html %}
+      {% include /ads/banner/07.html %}
     </div>
 
     <details class="footer-collapse">
@@ -1449,7 +930,6 @@ showVideo01();
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    /* === AGE GATE === */
     (function () {
       var KEY = 'age-verified-v1';
       var MAX_AGE_DAYS = 30;
@@ -1488,7 +968,6 @@ showVideo01();
       });
     })();
 
-    /* === COOKIE CONSENT === */
     (function () {
       var KEY = 'cookie-consent';
       var banner = document.getElementById('cookieBanner');
@@ -1511,7 +990,6 @@ showVideo01();
       });
     })();
 
-    /* === THEME TOGGLE === */
     (function () {
       var root = document.documentElement;
       var btn = document.getElementById('themeToggle');
@@ -1538,7 +1016,6 @@ showVideo01();
       });
     })();
 
-    /* === MENU === */
     (function () {
       var menu = document.getElementById('menu');
       var overlay = document.getElementById('menuOverlay');
@@ -1566,15 +1043,12 @@ showVideo01();
       });
     })();
 
-    /* === SHARE === */
     (function () {
       var toast = document.getElementById('toast');
       var btn = document.getElementById('shareBtn');
       var menu = document.getElementById('shareMenu');
       var toastTimer;
-
       if (!btn || !menu) return;
-
       function showToast(msg) {
         toast.textContent = msg;
         toast.classList.add('show');
@@ -1583,84 +1057,55 @@ showVideo01();
           toast.classList.remove('show');
         }, 2000);
       }
-
       function toggleMenu(force) {
         var open = typeof force === 'boolean' ? force : !menu.classList.contains('open');
         menu.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
-
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         toggleMenu();
       });
-
       document.addEventListener('click', function (e) {
         if (!menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
           toggleMenu(false);
         }
       });
-
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') toggleMenu(false);
       });
-
       menu.addEventListener('click', function (e) {
         var item = e.target.closest('.share-item');
         if (!item) return;
         e.preventDefault();
-
         var url = encodeURIComponent(window.location.href);
         var title = encodeURIComponent(document.title);
         var platform = item.getAttribute('data-share');
         var shareURL = '';
-
         switch (platform) {
-          case 'whatsapp':
-            shareURL = 'https://wa.me/?text=' + title + '%20-%20' + url;
-            break;
-          case 'telegram':
-            shareURL = 'https://t.me/share/url?url=' + url + '&text=' + title;
-            break;
-          case 'twitter':
-            shareURL = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title;
-            break;
-          case 'facebook':
-            shareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
-            break;
-          case 'reddit':
-            shareURL = 'https://www.reddit.com/submit?url=' + url + '&title=' + title;
-            break;
-          case 'pinterest':
-            shareURL = 'https://pinterest.com/pin/create/button/?url=' + url + '&description=' + title;
-            break;
-          case 'linkedin':
-            shareURL = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
-            break;
-          case 'copy':
-            copyLink(window.location.href);
-            toggleMenu(false);
-            return;
+          case 'whatsapp': shareURL = 'https://wa.me/?text=' + title + '%20-%20' + url; break;
+          case 'telegram': shareURL = 'https://t.me/share/url?url=' + url + '&text=' + title; break;
+          case 'twitter': shareURL = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title; break;
+          case 'facebook': shareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + url; break;
+          case 'reddit': shareURL = 'https://www.reddit.com/submit?url=' + url + '&title=' + title; break;
+          case 'pinterest': shareURL = 'https://pinterest.com/pin/create/button/?url=' + url + '&description=' + title; break;
+          case 'linkedin': shareURL = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url; break;
+          case 'copy': copyLink(window.location.href); toggleMenu(false); return;
         }
-
         if (shareURL) {
           window.open(shareURL, '_blank', 'noopener,noreferrer,width=600,height=520');
         }
         toggleMenu(false);
       });
-
       function copyLink(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function () {
             showToast('Link copied');
-          }).catch(function () {
-            fallbackCopy(text);
-          });
+          }).catch(function () { fallbackCopy(text); });
           return;
         }
         fallbackCopy(text);
       }
-
       function fallbackCopy(text) {
         var ta = document.createElement('textarea');
         ta.value = text;
@@ -1680,27 +1125,30 @@ showVideo01();
 
     /* === RELATED: ISI IKLAN === */
     (function () {
-      var tpl = document.getElementById('ad-related-template');
-      if (!tpl) return;
-      var isDesktop = window.matchMedia('(min-width: 701px)').matches;
-      var adsPerBreak = isDesktop ? 3 : 1;
+      var AD_ORDER = ['02', '03', '04', '05'];
+      var adIdx = 0;
 
       document.querySelectorAll('.related-ad').forEach(function (slot) {
         if (slot.dataset.filled === '1') return;
         slot.innerHTML = '';
-        for (var k = 0; k < adsPerBreak; k++) {
-          var clone = tpl.content.cloneNode(true);
-          clone.querySelectorAll('script').forEach(function (oldScript) {
-            var newScript = document.createElement('script');
-            if (oldScript.src) newScript.src = oldScript.src;
-            else newScript.textContent = oldScript.textContent;
-            Array.from(oldScript.attributes).forEach(function (attr) {
-              if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
-            });
-            oldScript.parentNode.replaceChild(newScript, oldScript);
+
+        var bannerNum = AD_ORDER[adIdx % AD_ORDER.length];
+        adIdx++;
+
+        var tpl = document.getElementById('ad-related-' + bannerNum);
+        if (!tpl) return;
+
+        var clone = tpl.content.cloneNode(true);
+        clone.querySelectorAll('script').forEach(function (oldScript) {
+          var newScript = document.createElement('script');
+          if (oldScript.src) newScript.src = oldScript.src;
+          else newScript.textContent = oldScript.textContent;
+          Array.from(oldScript.attributes).forEach(function (attr) {
+            if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
           });
-          slot.appendChild(clone);
-        }
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+        slot.appendChild(clone);
         slot.dataset.filled = '1';
       });
     })();
@@ -1740,45 +1188,10 @@ showVideo01();
         }
       });
     })();
-
-    /* === RESIZE: re-render iklan related === */
-    (function () {
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          var tpl = document.getElementById('ad-related-template');
-          if (!tpl) return;
-          var isDesktop = window.matchMedia('(min-width: 701px)').matches;
-          var adsPerBreak = isDesktop ? 3 : 1;
-          document.querySelectorAll('.related-ad').forEach(function (slot) {
-            slot.dataset.filled = '0';
-            slot.innerHTML = '';
-            for (var k = 0; k < adsPerBreak; k++) {
-              var clone = tpl.content.cloneNode(true);
-              clone.querySelectorAll('script').forEach(function (oldScript) {
-                var newScript = document.createElement('script');
-                if (oldScript.src) newScript.src = oldScript.src;
-                else newScript.textContent = oldScript.textContent;
-                Array.from(oldScript.attributes).forEach(function (attr) {
-                  if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
-                });
-                oldScript.parentNode.replaceChild(newScript, oldScript);
-              });
-              slot.appendChild(clone);
-            }
-            slot.dataset.filled = '1';
-          });
-        }, 400);
-      });
-    })();
   </script>
 
-{% include /ads/gobloggugel/umum.html %}
-{% include footer.html %}
-
-
-
+  {% include /ads/gobloggugel/umum.html %}
+  {% include footer.html %}
 
 </body>
 </html>
