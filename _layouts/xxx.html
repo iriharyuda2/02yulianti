@@ -666,7 +666,508 @@ layout: null
   </aside>
 
   <div class="post-content">
-    {{ content }}
+    <div id="multiSourceVastIframe01">
+
+<div id="vastBox01">
+<video id="vastVideo01" playsinline muted controls preload="auto"></video>
+<div id="vastStatus01">Loading ad...</div>
+</div>
+
+<div id="videoBox01">
+
+<div id="changeServerTitle01">Change Server</div>
+
+<div id="serverNotice01">
+If the video doesn't play, please try another server.
+</div>
+
+<div id="serverButtons01"></div>
+
+<div id="iframeContainer01"></div>
+
+</div>
+
+</div>
+
+<style>
+#multiSourceVastIframe01{
+width:100%;
+max-width:900px;
+margin:0 auto;
+}
+
+#vastBox01{
+position:relative;
+width:100%;
+aspect-ratio:16/9;
+background:#000;
+overflow:hidden;
+}
+
+#vastVideo01{
+width:100%;
+height:100%;
+display:block;
+background:#000;
+object-fit:contain;
+}
+
+#vastStatus01{
+position:absolute;
+left:10px;
+bottom:10px;
+z-index:5;
+padding:5px 8px;
+background:rgba(0,0,0,.7);
+color:#fff;
+font-size:11px;
+border-radius:3px;
+}
+
+#videoBox01{
+display:none;
+width:100%;
+}
+
+#changeServerTitle01{
+font-size:14px;
+font-weight:600;
+margin-top:8px;
+margin-bottom:3px;
+}
+
+#serverNotice01{
+font-size:12px;
+opacity:.7;
+margin-bottom:8px;
+}
+
+#serverButtons01{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-bottom:10px;
+}
+
+#serverButtons01 button{
+appearance:none;
+border:0;
+border-radius:4px;
+padding:7px 12px;
+background:#333;
+color:#fff;
+font-size:13px;
+line-height:1.2;
+cursor:pointer;
+-webkit-tap-highlight-color:transparent;
+}
+
+#serverButtons01 button:hover{
+background:#555;
+}
+
+#serverButtons01 button.active{
+background:#777;
+}
+
+#iframeContainer01{
+width:100%;
+aspect-ratio:16/9;
+background:#000;
+overflow:hidden;
+}
+
+#iframeContainer01 iframe{
+width:100%;
+height:100%;
+display:block;
+border:0;
+margin:0;
+padding:0;
+}
+</style>
+
+<script>
+(function(){
+
+var servers01=[
+{{content}}
+];
+
+var vastURLs01=[
+"https://vast.vstserv.com/vast?spot_id=2027599",
+"https://vast.vstserv.com/vast?spot_id=2027600",
+"https://vast.vstserv.com/vast?spot_id=2027601"
+];
+
+var vastURL01=
+vastURLs01[
+Math.floor(
+Math.random()*vastURLs01.length
+)
+];
+
+var vastBox01=
+document.getElementById("vastBox01");
+
+var vastVideo01=
+document.getElementById("vastVideo01");
+
+var vastStatus01=
+document.getElementById("vastStatus01");
+
+var videoBox01=
+document.getElementById("videoBox01");
+
+var buttons01=
+document.getElementById("serverButtons01");
+
+var iframeContainer01=
+document.getElementById("iframeContainer01");
+
+var started01=false;
+
+function showVideo01(){
+
+if(started01)return;
+
+started01=true;
+
+vastVideo01.pause();
+
+vastBox01.style.display="none";
+
+videoBox01.style.display="block";
+
+loadServer01(0);
+
+}
+
+function loadServer01(index){
+
+if(!servers01[index])return;
+
+iframeContainer01.innerHTML="";
+
+var iframe01=
+document.createElement("iframe");
+
+iframe01.src=servers01[index];
+
+iframe01.setAttribute(
+"allow",
+"autoplay; fullscreen; picture-in-picture"
+);
+
+iframe01.setAttribute(
+"allowfullscreen",
+""
+);
+
+iframe01.setAttribute(
+"frameborder",
+"0"
+);
+
+iframe01.setAttribute(
+"scrolling",
+"no"
+);
+
+iframeContainer01.appendChild(
+iframe01
+);
+
+var buttons=
+buttons01.querySelectorAll(
+"button"
+);
+
+buttons.forEach(function(button){
+
+button.classList.remove(
+"active"
+);
+
+});
+
+if(buttons[index]){
+
+buttons[index].classList.add(
+"active"
+);
+
+}
+
+}
+
+servers01.forEach(function(
+server,
+index
+){
+
+var button01=
+document.createElement("button");
+
+button01.type="button";
+
+button01.textContent=
+"Server "+
+String(index+1).padStart(2,"0");
+
+button01.setAttribute(
+"data-server",
+index
+);
+
+if(index===0){
+
+button01.classList.add(
+"active"
+);
+
+}
+
+buttons01.appendChild(
+button01
+);
+
+});
+
+buttons01.addEventListener(
+"click",
+function(event){
+
+var button01=
+event.target.closest(
+"button"
+);
+
+if(!button01)return;
+
+var index01=
+parseInt(
+button01.getAttribute(
+"data-server"
+),
+10
+);
+
+loadServer01(index01);
+
+}
+);
+
+function status01(text){
+
+vastStatus01.textContent=
+text;
+
+}
+
+status01(
+"Loading ad..."
+);
+
+fetch(
+vastURL01,
+{
+method:"GET",
+mode:"cors"
+}
+)
+.then(function(response){
+
+if(!response.ok){
+
+throw new Error(
+"HTTP "+response.status
+);
+
+}
+
+return response.text();
+
+})
+.then(function(text){
+
+var xml01=
+new DOMParser()
+.parseFromString(
+text,
+"text/xml"
+);
+
+var ad01=
+xml01.querySelector(
+"Ad"
+);
+
+if(!ad01){
+
+throw new Error(
+"No Ad"
+);
+
+}
+
+var mediaFiles01=
+ad01.querySelectorAll(
+"MediaFile"
+);
+
+if(!mediaFiles01.length){
+
+throw new Error(
+"No MediaFile"
+);
+
+}
+
+var mediaURL01="";
+
+for(
+var i01=0;
+i01<mediaFiles01.length;
+i01++
+){
+
+var mediaFile01=
+mediaFiles01[i01];
+
+var type01=
+(
+mediaFile01.getAttribute(
+"type"
+)||""
+)
+.toLowerCase();
+
+var url01=
+(
+mediaFile01.textContent||
+""
+).trim();
+
+if(!url01)continue;
+
+if(
+type01.indexOf(
+"mp4"
+)!==-1
+){
+
+mediaURL01=url01;
+
+break;
+
+}
+
+if(!mediaURL01){
+
+mediaURL01=url01;
+
+}
+
+}
+
+if(!mediaURL01){
+
+throw new Error(
+"No media URL"
+);
+
+}
+
+vastVideo01.src=
+mediaURL01;
+
+vastVideo01.load();
+
+status01(
+"Advertisement"
+);
+
+var playPromise01=
+vastVideo01.play();
+
+if(
+playPromise01&&
+playPromise01.catch
+){
+
+playPromise01.catch(
+function(){
+
+status01(
+"Press Play to start the ad"
+);
+
+}
+);
+
+}
+
+})
+.catch(function(){
+
+status01(
+"Ad unavailable"
+);
+
+setTimeout(
+function(){
+
+showVideo01();
+
+},
+500
+);
+
+});
+
+vastVideo01.addEventListener(
+"ended",
+function(){
+
+status01(
+"Advertisement finished"
+);
+
+setTimeout(
+function(){
+
+showVideo01();
+
+},
+300
+);
+
+}
+);
+
+vastVideo01.addEventListener(
+"error",
+function(){
+
+status01(
+"Ad unavailable"
+);
+
+setTimeout(
+function(){
+
+showVideo01();
+
+},
+500
+);
+
+}
+);
+
+})();
+</script>
   </div>
 
   <div class="post-share" id="postShare">
