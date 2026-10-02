@@ -35,7 +35,7 @@ layout: null
       --menu-bg: #ffffff; --overlay: rgba(0,0,0,0.4);
       --duration-bg: rgba(0,0,0,0.7); --duration-fg: #ffffff;
       --share-bg: rgba(255,255,255,0.9); --share-fg: #222222;
-      --ad-bg: #f4f4f4; --ad-border: #dddddd;
+      --ad-bg: transparent; --ad-border: transparent;
     }
     [data-theme="dark"] {
       --bg: #0f1115; --bg-card: #181b22; --text: #e8e8e8; --text-muted: #9aa0a6;
@@ -45,7 +45,7 @@ layout: null
       --menu-bg: #181b22; --overlay: rgba(0,0,0,0.6);
       --duration-bg: rgba(0,0,0,0.75); --duration-fg: #ffffff;
       --share-bg: rgba(40,44,54,0.9); --share-fg: #e8e8e8;
-      --ad-bg: #1c1f26; --ad-border: #2a2e37;
+      --ad-bg: transparent; --ad-border: transparent;
     }
 
     * { box-sizing: border-box; }
@@ -115,44 +115,63 @@ layout: null
     .menu a:hover { background: var(--btn-bg); color: var(--link); }
     body.menu-open { overflow: hidden; }
 
+    /* === AD SLOT (auto-size natural, no set size) === */
     .ad-slot {
-      display: flex; align-items: center; justify-content: center;
-      background: var(--ad-bg); border: 1px dashed var(--ad-border);
-      border-radius: 10px; width: 300px; height: 250px;
-      margin: 0 auto; overflow: hidden; position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ad-bg);
+      border: 1px dashed var(--ad-border);
+      border-radius: 10px;
+      margin: 30px auto;
+      overflow: hidden;
+      position: relative;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      transition: opacity 0.3s ease, max-height 0.4s ease,
+                  padding 0.3s ease, margin 0.4s ease, border 0.3s ease;
+      max-height: 2000px;
+      opacity: 1;
     }
+
+    .ad-slot iframe,
+    .ad-slot img,
+    .ad-slot ins,
     .ad-slot > * {
-      display: block; width: 100%; height: 100%; position: relative; z-index: 1;
+      display: block;
+      border: 0;
+      max-width: 100%;
+      flex-shrink: 0;
     }
+
+    .ad-slot.empty {
+      opacity: 0;
+      max-height: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      border: none;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
     .ad-footer { margin: 0 auto 32px; }
 
+    /* === AD IN GRID (flex-wrap, no set size) === */
     .ad-in-grid {
       grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
       gap: 12px;
-      justify-items: center;
       width: 100%;
       margin: 10px 0;
     }
-    .ad-in-grid .ad-slot {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      aspect-ratio: 300 / 250;
-      margin: 0;
-    }
 
-    @media (min-width: 701px) {
-      .ad-in-grid {
-        grid-template-columns: repeat(3, 1fr);
-        justify-items: stretch;
-      }
-      .ad-in-grid .ad-slot {
-        max-width: 100%;
-        width: 100%;
-        aspect-ratio: 300 / 250;
-      }
+    .ad-in-grid .ad-slot {
+      margin: 0;
     }
 
     .grid {
@@ -376,10 +395,6 @@ layout: null
       footer { font-size: 0.78rem; padding: 24px 0; }
       .footer-collapse summary { padding: 11px 14px; font-size: 0.82rem; }
       .footer-collapse-content { padding: 4px 14px 14px; font-size: 0.78rem; }
-      .ad-slot {
-        width: 100%; max-width: 300px; height: auto;
-        aspect-ratio: 300 / 250;
-      }
     }
   </style>
 
@@ -554,7 +569,7 @@ layout: null
     </details>
   </footer>
 
-  <!-- TEMPLATE IKLAN IN-GRID (16 break, tiap break 3 banner) -->
+  <!-- TEMPLATE IKLAN IN-GRID -->
   {% for b in (1..16) %}
     {% assign b1 = b | minus: 1 | times: 3 | plus: 2 %}
     {% assign b2 = b1 | plus: 1 %}
@@ -766,10 +781,75 @@ layout: null
       });
     })();
 
+    /* === AUTO-HIDE KOSONG === */
+    (function () {
+      function processAd(slot) {
+        if (slot.dataset.processed === '1') return;
+
+        var inner = slot.querySelector('iframe, img, ins');
+        if (!inner) {
+          slot.classList.add('empty');
+          slot.dataset.processed = '1';
+          return;
+        }
+
+        var w = inner.offsetWidth || parseInt(inner.getAttribute('width'), 10) || 0;
+        var h = inner.offsetHeight || parseInt(inner.getAttribute('height'), 10) || 0;
+
+        if (w === 0 || h === 0) {
+          slot.classList.add('empty');
+        } else {
+          slot.classList.remove('empty');
+        }
+        slot.dataset.processed = '1';
+      }
+
+      function processAll() {
+        document.querySelectorAll('.ad-slot').forEach(processAd);
+      }
+
+      processAll();
+      setTimeout(processAll, 800);
+      setTimeout(processAll, 2000);
+      setTimeout(processAll, 4000);
+      setTimeout(processAll, 8000);
+
+      if ('ResizeObserver' in window) {
+        var observer = new ResizeObserver(function (entries) {
+          entries.forEach(function (entry) {
+            var inner = entry.target;
+            var slot = inner.closest('.ad-slot');
+            if (!slot) return;
+
+            var w = inner.offsetWidth || 0;
+            var h = inner.offsetHeight || 0;
+
+            if (w > 0 && h > 0) {
+              slot.classList.remove('empty');
+            } else {
+              slot.classList.add('empty');
+            }
+          });
+        });
+
+        function observeAll() {
+          document.querySelectorAll('.ad-slot iframe, .ad-slot img, .ad-slot ins').forEach(function (el) {
+            if (el.dataset.observed === '1') return;
+            el.dataset.observed = '1';
+            observer.observe(el);
+          });
+        }
+        observeAll();
+        setTimeout(observeAll, 1000);
+        setTimeout(observeAll, 3000);
+        setTimeout(observeAll, 6000);
+      }
+    })();
+
     /* === PAGINASI + IKLAN IN-GRID === */
     (function () {
-      var PER_PAGE = 27;       // post per halaman
-      var AD_EVERY = 9;        // iklan setiap N post
+      var PER_PAGE = 27;
+      var AD_EVERY = 9;
 
       var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
       var nav = document.getElementById('pagination');
@@ -778,7 +858,6 @@ layout: null
 
       if (totalPages <= 1) { nav.remove(); return; }
 
-      // Cache break template
       var adTemplates = [];
       for (var i = 1; i <= 100; i++) {
         var tpl = document.getElementById('ad-template-break-' + i);
@@ -830,7 +909,6 @@ layout: null
       function updateGrid(page) {
         var start = (page - 1) * PER_PAGE;
         var end = start + PER_PAGE;
-        var isDesktop = window.matchMedia('(min-width: 701px)').matches;
 
         document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
           ad.remove();
@@ -857,13 +935,6 @@ layout: null
 
               var clone = tpl.content.cloneNode(true);
 
-              if (!isDesktop) {
-                var slots = clone.querySelectorAll('.ad-slot');
-                for (var s = 1; s < slots.length; s++) {
-                  slots[s].remove();
-                }
-              }
-
               clone.querySelectorAll('script').forEach(function (oldScript) {
                 var newScript = document.createElement('script');
                 if (oldScript.src) newScript.src = oldScript.src;
@@ -878,6 +949,25 @@ layout: null
             }
           }
         });
+
+        // Proses hide setelah insert
+        setTimeout(function () {
+          document.querySelectorAll('.ad-slot').forEach(function (slot) {
+            if (slot.dataset.processed === '1') return;
+            var inner = slot.querySelector('iframe, img, ins');
+            if (!inner) {
+              slot.classList.add('empty');
+              slot.dataset.processed = '1';
+              return;
+            }
+            var w = inner.offsetWidth || parseInt(inner.getAttribute('width'), 10) || 0;
+            var h = inner.offsetHeight || parseInt(inner.getAttribute('height'), 10) || 0;
+            if (w === 0 || h === 0) {
+              slot.classList.add('empty');
+            }
+            slot.dataset.processed = '1';
+          });
+        }, 800);
       }
 
       function makeLink(text, page, opts) {
