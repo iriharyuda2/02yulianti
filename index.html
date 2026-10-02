@@ -219,29 +219,27 @@ layout: null
       .card .share { opacity: 1; transform: translateY(0); }
     }
 
-    .load-more-wrap {
-      display: flex; justify-content: center; margin: 30px 0 20px;
+    .pagination {
+      display: flex; justify-content: center; align-items: center;
+      gap: 6px; margin: 40px 0 20px; flex-wrap: wrap;
     }
-    .load-more {
+    .pagination a, .pagination span {
       background: var(--btn-bg); color: var(--btn-text);
-      border: 1px solid var(--border); border-radius: 10px;
-      padding: 12px 30px; cursor: pointer; font-size: 0.95rem;
-      font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
-      transition: transform 0.1s ease, background 0.15s ease;
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 12px; font-size: 0.9rem; min-width: 36px;
+      text-align: center; text-decoration: none; display: inline-block;
+      line-height: 1.4; transition: background 0.15s ease, transform 0.1s ease;
     }
-    .load-more:hover {
-      background: var(--link); color: #fff;
-      border-color: var(--link); transform: translateY(-2px);
+    .pagination a:hover { transform: translateY(-2px); }
+    .pagination .active {
+      background: var(--link); color: #fff; border-color: var(--link);
     }
-    .load-more:active { transform: translateY(0); }
-    .load-more:disabled {
-      opacity: 0.5; cursor: not-allowed;
+    .pagination .disabled {
+      opacity: 0.4; cursor: not-allowed; pointer-events: none;
     }
-    .load-more svg {
-      width: 16px; height: 16px; stroke: currentColor;
-      fill: none; stroke-width: 2;
+    .pagination .dots {
+      background: transparent; border: none; cursor: default;
     }
-    .load-more.hidden { display: none; }
 
     .cookie-banner {
       position: fixed; bottom: 16px; left: 16px; right: 16px;
@@ -485,14 +483,7 @@ layout: null
     {% endfor %}
   </div>
 
-  <div class="load-more-wrap" id="loadMoreWrap">
-    <button class="load-more" id="loadMoreBtn" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-      <span>Load More</span>
-    </button>
-  </div>
+  <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -775,83 +766,190 @@ layout: null
       });
     })();
 
-    /* === LOAD MORE + IKLAN IN-GRID === */
+    /* === PAGINASI + IKLAN IN-GRID === */
     (function () {
-      var PER_BATCH = 12;
-      var AD_EVERY = 6;
+      var PER_PAGE = 27;       // post per halaman
+      var AD_EVERY = 9;        // iklan setiap N post
 
       var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
-      var loadBtn = document.getElementById('loadMoreBtn');
-      var loadWrap = document.getElementById('loadMoreWrap');
+      var nav = document.getElementById('pagination');
+      var totalPages = Math.ceil(items.length / PER_PAGE);
+      var currentPage = 1;
 
-      var revealedCount = 0;
-      var adsRenderedUpTo = 0;
+      if (totalPages <= 1) { nav.remove(); return; }
 
-      items.forEach(function (item) {
-        item.style.display = 'none';
-      });
+      // Cache break template
+      var adTemplates = [];
+      for (var i = 1; i <= 100; i++) {
+        var tpl = document.getElementById('ad-template-break-' + i);
+        if (!tpl) break;
+        adTemplates.push(tpl);
+      }
 
-      function renderAdsForVisible() {
+      function pageURL(n) {
+        var base = window.location.origin + window.location.pathname;
+        return n === 1 ? base : base + '?pag=' + n;
+      }
+
+      function getPageFromURL() {
+        var params = new URLSearchParams(window.location.search);
+        var p = parseInt(params.get('pag'), 10);
+        if (isNaN(p) || p < 1) return 1;
+        if (p > totalPages) return totalPages;
+        return p;
+      }
+
+      function updateHead(page) {
+        var title = page === 1
+          ? 'Yulianti'
+          : 'Yulianti — Page ' + page + ' of ' + totalPages;
+        document.title = title;
+
+        var canonical = document.getElementById('canonicalLink');
+        if (canonical) canonical.setAttribute('href', pageURL(page));
+
+        var prev = document.head.querySelector('link[rel="prev"]');
+        var next = document.head.querySelector('link[rel="next"]');
+        if (prev) prev.remove();
+        if (next) next.remove();
+
+        if (page > 1) {
+          var l1 = document.createElement('link');
+          l1.rel = 'prev';
+          l1.href = pageURL(page - 1);
+          document.head.appendChild(l1);
+        }
+        if (page < totalPages) {
+          var l2 = document.createElement('link');
+          l2.rel = 'next';
+          l2.href = pageURL(page + 1);
+          document.head.appendChild(l2);
+        }
+      }
+
+      function updateGrid(page) {
+        var start = (page - 1) * PER_PAGE;
+        var end = start + PER_PAGE;
         var isDesktop = window.matchMedia('(min-width: 701px)').matches;
 
-        var totalVisible = revealedCount;
-        var breakTarget = Math.floor(totalVisible / AD_EVERY);
+        document.querySelectorAll('.ad-in-grid').forEach(function (ad) {
+          ad.remove();
+        });
 
-        if (totalVisible % AD_EVERY === 0 && totalVisible === items.length) {
-          breakTarget = breakTarget - 1;
-        }
+        var visibleCount = 0;
+        var visibleTotal = 0;
+        items.forEach(function (el, i) {
+          if (i >= start && i < end) visibleTotal++;
+        });
 
-        while (adsRenderedUpTo < breakTarget) {
-          var postIdx = (adsRenderedUpTo + 1) * AD_EVERY - 1;
-          var el = items[postIdx];
-          if (!el) break;
+        var adIdx = 0;
 
-          var breakNum = adsRenderedUpTo + 1;
-          var tpl = document.getElementById('ad-template-break-' + breakNum);
-          adsRenderedUpTo++;
+        items.forEach(function (el, i) {
+          var show = (i >= start && i < end);
+          el.style.display = show ? '' : 'none';
 
-          if (!tpl) continue;
+          if (show) {
+            visibleCount++;
+            if (visibleCount % AD_EVERY === 0 && visibleCount < visibleTotal) {
+              var tpl = adTemplates[adIdx];
+              adIdx++;
+              if (!tpl) return;
 
-          var clone = tpl.content.cloneNode(true);
+              var clone = tpl.content.cloneNode(true);
 
-          if (!isDesktop) {
-            var slots = clone.querySelectorAll('.ad-slot');
-            for (var s = 1; s < slots.length; s++) {
-              slots[s].remove();
+              if (!isDesktop) {
+                var slots = clone.querySelectorAll('.ad-slot');
+                for (var s = 1; s < slots.length; s++) {
+                  slots[s].remove();
+                }
+              }
+
+              clone.querySelectorAll('script').forEach(function (oldScript) {
+                var newScript = document.createElement('script');
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                Array.from(oldScript.attributes).forEach(function (attr) {
+                  if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+                });
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+              });
+
+              el.parentNode.insertBefore(clone, el.nextSibling);
             }
           }
-
-          clone.querySelectorAll('script').forEach(function (oldScript) {
-            var newScript = document.createElement('script');
-            if (oldScript.src) newScript.src = oldScript.src;
-            else newScript.textContent = oldScript.textContent;
-            Array.from(oldScript.attributes).forEach(function (attr) {
-              if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
-            });
-            oldScript.parentNode.replaceChild(newScript, oldScript);
-          });
-
-          el.parentNode.insertBefore(clone, el.nextSibling);
-        }
+        });
       }
 
-      function revealMore() {
-        var end = Math.min(revealedCount + PER_BATCH, items.length);
-        for (var i = revealedCount; i < end; i++) {
-          items[i].style.display = '';
+      function makeLink(text, page, opts) {
+        opts = opts || {};
+        var el;
+        if (opts.disabled) {
+          el = document.createElement('span');
+          el.className = 'disabled';
+        } else {
+          el = document.createElement('a');
+          el.href = page === 1 ? './' : '?pag=' + page;
         }
-        revealedCount = end;
-
-        renderAdsForVisible();
-
-        if (revealedCount >= items.length) {
-          if (loadWrap) loadWrap.style.display = 'none';
-        }
+        if (opts.active) el.classList.add('active');
+        el.textContent = text;
+        return el;
       }
 
-      loadBtn.addEventListener('click', revealMore);
+      function drawPagination(current) {
+        nav.innerHTML = '';
+        nav.appendChild(makeLink('‹', current - 1, { disabled: current === 1 }));
 
-      revealMore();
+        var pages = [];
+        if (totalPages <= 7) {
+          for (var i = 1; i <= totalPages; i++) pages.push(i);
+        } else {
+          pages.push(1);
+          if (current > 3) pages.push('...');
+          var from = Math.max(2, current - 1);
+          var to = Math.min(totalPages - 1, current + 1);
+          for (var j = from; j <= to; j++) pages.push(j);
+          if (current < totalPages - 2) pages.push('...');
+          pages.push(totalPages);
+        }
+
+        pages.forEach(function (p) {
+          if (p === '...') {
+            var span = document.createElement('span');
+            span.className = 'dots';
+            span.textContent = '…';
+            nav.appendChild(span);
+          } else {
+            nav.appendChild(makeLink(p, p, { active: p === current }));
+          }
+        });
+
+        nav.appendChild(makeLink('›', current + 1, { disabled: current === totalPages }));
+      }
+
+      function show(page, scroll) {
+        currentPage = page;
+        updateGrid(page);
+        drawPagination(page);
+        updateHead(page);
+        if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      window.addEventListener('popstate', function () {
+        show(getPageFromURL(), true);
+      });
+
+      nav.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        if (href.indexOf('?pag=') !== 0 && href !== './') return;
+        e.preventDefault();
+        var url = href === './' ? window.location.pathname : '?pag=' + href.split('=')[1];
+        history.pushState({}, '', url);
+        show(getPageFromURL(), true);
+      });
+
+      show(getPageFromURL(), false);
     })();
   </script>
 
