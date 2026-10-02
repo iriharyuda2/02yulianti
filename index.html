@@ -6,7 +6,7 @@ layout: null
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Blog</title>
+  <title>Yulianti</title>
   <link rel="canonical" id="canonicalLink" href="">
   <meta name="robots" content="index, follow">
 
@@ -219,7 +219,6 @@ layout: null
       .card .share { opacity: 1; transform: translateY(0); }
     }
 
-    /* === LOAD MORE === */
     .load-more-wrap {
       display: flex; justify-content: center; margin: 30px 0 20px;
     }
@@ -419,7 +418,7 @@ layout: null
   </div>
 
   <header>
-    <h1>My Blog</h1>
+    <h1>Yulianti</h1>
     <div class="header-actions">
       <button class="toggle" id="themeToggle" aria-label="Toggle theme">
         <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -778,17 +777,16 @@ layout: null
 
     /* === LOAD MORE + IKLAN IN-GRID === */
     (function () {
-      var PER_BATCH = 30;      // post per batch
-      var AD_EVERY = 9;        // iklan setiap 6 post
+      var PER_BATCH = 12;
+      var AD_EVERY = 6;
 
       var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
       var loadBtn = document.getElementById('loadMoreBtn');
       var loadWrap = document.getElementById('loadMoreWrap');
 
-      var revealedCount = 0;   // jumlah post yang sudah tampil
-      var adsRenderedUpTo = 0; // jumlah post yang sudah dihitung untuk iklan
+      var revealedCount = 0;
+      var adsRenderedUpTo = 0;
 
-      // Hide semua post dulu
       items.forEach(function (item) {
         item.style.display = 'none';
       });
@@ -796,18 +794,15 @@ layout: null
       function renderAdsForVisible() {
         var isDesktop = window.matchMedia('(min-width: 701px)').matches;
 
-        // Hitung berapa break yang seharusnya sudah muncul
         var totalVisible = revealedCount;
         var breakTarget = Math.floor(totalVisible / AD_EVERY);
 
-        // Kalau post terakhir pas kelipatan 6, jangan render iklan setelahnya
         if (totalVisible % AD_EVERY === 0 && totalVisible === items.length) {
           breakTarget = breakTarget - 1;
         }
 
-        // Render banner untuk break yang belum di-render
         while (adsRenderedUpTo < breakTarget) {
-          var postIdx = (adsRenderedUpTo + 1) * AD_EVERY - 1; // index post terakhir di break itu
+          var postIdx = (adsRenderedUpTo + 1) * AD_EVERY - 1;
           var el = items[postIdx];
           if (!el) break;
 
@@ -819,7 +814,6 @@ layout: null
 
           var clone = tpl.content.cloneNode(true);
 
-          // Kalau mobile, hapus slot ke-2 dan ke-3
           if (!isDesktop) {
             var slots = clone.querySelectorAll('.ad-slot');
             for (var s = 1; s < slots.length; s++) {
@@ -827,7 +821,6 @@ layout: null
             }
           }
 
-          // Re-create script
           clone.querySelectorAll('script').forEach(function (oldScript) {
             var newScript = document.createElement('script');
             if (oldScript.src) newScript.src = oldScript.src;
@@ -849,10 +842,8 @@ layout: null
         }
         revealedCount = end;
 
-        // Render iklan untuk break yang baru muncul
         renderAdsForVisible();
 
-        // Sembunyikan tombol kalau semua sudah tampil
         if (revealedCount >= items.length) {
           if (loadWrap) loadWrap.style.display = 'none';
         }
@@ -860,7 +851,6 @@ layout: null
 
       loadBtn.addEventListener('click', revealMore);
 
-      // Initial: tampilkan batch pertama
       revealMore();
     })();
   </script>
