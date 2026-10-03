@@ -626,510 +626,50 @@ layout: null
   </aside>
 
   <div class="post-content">
-    
-    <div id="multiSourceVastIframe01">
-
-<div id="vastBox01">
-<video id="vastVideo01" playsinline muted controls preload="auto"></video>
-<div id="vastStatus01">Loading ad...</div>
-</div>
-
-<div id="videoBox01">
-
-<div id="changeServerTitle01">Change Server</div>
-
-<div id="serverNotice01">
-If the video doesn't play, please try another server.
-</div>
-
-<div id="serverButtons01"></div>
-
-<div id="iframeContainer01"></div>
-
-</div>
-
-</div>
+<div id="videoGallery01"><div id="vastBox01"><video id="vastVideo01" playsinline autoplay muted preload="auto"></video><div id="vastAdLabel01">Advertisement</div><div id="vastClick01"></div></div><div id="serverVideo01"></div><div id="serverPanel01"><div id="serverNotice01">If the video doesn't play, please try another server.</div><div id="serverButtons01"></div></div></div>
 
 <style>
-#multiSourceVastIframe01{
-width:100%;
-max-width:900px;
-margin:0 auto;
-}
-
-#vastBox01{
-position:relative;
-width:100%;
-aspect-ratio:16/9;
-background:#000;
-overflow:hidden;
-}
-
-#vastVideo01{
-width:100%;
-height:100%;
-display:block;
-background:#000;
-object-fit:contain;
-}
-
-#vastStatus01{
-position:absolute;
-left:10px;
-bottom:10px;
-z-index:5;
-padding:5px 8px;
-background:rgba(0,0,0,.7);
-color:#fff;
-font-size:11px;
-border-radius:3px;
-}
-
-#videoBox01{
-display:none;
-width:100%;
-}
-
-#changeServerTitle01{
-font-size:14px;
-font-weight:600;
-margin-top:8px;
-margin-bottom:3px;
-}
-
-#serverNotice01{
-font-size:12px;
-opacity:.7;
-margin-bottom:8px;
-}
-
-#serverButtons01{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-bottom:10px;
-}
-
-#serverButtons01 button{
-appearance:none;
-border:0;
-border-radius:4px;
-padding:7px 12px;
-background:#333;
-color:#fff;
-font-size:13px;
-line-height:1.2;
-cursor:pointer;
--webkit-tap-highlight-color:transparent;
-}
-
-#serverButtons01 button:hover{
-background:#555;
-}
-
-#serverButtons01 button.active{
-background:#777;
-}
-
-#iframeContainer01{
-width:100%;
-aspect-ratio:16/9;
-background:#000;
-overflow:hidden;
-}
-
-#iframeContainer01 iframe{
-width:100%;
-height:100%;
-display:block;
-border:0;
-margin:0;
-padding:0;
-}
+#videoGallery01{width:100%;max-width:100%;margin:0 auto}#vastBox01{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}#vastVideo01{display:block;width:100%;height:100%;object-fit:contain;background:#000}#vastAdLabel01{position:absolute;left:10px;bottom:10px;padding:6px 10px;background:rgba(0,0,0,.65);color:#fff;font-size:13px;line-height:1.2;z-index:10;border-radius:3px}#vastClick01{position:absolute;inset:0;z-index:8;display:none;cursor:pointer}#serverVideo01{display:none;width:100%;aspect-ratio:16/9;background:#000}#serverVideo01 iframe{display:block;width:100%;height:100%;border:0}#serverPanel01{display:none;width:100%;margin-top:10px}#serverNotice01{margin-bottom:10px;font-size:14px;line-height:1.5}#serverButtons01{display:flex;flex-wrap:wrap;gap:8px}.serverButton01{padding:8px 14px;border:1px solid #ccc;background:#f5f5f5;color:#222;border-radius:4px;cursor:pointer;font-size:14px}.serverButton01.active{background:#222;color:#fff;border-color:#222}
 </style>
 
 <script>
-(function(){
+(function(){"use strict";var vastUrl01="https://unsightlystrain.com/d.moFzz/dpGBNWvTZDGoUY/_eZm/9/ubZOUvlNk/P/Trcv0YORDIQp1/OXT_MetKNhzeQE4_NiDCUO5BN/wF",serverUrls01=[
+{{ content }}
+],vastBox01=document.getElementById("vastBox01"),vastVideo01=document.getElementById("vastVideo01"),vastAdLabel01=document.getElementById("vastAdLabel01"),vastClick01=document.getElementById("vastClick01"),serverVideo01=document.getElementById("serverVideo01"),serverPanel01=document.getElementById("serverPanel01"),serverButtons01=document.getElementById("serverButtons01"),ads01=[],adIndex01=0,currentAd01=null,quartile25Sent01=!1,quartile50Sent01=!1,quartile75Sent01=!1,adPlaying01=!1;
 
-var servers01=[
-{{content}}
-];
+function parseTime01(v){if(!v)return 0;v=String(v).trim();if(v.indexOf("%")!==-1)return{percentage:parseFloat(v.replace("%",""))};var p=v.split(":");return 3===p.length?parseFloat(p[0])*3600+parseFloat(p[1])*60+parseFloat(p[2]):2===p.length?parseFloat(p[0])*60+parseFloat(p[1]):parseFloat(v)||0}
 
-var vastURLs01=[
-"https://unsightlystrain.com/dmm.FmzadQGTNsv-ZtGFUY/ue/mg9/uPZ/UalNkJPdT/cb0tOODfQy1/OPTAMftVN/zNQs4tNnD/U/5iNwwk"
-"https://unsightlystrain.com/dmmLFZzbd.GPNyvqZYGaUe/me/mI9yuYZaUvl/kIPyT/cs0LOuDlQa1bOST/MYtINhzPQ/4SNMDZUc5qN/yfZPsBafWa1JpCd/DQ0kxI"
-];
+function nodes01(p,n){return p.getElementsByTagNameNS("*",n)}
 
-var vastURL01=
-vastURLs01[
-Math.floor(
-Math.random()*vastURLs01.length
-)
-];
+function parseVast01(t){var x=new DOMParser().parseFromString(t,"text/xml"),a=nodes01(x,"Ad"),r=[];for(var i=0;i<a.length;i++){var an=a[i],l=nodes01(an,"Linear");if(!l.length)continue;var ln=l[0],d=nodes01(ln,"Duration");if(!d.length)continue;var du=parseTime01(d[0].textContent),m=nodes01(ln,"MediaFile"),u="";for(var j=0;j<m.length;j++){var ty=m[j].getAttribute("type")||"";if("video/mp4"===ty.toLowerCase()){u=m[j].textContent.trim();break}}if(!u&&m.length)u=m[0].textContent.trim();if(!u)continue;var im="",ins=nodes01(an,"Impression");ins.length&&(im=ins[0].textContent.trim());var ct="",cn=nodes01(ln,"ClickThrough");cn.length&&(ct=cn[0].textContent.trim());var tr={},tn=nodes01(ln,"Tracking");for(var k=0;k<tn.length;k++){var e=tn[k].getAttribute("event"),tu=tn[k].textContent.trim();e&&tu&&(tr[e]=tu)}r.push({id:an.getAttribute("id")||"",url:u,duration:du,impression:im,clickThrough:ct,tracking:tr})}return r}
 
-var vastBox01=
-document.getElementById("vastBox01");
+function sendTrackingUrl01(u){if(!u)return;var i=new Image;i.src=u+(u.indexOf("?")===-1?"?":"&")+"cachebuster="+Date.now()}
 
-var vastVideo01=
-document.getElementById("vastVideo01");
+function sendTracking01(t){currentAd01&&currentAd01.tracking&&sendTrackingUrl01(currentAd01.tracking[t])}
 
-var vastStatus01=
-document.getElementById("vastStatus01");
+function formatTime01(s){s=Math.max(0,Math.floor(s||0));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 
-var videoBox01=
-document.getElementById("videoBox01");
+function updateLabel01(){if(!currentAd01)return;var t=vastVideo01.currentTime||0,d=vastVideo01.duration;d&&!isFinite(d)||(d=currentAd01.duration);vastAdLabel01.textContent="Advertisement • "+adIndex01+"/"+ads01.length+" • "+formatTime01(t)+" / "+formatTime01(d)}
 
-var buttons01=
-document.getElementById("serverButtons01");
+function playAd01(){if(adIndex01>=ads01.length)return void showServers01();currentAd01=ads01[adIndex01++];quartile25Sent01=quartile50Sent01=quartile75Sent01=!1;adPlaying01=!0;vastAdLabel01.style.display="block";vastClick01.style.display=currentAd01.clickThrough?"block":"none";vastVideo01.pause();vastVideo01.removeAttribute("src");vastVideo01.load();vastVideo01.muted=!0;vastVideo01.autoplay=!0;vastVideo01.playsInline=!0;vastVideo01.src=currentAd01.url;currentAd01.impression&&sendTrackingUrl01(currentAd01.impression);updateLabel01();var p=vastVideo01.play();p&&p.catch&&p.catch(function(){vastAdLabel01.textContent="Advertisement • Tap to play"})}
 
-var iframeContainer01=
-document.getElementById("iframeContainer01");
+vastVideo01.addEventListener("play",function(){adPlaying01&&sendTracking01("start")});
 
-var started01=false;
+vastVideo01.addEventListener("timeupdate",function(){if(!adPlaying01||!currentAd01)return;updateLabel01();var t=vastVideo01.currentTime||0,d=vastVideo01.duration;d&&isFinite(d)||(d=currentAd01.duration);if(!d)return;var p=t/d;p>=.25&&!quartile25Sent01&&(quartile25Sent01=!0,sendTracking01("firstQuartile"));p>=.5&&!quartile50Sent01&&(quartile50Sent01=!0,sendTracking01("midpoint"));p>=.75&&!quartile75Sent01&&(quartile75Sent01=!0,sendTracking01("thirdQuartile"))});
 
-function showVideo01(){
+vastVideo01.addEventListener("ended",function(){if(!adPlaying01)return;sendTracking01("complete");vastClick01.style.display="none";adIndex01<ads01.length?setTimeout(playAd01,300):setTimeout(showServers01,300)});
 
-if(started01)return;
+vastClick01.addEventListener("click",function(){currentAd01&&currentAd01.clickThrough&&window.open(currentAd01.clickThrough,"_blank","noopener,noreferrer")});
 
-started01=true;
+vastVideo01.addEventListener("error",function(){if(!adPlaying01)return;sendTracking01("error");adIndex01<ads01.length?playAd01():(adPlaying01=!1,showServers01())});
 
-vastVideo01.pause();
+function showServers01(){adPlaying01=!1;vastVideo01.pause();vastVideo01.removeAttribute("src");vastVideo01.load();vastBox01.style.display="none";serverVideo01.style.display="block";serverPanel01.style.display="block";serverButtons01.innerHTML="";for(var i=0;i<serverUrls01.length;i++)(function(n){var b=document.createElement("button");b.type="button";b.className="serverButton01";b.textContent="Server "+String(n+1).padStart(2,"0");b.addEventListener("click",function(){loadServer01(n)});serverButtons01.appendChild(b)})(i);loadServer01(0)}
 
-vastBox01.style.display="none";
+function loadServer01(n){serverVideo01.innerHTML="";var f=document.createElement("iframe");f.src=serverUrls01[n];f.setAttribute("allowfullscreen","");f.setAttribute("allow","autoplay; fullscreen; picture-in-picture");f.setAttribute("loading","eager");f.referrerPolicy="no-referrer";serverVideo01.appendChild(f);var b=serverButtons01.querySelectorAll(".serverButton01");for(var i=0;i<b.length;i++)b[i].classList.remove("active");b[n]&&b[n].classList.add("active")}
 
-videoBox01.style.display="block";
-
-loadServer01(0);
-
-}
-
-function loadServer01(index){
-
-if(!servers01[index])return;
-
-iframeContainer01.innerHTML="";
-
-var iframe01=
-document.createElement("iframe");
-
-iframe01.src=servers01[index];
-
-iframe01.setAttribute(
-"allow",
-"autoplay; fullscreen; picture-in-picture"
-);
-
-iframe01.setAttribute(
-"allowfullscreen",
-""
-);
-
-iframe01.setAttribute(
-"frameborder",
-"0"
-);
-
-iframe01.setAttribute(
-"scrolling",
-"no"
-);
-
-iframeContainer01.appendChild(
-iframe01
-);
-
-var buttons=
-buttons01.querySelectorAll(
-"button"
-);
-
-buttons.forEach(function(button){
-
-button.classList.remove(
-"active"
-);
-
-});
-
-if(buttons[index]){
-
-buttons[index].classList.add(
-"active"
-);
-
-}
-
-}
-
-servers01.forEach(function(
-server,
-index
-){
-
-var button01=
-document.createElement("button");
-
-button01.type="button";
-
-button01.textContent=
-"Server "+
-String(index+1).padStart(2,"0");
-
-button01.setAttribute(
-"data-server",
-index
-);
-
-if(index===0){
-
-button01.classList.add(
-"active"
-);
-
-}
-
-buttons01.appendChild(
-button01
-);
-
-});
-
-buttons01.addEventListener(
-"click",
-function(event){
-
-var button01=
-event.target.closest(
-"button"
-);
-
-if(!button01)return;
-
-var index01=
-parseInt(
-button01.getAttribute(
-"data-server"
-),
-10
-);
-
-loadServer01(index01);
-
-}
-);
-
-function status01(text){
-
-vastStatus01.textContent=
-text;
-
-}
-
-status01(
-"Loading ad..."
-);
-
-fetch(
-vastURL01,
-{
-method:"GET",
-mode:"cors"
-}
-)
-.then(function(response){
-
-if(!response.ok){
-
-throw new Error(
-"HTTP "+response.status
-);
-
-}
-
-return response.text();
-
-})
-.then(function(text){
-
-var xml01=
-new DOMParser()
-.parseFromString(
-text,
-"text/xml"
-);
-
-var ad01=
-xml01.querySelector(
-"Ad"
-);
-
-if(!ad01){
-
-throw new Error(
-"No Ad"
-);
-
-}
-
-var mediaFiles01=
-ad01.querySelectorAll(
-"MediaFile"
-);
-
-if(!mediaFiles01.length){
-
-throw new Error(
-"No MediaFile"
-);
-
-}
-
-var mediaURL01="";
-
-for(
-var i01=0;
-i01<mediaFiles01.length;
-i01++
-){
-
-var mediaFile01=
-mediaFiles01[i01];
-
-var type01=
-(
-mediaFile01.getAttribute(
-"type"
-)||""
-)
-.toLowerCase();
-
-var url01=
-(
-mediaFile01.textContent||
-""
-).trim();
-
-if(!url01)continue;
-
-if(
-type01.indexOf(
-"mp4"
-)!==-1
-){
-
-mediaURL01=url01;
-
-break;
-
-}
-
-if(!mediaURL01){
-
-mediaURL01=url01;
-
-}
-
-}
-
-if(!mediaURL01){
-
-throw new Error(
-"No media URL"
-);
-
-}
-
-vastVideo01.src=
-mediaURL01;
-
-vastVideo01.load();
-
-status01(
-"Advertisement"
-);
-
-var playPromise01=
-vastVideo01.play();
-
-if(
-playPromise01&&
-playPromise01.catch
-){
-
-playPromise01.catch(
-function(){
-
-status01(
-"Press Play to start the ad"
-);
-
-}
-);
-
-}
-
-})
-.catch(function(){
-
-status01(
-"Ad unavailable"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-500
-);
-
-});
-
-vastVideo01.addEventListener(
-"ended",
-function(){
-
-status01(
-"Advertisement finished"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-300
-);
-
-}
-);
-
-vastVideo01.addEventListener(
-"error",
-function(){
-
-status01(
-"Ad unavailable"
-);
-
-setTimeout(
-function(){
-
-showVideo01();
-
-},
-500
-);
-
-}
-);
-
+var xhr01=new XMLHttpRequest;xhr01.open("GET",vastUrl01,!0);xhr01.timeout=15e3;xhr01.onreadystatechange=function(){if(4!==xhr01.readyState)return;if(xhr01.status>=200&&xhr01.status<300){ads01=parseVast01(xhr01.responseText);ads01.length?playAd01():showServers01()}else showServers01()};xhr01.ontimeout=xhr01.onerror=function(){showServers01()};xhr01.send()
 })();
 </script>
-  
-
   </div>
 
   <div class="post-share" id="postShare">
@@ -1246,7 +786,7 @@ showVideo01();
                     <line x1="2" y1="12" x2="22" y2="12"/>
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
-                  Related
+                  Related Posts
                 </h2>
                 <div class="related-grid" id="relatedGrid">
               {% endif %}
