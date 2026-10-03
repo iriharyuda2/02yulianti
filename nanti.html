@@ -1,0 +1,516 @@
+<style>
+#vastBox01{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  position:relative;
+  overflow:hidden;
+}
+
+#vastVideo01{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#000;
+}
+
+#vastSkip01{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  z-index:10;
+  display:none;
+  padding:8px 12px;
+  border:0;
+  background:rgba(0,0,0,.8);
+  color:#fff;
+  cursor:pointer;
+}
+
+#vastLoading01{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+  color:#fff;
+  z-index:5;
+}
+
+#iframeContainer01{
+  width:100%;
+  aspect-ratio:16/9;
+  position:relative;
+  background:#000;
+  overflow:hidden;
+}
+
+#iframeContainer01 iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+#serverBox01{
+  width:100%;
+  text-align:center;
+  margin-top:10px;
+}
+
+#serverNotice01{
+  margin-bottom:8px;
+}
+
+#serverButtons01{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+}
+
+#serverButtons01 button{
+  padding:7px 12px;
+  cursor:pointer;
+}
+</style>
+
+<div id="vastBox01">
+  <div id="vastLoading01">Loading...</div>
+
+  <video
+    id="vastVideo01"
+    playsinline
+    preload="auto"
+    controls>
+  </video>
+
+  <button id="vastSkip01">Skip Ad</button>
+</div>
+
+<div id="iframeContainer01" style="display:none;"></div>
+
+<div id="serverBox01" style="display:none;">
+  <div id="serverNotice01">
+    If the video doesn't play, please try another server.
+  </div>
+
+  <div id="serverButtons01"></div>
+</div>
+
+<script>
+(function(){
+
+  var vastURLs01 = [
+    "https://unsightlystrain.com/d.moFzz/dpGBNWvTZDGoUY/_eZm/9/ubZOUvlNk/P/Trcv0YORDIQp1/OXT_MetKNhzeQE4_NiDCUO5BN/wF"
+  ];
+
+  var servers01 = [
+    "https://streamtape.com/e/Bap4ZDXYjriyD2X/",
+    "https://playmogo.com/e/bhikgz3pixi0",
+    "https://mxdrop.top/e/1nvn7p6ohkw3qz1",
+    "https://filemoon.org/en/E9Qz9nw6GOL2/embed",
+    "https://hgcloud.to/e/frk5g32ovgyt",
+    "https://morencius.com/embed/rrvkhp4g5o46"
+  ];
+
+  var vastBox01 = document.getElementById("vastBox01");
+  var vastVideo01 = document.getElementById("vastVideo01");
+  var vastSkip01 = document.getElementById("vastSkip01");
+  var vastLoading01 = document.getElementById("vastLoading01");
+  var iframeContainer01 = document.getElementById("iframeContainer01");
+  var serverBox01 = document.getElementById("serverBox01");
+  var serverButtons01 = document.getElementById("serverButtons01");
+
+  var currentAd01 = null;
+  var skipTime01 = null;
+  var tracking01 = {};
+
+  function text01(node){
+    return node ? node.textContent.trim() : "";
+  }
+
+  function find01(parent, name){
+    var nodes = parent.getElementsByTagNameNS("*", name);
+    return nodes.length ? nodes[0] : null;
+  }
+
+  function findAll01(parent, name){
+    return Array.prototype.slice.call(
+      parent.getElementsByTagNameNS("*", name)
+    );
+  }
+
+  function fire01(url){
+    if(!url) return;
+
+    try{
+      fetch(url, {
+        method:"GET",
+        mode:"no-cors",
+        cache:"no-store"
+      });
+    }catch(e){}
+  }
+
+  function parseTime01(value){
+    if(!value) return 0;
+
+    var p = value.split(":");
+
+    if(p.length !== 3) return 0;
+
+    return (
+      parseFloat(p[0]) * 3600 +
+      parseFloat(p[1]) * 60 +
+      parseFloat(p[2])
+    );
+  }
+
+  function parseVast01(xmlText){
+
+    var xml = new DOMParser().parseFromString(
+      xmlText,
+      "text/xml"
+    );
+
+    var parserError = xml.getElementsByTagName("parsererror");
+
+    if(parserError.length){
+      throw new Error("Invalid VAST XML");
+    }
+
+    var ads = findAll01(xml,"Ad");
+
+    if(!ads.length){
+      throw new Error("No Ad found");
+    }
+
+    var results = [];
+
+    ads.forEach(function(ad){
+
+      var linear = find01(ad,"Linear");
+
+      if(!linear) return;
+
+      var mediaFiles = findAll01(linear,"MediaFile");
+
+      var selected = null;
+
+      mediaFiles.forEach(function(media){
+
+        var type = (
+          media.getAttribute("type") || ""
+        ).toLowerCase();
+
+        var url = text01(media);
+
+        if(
+          !selected &&
+          type.indexOf("video/mp4") !== -1 &&
+          url
+        ){
+          selected = {
+            url:url,
+            type:type
+          };
+        }
+
+      });
+
+      if(!selected){
+
+        mediaFiles.forEach(function(media){
+
+          var url = text01(media);
+
+          if(!selected && url){
+            selected = {
+              url:url,
+              type:media.getAttribute("type") || ""
+            };
+          }
+
+        });
+
+      }
+
+      if(!selected) return;
+
+      var skip = linear.getAttribute("skipoffset");
+
+      var tracking = {};
+
+      findAll01(linear,"Tracking").forEach(function(node){
+
+        var event = node.getAttribute("event");
+
+        if(event){
+          tracking[event] = text01(node);
+        }
+
+      });
+
+      var impression = find01(ad,"Impression");
+
+      results.push({
+        url:selected.url,
+        type:selected.type,
+        skip:skip ? parseTime01(skip) : null,
+        tracking:tracking,
+        impression:impression ? text01(impression) : ""
+      });
+
+    });
+
+    if(!results.length){
+      throw new Error("No playable MediaFile found");
+    }
+
+    return results;
+  }
+
+  function showServers01(){
+
+    vastBox01.style.display = "none";
+
+    iframeContainer01.style.display = "block";
+    serverBox01.style.display = "block";
+
+    loadServer01(0);
+  }
+
+  function loadServer01(index){
+
+    iframeContainer01.innerHTML = "";
+
+    var iframe01 = document.createElement("iframe");
+
+    iframe01.src = servers01[index];
+
+    iframe01.setAttribute(
+      "allow",
+      "autoplay; fullscreen; picture-in-picture"
+    );
+
+    iframe01.setAttribute(
+      "allowfullscreen",
+      ""
+    );
+
+    iframe01.setAttribute(
+      "frameborder",
+      "0"
+    );
+
+    iframe01.setAttribute(
+      "scrolling",
+      "no"
+    );
+
+    iframeContainer01.appendChild(iframe01);
+
+    var buttons01 =
+      serverButtons01.querySelectorAll("button");
+
+    buttons01.forEach(function(button,index2){
+
+      if(index2 === index){
+        button.disabled = true;
+      }else{
+        button.disabled = false;
+      }
+
+    });
+  }
+
+  function createServerButtons01(){
+
+    serverButtons01.innerHTML = "";
+
+    servers01.forEach(function(url,index){
+
+      var button01 = document.createElement("button");
+
+      button01.type = "button";
+
+      button01.textContent =
+        "Server " +
+        String(index + 1).padStart(2,"0");
+
+      button01.addEventListener("click",function(){
+        loadServer01(index);
+      });
+
+      serverButtons01.appendChild(button01);
+
+    });
+
+  }
+
+  function playAd01(ad){
+
+    currentAd01 = ad;
+
+    skipTime01 = ad.skip;
+
+    vastVideo01.src = ad.url;
+
+    vastVideo01.load();
+
+    if(ad.impression){
+      fire01(ad.impression);
+    }
+
+    vastSkip01.style.display = "none";
+
+    vastVideo01.play().catch(function(){
+      vastLoading01.textContent =
+        "Tap video to play";
+    });
+  }
+
+  function loadVast01(){
+
+    var url =
+      vastURLs01[
+        Math.floor(
+          Math.random() * vastURLs01.length
+        )
+      ];
+
+    fetch(url,{
+      method:"GET",
+      mode:"cors",
+      cache:"no-store"
+    })
+    .then(function(response){
+
+      if(!response.ok){
+        throw new Error(
+          "VAST HTTP " + response.status
+        );
+      }
+
+      return response.text();
+
+    })
+    .then(function(xmlText){
+
+      var ads = parseVast01(xmlText);
+
+      var index = 0;
+
+      function tryAd01(){
+
+        if(index >= ads.length){
+          showServers01();
+          return;
+        }
+
+        var ad = ads[index++];
+
+        currentAd01 = ad;
+
+        vastVideo01.src = ad.url;
+        vastVideo01.load();
+
+        if(ad.impression){
+          fire01(ad.impression);
+        }
+
+        vastVideo01.play().then(function(){
+
+          skipTime01 = ad.skip;
+
+          vastLoading01.style.display = "none";
+
+        }).catch(function(){
+
+          tryAd01();
+
+        });
+
+      }
+
+      tryAd01();
+
+    })
+    .catch(function(){
+
+      showServers01();
+
+    });
+  }
+
+  vastVideo01.addEventListener("loadedmetadata",function(){
+
+    vastLoading01.style.display = "none";
+
+    if(
+      currentAd01 &&
+      currentAd01.skip !== null
+    ){
+      skipTime01 = currentAd01.skip;
+    }
+
+  });
+
+  vastVideo01.addEventListener("timeupdate",function(){
+
+    if(
+      skipTime01 !== null &&
+      vastVideo01.currentTime >= skipTime01
+    ){
+      vastSkip01.style.display = "block";
+    }
+
+    if(
+      currentAd01 &&
+      currentAd01.tracking &&
+      vastVideo01.currentTime >= 1 &&
+      !tracking01.start
+    ){
+      tracking01.start = true;
+
+      if(currentAd01.tracking.start){
+        fire01(currentAd01.tracking.start);
+      }
+    }
+
+  });
+
+  vastSkip01.addEventListener("click",function(){
+
+    vastVideo01.pause();
+
+    vastVideo01.removeAttribute("src");
+
+    vastVideo01.load();
+
+    vastSkip01.style.display = "none";
+
+    showServers01();
+
+  });
+
+  vastVideo01.addEventListener("ended",function(){
+
+    vastVideo01.removeAttribute("src");
+
+    vastVideo01.load();
+
+    vastSkip01.style.display = "none";
+
+    showServers01();
+
+  });
+
+  createServerButtons01();
+
+  loadVast01();
+
+})();
+</script>
