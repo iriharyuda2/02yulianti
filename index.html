@@ -115,7 +115,6 @@ layout: null
     .menu a:hover { background: var(--btn-bg); color: var(--link); }
     body.menu-open { overflow: hidden; }
 
-    /* === AD SLOTS === */
     .ad-slot {
       display: flex; align-items: center; justify-content: center;
       background: var(--ad-bg); border: 1px dashed var(--ad-border);
@@ -128,13 +127,11 @@ layout: null
     }
     .ad-footer { margin: 0 auto 32px; }
 
-    /* Desktop only / mobile only */
     .ad-desktop-only { display: none; }
     @media (min-width: 701px) {
       .ad-desktop-only { display: flex; }
     }
 
-    /* Iklan in-grid */
     .ad-in-grid {
       grid-column: 1 / -1;
       display: grid;
@@ -490,7 +487,6 @@ layout: null
         </button>
       </div>
 
-      {# Iklan setiap 9 post #}
       {% assign mod = forloop.index | modulo: 9 %}
       {% if mod == 0 and forloop.index != forloop.length %}
         {% assign break_num = forloop.index | divided_by: 9 %}
@@ -775,7 +771,6 @@ layout: null
       });
     })();
 
-    /* === PAGINASI === */
     (function () {
       var PER_PAGE = 27;
 
