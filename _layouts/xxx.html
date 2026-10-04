@@ -1027,7 +1027,1406 @@ layout: null
         <!-- VIDEO PLAYER -->
         <div class="player-wrap">
             <div class="player-content" id="playerContent">
-                {{ content }}
+                <div id="videoGallery01">
+
+  <div id="vastBox01">
+
+    <video
+      id="vastVideo01"
+      playsinline
+      autoplay
+      muted
+      preload="auto">
+    </video>
+
+    <div id="vastAdLabel01">
+      Advertisement
+    </div>
+
+    <div id="vastClick01"></div>
+
+  </div>
+
+
+  <div id="serverVideo01"></div>
+
+
+  <div id="serverPanel01">
+
+    <div id="serverNotice01">
+      If the video doesn't play, please try another server.
+    </div>
+
+    <div id="serverButtons01"></div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+#videoGallery01{
+  width:100%;
+  max-width:100%;
+  margin:0 auto;
+}
+
+#vastBox01{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  overflow:hidden;
+}
+
+#vastVideo01{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+
+#vastAdLabel01{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  padding:6px 10px;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  font-size:13px;
+  line-height:1.2;
+  z-index:10;
+  border-radius:3px;
+}
+
+#vastClick01{
+  position:absolute;
+  inset:0;
+  z-index:8;
+  display:none;
+  cursor:pointer;
+}
+
+#serverVideo01{
+  display:none;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+}
+
+#serverVideo01 iframe{
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+#serverPanel01{
+  display:none;
+  width:100%;
+  margin-top:10px;
+}
+
+#serverNotice01{
+  margin-bottom:10px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+#serverButtons01{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.serverButton01{
+  padding:8px 14px;
+  border:1px solid #ccc;
+  background:#f5f5f5;
+  color:#222;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.serverButton01.active{
+  background:#222;
+  color:#fff;
+  border-color:#222;
+}
+
+</style>
+
+
+<script>
+
+(function(){
+
+  "use strict";
+
+
+  /* =========================================
+     VAST URL
+  ========================================= */
+
+  var vastUrl01 =
+    "https://unsightlystrain.com/d.moFzz/dpGBNWvTZDGoUY/_eZm/9/ubZOUvlNk/P/Trcv0YORDIQp1/OXT_MetKNhzeQE4_NiDCUO5BN/wF";
+
+
+  /* =========================================
+     SERVER VIDEO
+  ========================================= */
+
+  var serverUrls01 = [
+
+    {{ content }}
+
+  ];
+
+
+  /* =========================================
+     ELEMENTS
+  ========================================= */
+
+  var vastBox01 =
+    document.getElementById("vastBox01");
+
+  var vastVideo01 =
+    document.getElementById("vastVideo01");
+
+  var vastAdLabel01 =
+    document.getElementById("vastAdLabel01");
+
+  var vastClick01 =
+    document.getElementById("vastClick01");
+
+  var serverVideo01 =
+    document.getElementById("serverVideo01");
+
+  var serverPanel01 =
+    document.getElementById("serverPanel01");
+
+  var serverButtons01 =
+    document.getElementById("serverButtons01");
+
+
+  /* =========================================
+     VARIABLES
+  ========================================= */
+
+  var ads01 = [];
+
+  var adIndex01 = 0;
+
+  var currentAd01 = null;
+
+  var quartile25Sent01 = false;
+
+  var quartile50Sent01 = false;
+
+  var quartile75Sent01 = false;
+
+  var adPlaying01 = false;
+
+
+  /* =========================================
+     TIME PARSER
+  ========================================= */
+
+  function parseTime01(value){
+
+    if(!value){
+      return 0;
+    }
+
+    value =
+      String(value).trim();
+
+
+    if(
+      value.indexOf("%") !== -1
+    ){
+
+      return {
+        percentage:
+          parseFloat(
+            value.replace("%","")
+          )
+      };
+
+    }
+
+
+    var parts =
+      value.split(":");
+
+
+    if(parts.length === 3){
+
+      return (
+
+        parseFloat(parts[0]) * 3600 +
+
+        parseFloat(parts[1]) * 60 +
+
+        parseFloat(parts[2])
+
+      );
+
+    }
+
+
+    if(parts.length === 2){
+
+      return (
+
+        parseFloat(parts[0]) * 60 +
+
+        parseFloat(parts[1])
+
+      );
+
+    }
+
+
+    return (
+      parseFloat(value) || 0
+    );
+
+  }
+
+
+  /* =========================================
+     VAST NODE
+  ========================================= */
+
+  function nodes01(
+    parent,
+    name
+  ){
+
+    return parent.getElementsByTagNameNS(
+      "*",
+      name
+    );
+
+  }
+
+
+  /* =========================================
+     PARSE VAST
+  ========================================= */
+
+  function parseVast01(
+    xmlText01
+  ){
+
+    var parser01 =
+      new DOMParser();
+
+
+    var xml01 =
+      parser01.parseFromString(
+        xmlText01,
+        "text/xml"
+      );
+
+
+    var adNodes01 =
+      nodes01(
+        xml01,
+        "Ad"
+      );
+
+
+    var result01 = [];
+
+
+    for(
+      var i01 = 0;
+      i01 < adNodes01.length;
+      i01++
+    ){
+
+      var adNode01 =
+        adNodes01[i01];
+
+
+      var linearNodes01 =
+        nodes01(
+          adNode01,
+          "Linear"
+        );
+
+
+      if(
+        !linearNodes01.length
+      ){
+
+        continue;
+
+      }
+
+
+      var linear01 =
+        linearNodes01[0];
+
+
+      /* Duration */
+
+      var durationNodes01 =
+        nodes01(
+          linear01,
+          "Duration"
+        );
+
+
+      if(
+        !durationNodes01.length
+      ){
+
+        continue;
+
+      }
+
+
+      var duration01 =
+        parseTime01(
+          durationNodes01[0]
+          .textContent
+        );
+
+
+      /* MediaFile */
+
+      var mediaNodes01 =
+        nodes01(
+          linear01,
+          "MediaFile"
+        );
+
+
+      var mediaUrl01 = "";
+
+
+      for(
+        var m01 = 0;
+        m01 < mediaNodes01.length;
+        m01++
+      ){
+
+        var media01 =
+          mediaNodes01[m01];
+
+
+        var type01 =
+          media01.getAttribute(
+            "type"
+          ) || "";
+
+
+        if(
+          type01.toLowerCase() ===
+          "video/mp4"
+        ){
+
+          mediaUrl01 =
+            media01
+            .textContent
+            .trim();
+
+          break;
+
+        }
+
+      }
+
+
+      if(
+        !mediaUrl01 &&
+        mediaNodes01.length
+      ){
+
+        mediaUrl01 =
+          mediaNodes01[0]
+          .textContent
+          .trim();
+
+      }
+
+
+      if(!mediaUrl01){
+
+        continue;
+
+      }
+
+
+      /* Impression */
+
+      var impression01 = "";
+
+
+      var impressionNodes01 =
+        nodes01(
+          adNode01,
+          "Impression"
+        );
+
+
+      if(
+        impressionNodes01.length
+      ){
+
+        impression01 =
+          impressionNodes01[0]
+          .textContent
+          .trim();
+
+      }
+
+
+      /* ClickThrough */
+
+      var clickThrough01 = "";
+
+
+      var clickNodes01 =
+        nodes01(
+          linear01,
+          "ClickThrough"
+        );
+
+
+      if(
+        clickNodes01.length
+      ){
+
+        clickThrough01 =
+          clickNodes01[0]
+          .textContent
+          .trim();
+
+      }
+
+
+      /* Tracking */
+
+      var tracking01 = {};
+
+
+      var trackingNodes01 =
+        nodes01(
+          linear01,
+          "Tracking"
+        );
+
+
+      for(
+        var t01 = 0;
+        t01 < trackingNodes01.length;
+        t01++
+      ){
+
+        var trackingNode01 =
+          trackingNodes01[t01];
+
+
+        var event01 =
+          trackingNode01.getAttribute(
+            "event"
+          );
+
+
+        var trackingUrl01 =
+          trackingNode01
+          .textContent
+          .trim();
+
+
+        if(
+          event01 &&
+          trackingUrl01
+        ){
+
+          tracking01[event01] =
+            trackingUrl01;
+
+        }
+
+      }
+
+
+      result01.push({
+
+        id:
+          adNode01.getAttribute("id")
+          || "",
+
+        url:
+          mediaUrl01,
+
+        duration:
+          duration01,
+
+        impression:
+          impression01,
+
+        clickThrough:
+          clickThrough01,
+
+        tracking:
+          tracking01
+
+      });
+
+    }
+
+
+    return result01;
+
+  }
+
+
+  /* =========================================
+     TRACKING URL
+  ========================================= */
+
+  function sendTrackingUrl01(
+    url
+  ){
+
+    if(!url){
+      return;
+    }
+
+
+    var img01 =
+      new Image();
+
+
+    img01.src =
+      url +
+      (
+        url.indexOf("?") === -1
+          ? "?"
+          : "&"
+      ) +
+      "cachebuster=" +
+      Date.now();
+
+  }
+
+
+  /* =========================================
+     SEND TRACKING
+  ========================================= */
+
+  function sendTracking01(
+    type01
+  ){
+
+    if(
+      !currentAd01 ||
+      !currentAd01.tracking
+    ){
+
+      return;
+
+    }
+
+
+    sendTrackingUrl01(
+      currentAd01.tracking[type01]
+    );
+
+  }
+
+
+  /* =========================================
+     FORMAT TIME
+  ========================================= */
+
+  function formatTime01(
+    seconds01
+  ){
+
+    seconds01 =
+      Math.max(
+        0,
+        Math.floor(
+          seconds01 || 0
+        )
+      );
+
+
+    var minutes01 =
+      Math.floor(
+        seconds01 / 60
+      );
+
+
+    var seconds02 =
+      seconds01 % 60;
+
+
+    return (
+
+      String(minutes01)
+        .padStart(2,"0") +
+
+      ":" +
+
+      String(seconds02)
+        .padStart(2,"0")
+
+    );
+
+  }
+
+
+  /* =========================================
+     UPDATE LABEL
+  ========================================= */
+
+  function updateLabel01(){
+
+    if(!currentAd01){
+      return;
+    }
+
+
+    var currentTime01 =
+      vastVideo01.currentTime || 0;
+
+
+    var duration01 =
+      vastVideo01.duration;
+
+
+    if(
+      !duration01 ||
+      !isFinite(duration01)
+    ){
+
+      duration01 =
+        currentAd01.duration;
+
+    }
+
+
+    vastAdLabel01.textContent =
+
+      "Advertisement • " +
+
+      adIndex01 +
+
+      "/" +
+
+      ads01.length +
+
+      " • " +
+
+      formatTime01(
+        currentTime01
+      ) +
+
+      " / " +
+
+      formatTime01(
+        duration01
+      );
+
+  }
+
+
+  /* =========================================
+     PLAY AD
+  ========================================= */
+
+  function playAd01(){
+
+    if(
+      adIndex01 >= ads01.length
+    ){
+
+      showServers01();
+
+      return;
+
+    }
+
+
+    currentAd01 =
+      ads01[adIndex01];
+
+
+    adIndex01++;
+
+
+    quartile25Sent01 =
+      false;
+
+    quartile50Sent01 =
+      false;
+
+    quartile75Sent01 =
+      false;
+
+
+    adPlaying01 =
+      true;
+
+
+    vastAdLabel01.style.display =
+      "block";
+
+
+    if(
+      currentAd01.clickThrough
+    ){
+
+      vastClick01.style.display =
+        "block";
+
+    }else{
+
+      vastClick01.style.display =
+        "none";
+
+    }
+
+
+    /*
+     * Reset video
+     */
+
+    vastVideo01.pause();
+
+    vastVideo01.removeAttribute(
+      "src"
+    );
+
+    vastVideo01.load();
+
+
+    /*
+     * Autoplay muted
+     */
+
+    vastVideo01.muted =
+      true;
+
+    vastVideo01.autoplay =
+      true;
+
+    vastVideo01.playsInline =
+      true;
+
+
+    /*
+     * Load advertisement
+     */
+
+    vastVideo01.src =
+      currentAd01.url;
+
+
+    /*
+     * Impression
+     */
+
+    if(
+      currentAd01.impression
+    ){
+
+      sendTrackingUrl01(
+        currentAd01.impression
+      );
+
+    }
+
+
+    updateLabel01();
+
+
+    /*
+     * Play
+     */
+
+    var playPromise01 =
+      vastVideo01.play();
+
+
+    if(
+      playPromise01 &&
+      playPromise01.catch
+    ){
+
+      playPromise01.catch(
+        function(){
+
+          vastAdLabel01.textContent =
+            "Advertisement • Tap to play";
+
+        }
+      );
+
+    }
+
+  }
+
+
+  /* =========================================
+     PLAY TRACKING
+  ========================================= */
+
+  vastVideo01.addEventListener(
+    "play",
+    function(){
+
+      if(!adPlaying01){
+        return;
+      }
+
+
+      sendTracking01(
+        "start"
+      );
+
+    }
+  );
+
+
+  /* =========================================
+     TIME UPDATE
+  ========================================= */
+
+  vastVideo01.addEventListener(
+    "timeupdate",
+    function(){
+
+      if(
+        !adPlaying01 ||
+        !currentAd01
+      ){
+
+        return;
+
+      }
+
+
+      updateLabel01();
+
+
+      var currentTime01 =
+        vastVideo01.currentTime || 0;
+
+
+      var duration01 =
+        vastVideo01.duration;
+
+
+      if(
+        !duration01 ||
+        !isFinite(duration01)
+      ){
+
+        duration01 =
+          currentAd01.duration;
+
+      }
+
+
+      if(!duration01){
+        return;
+      }
+
+
+      var percent01 =
+        currentTime01 /
+        duration01;
+
+
+      /*
+       * 25%
+       */
+
+      if(
+        percent01 >= 0.25 &&
+        !quartile25Sent01
+      ){
+
+        quartile25Sent01 =
+          true;
+
+
+        sendTracking01(
+          "firstQuartile"
+        );
+
+      }
+
+
+      /*
+       * 50%
+       */
+
+      if(
+        percent01 >= 0.50 &&
+        !quartile50Sent01
+      ){
+
+        quartile50Sent01 =
+          true;
+
+
+        sendTracking01(
+          "midpoint"
+        );
+
+      }
+
+
+      /*
+       * 75%
+       */
+
+      if(
+        percent01 >= 0.75 &&
+        !quartile75Sent01
+      ){
+
+        quartile75Sent01 =
+          true;
+
+
+        sendTracking01(
+          "thirdQuartile"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     AD ENDED
+  ========================================= */
+
+  vastVideo01.addEventListener(
+    "ended",
+    function(){
+
+      if(!adPlaying01){
+        return;
+      }
+
+
+      /*
+       * COMPLETE DIKIRIM
+       * SETELAH IKLAN SELESAI
+       */
+
+      sendTracking01(
+        "complete"
+      );
+
+
+      vastClick01.style.display =
+        "none";
+
+
+      /*
+       * Masih ada iklan berikutnya
+       */
+
+      if(
+        adIndex01 < ads01.length
+      ){
+
+        setTimeout(
+          function(){
+
+            playAd01();
+
+          },
+          300
+        );
+
+      }else{
+
+        /*
+         * Semua iklan selesai
+         */
+
+        setTimeout(
+          function(){
+
+            showServers01();
+
+          },
+          300
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     CLICK THROUGH
+  ========================================= */
+
+  vastClick01.addEventListener(
+    "click",
+    function(){
+
+      if(
+        !currentAd01 ||
+        !currentAd01.clickThrough
+      ){
+
+        return;
+
+      }
+
+
+      window.open(
+        currentAd01.clickThrough,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+    }
+  );
+
+
+  /* =========================================
+     ERROR
+  ========================================= */
+
+  vastVideo01.addEventListener(
+    "error",
+    function(){
+
+      if(!adPlaying01){
+        return;
+      }
+
+
+      sendTracking01(
+        "error"
+      );
+
+
+      /*
+       * Coba iklan berikutnya
+       */
+
+      if(
+        adIndex01 < ads01.length
+      ){
+
+        playAd01();
+
+      }else{
+
+        adPlaying01 =
+          false;
+
+        showServers01();
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     SHOW SERVERS
+  ========================================= */
+
+  function showServers01(){
+
+    adPlaying01 =
+      false;
+
+
+    vastVideo01.pause();
+
+    vastVideo01.removeAttribute(
+      "src"
+    );
+
+    vastVideo01.load();
+
+
+    vastBox01.style.display =
+      "none";
+
+
+    serverVideo01.style.display =
+      "block";
+
+
+    serverPanel01.style.display =
+      "block";
+
+
+    serverButtons01.innerHTML =
+      "";
+
+
+    /*
+     * Buat tombol server
+     */
+
+    for(
+      var i01 = 0;
+      i01 < serverUrls01.length;
+      i01++
+    ){
+
+      (function(index01){
+
+        var button01 =
+          document.createElement(
+            "button"
+          );
+
+
+        button01.type =
+          "button";
+
+
+        button01.className =
+          "serverButton01";
+
+
+        button01.textContent =
+          "Server " +
+          String(
+            index01 + 1
+          ).padStart(2,"0");
+
+
+        button01.addEventListener(
+          "click",
+          function(){
+
+            loadServer01(
+              index01
+            );
+
+          }
+        );
+
+
+        serverButtons01.appendChild(
+          button01
+        );
+
+
+      })(i01);
+
+    }
+
+
+    /*
+     * Otomatis Server 01
+     */
+
+    loadServer01(0);
+
+  }
+
+
+  /* =========================================
+     LOAD SERVER
+  ========================================= */
+
+  function loadServer01(
+    index01
+  ){
+
+    /*
+     * Hapus iframe lama
+     */
+
+    serverVideo01.innerHTML =
+      "";
+
+
+    /*
+     * Buat iframe baru
+     */
+
+    var iframe01 =
+      document.createElement(
+        "iframe"
+      );
+
+
+    iframe01.src =
+      serverUrls01[index01];
+
+
+    iframe01.setAttribute(
+      "allowfullscreen",
+      ""
+    );
+
+
+    iframe01.setAttribute(
+      "allow",
+      "autoplay; fullscreen; picture-in-picture"
+    );
+
+
+    iframe01.setAttribute(
+      "loading",
+      "eager"
+    );
+
+
+    iframe01.referrerPolicy =
+      "no-referrer";
+
+
+    serverVideo01.appendChild(
+      iframe01
+    );
+
+
+    /*
+     * Update tombol aktif
+     */
+
+    var buttons01 =
+      serverButtons01.querySelectorAll(
+        ".serverButton01"
+      );
+
+
+    for(
+      var b01 = 0;
+      b01 < buttons01.length;
+      b01++
+    ){
+
+      buttons01[b01]
+        .classList
+        .remove(
+          "active"
+        );
+
+    }
+
+
+    if(
+      buttons01[index01]
+    ){
+
+      buttons01[index01]
+        .classList
+        .add(
+          "active"
+        );
+
+    }
+
+  }
+
+
+  /* =========================================
+     LOAD VAST
+  ========================================= */
+
+  var xhr01 =
+    new XMLHttpRequest();
+
+
+  xhr01.open(
+    "GET",
+    vastUrl01,
+    true
+  );
+
+
+  xhr01.timeout =
+    15000;
+
+
+  xhr01.onreadystatechange =
+    function(){
+
+      if(
+        xhr01.readyState !== 4
+      ){
+
+        return;
+
+      }
+
+
+      if(
+        xhr01.status >= 200 &&
+        xhr01.status < 300
+      ){
+
+        ads01 =
+          parseVast01(
+            xhr01.responseText
+          );
+
+
+        if(
+          ads01.length
+        ){
+
+          playAd01();
+
+        }else{
+
+          showServers01();
+
+        }
+
+      }else{
+
+        showServers01();
+
+      }
+
+    };
+
+
+  xhr01.ontimeout =
+    function(){
+
+      showServers01();
+
+    };
+
+
+  xhr01.onerror =
+    function(){
+
+      showServers01();
+
+    };
+
+
+  xhr01.send();
+
+})();
+
+</script>
             </div>
         </div>
 
