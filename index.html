@@ -68,7 +68,7 @@ layout: null
             --dur-bg: rgba(10,10,15,.85);
             --dur-fg: #a855f7;
             --header-bg: rgba(10,10,15,.85);
-            --menu-bg: #16161f;
+            --menu-bg: #0d0d14;
             --menu-hover: #1d1d29;
             --menu-text: #b0b0c0;
         }
@@ -93,7 +93,7 @@ layout: null
             --dur-bg: rgba(20,20,26,.9);
             --dur-fg: #ffffff;
             --header-bg: rgba(250,250,249,.9);
-            --menu-bg: #ffffff;
+            --menu-bg: #fafaf9;
             --menu-hover: #f5f5f3;
             --menu-text: #4a4a52;
         }
@@ -170,65 +170,180 @@ layout: null
         .icon-btn:active{transform:scale(.94)}
         .icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-        /* ============ MENU PANEL ============ */
+        /* ============ FULLSCREEN MENU ============ */
         .menu-panel{
-            position:fixed;top:0;right:0;height:100%;width:300px;max-width:88vw;
-            background:var(--menu-bg);z-index:1100;
-            transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+            position:fixed;inset:0;z-index:1100;
+            background:var(--menu-bg);
+            transform:translateY(-100%);
+            transition:transform .38s cubic-bezier(.4,0,.2,1);
             display:flex;flex-direction:column;
-            border-left:1px solid var(--border);
+            overflow:hidden;
         }
-        .menu-panel.open{transform:translateX(0)}
-        .menu-overlay{
-            position:fixed;inset:0;background:rgba(0,0,0,.5);
-            opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
-            z-index:1050;backdrop-filter:blur(2px);
-        }
-        .menu-overlay.open{opacity:1;visibility:visible}
+        .menu-panel.open{transform:translateY(0)}
+
         .menu-head{
+            flex-shrink:0;
             display:flex;align-items:center;justify-content:space-between;
-            padding:18px 20px;border-bottom:1px solid var(--border);
+            padding:14px 16px;
+            border-bottom:1px solid var(--border);
+            background:var(--menu-bg);
         }
-        .menu-head span{
-            font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+        .menu-head-title{
+            display:flex;align-items:center;gap:10px;
+        }
+        .menu-head-mark{
+            width:32px;height:32px;flex-shrink:0;
+            border-radius:8px;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-weight:900;font-size:14px;
+            font-family:'Playfair Display',serif;
+        }
+        .menu-head-text{
+            display:flex;flex-direction:column;
+        }
+        .menu-head-name{
+            font-size:14px;font-weight:800;color:var(--text);
+            letter-spacing:-.02em;
+            line-height:1.2;
+        }
+        .menu-head-sub{
+            font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
             color:var(--text-dim);
+            line-height:1.2;
+            margin-top:2px;
         }
         .menu-close{
-            width:30px;height:30px;border-radius:8px;
+            width:36px;height:36px;border-radius:9px;
             background:var(--surface);border:1px solid var(--border);
             cursor:pointer;display:flex;align-items:center;justify-content:center;
             color:var(--text);padding:0;
+            transition:all .2s ease;
         }
-        .menu-close svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-close:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .menu-close:active{transform:scale(.94)}
+        .menu-close svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
         .menu-body{
             flex:1;
             overflow-y:auto;
-            padding:10px 10px 20px;
+            padding:20px 16px 40px;
+            -webkit-overflow-scrolling:touch;
         }
+        .menu-content{
+            max-width:680px;
+            margin:0 auto;
+        }
+
         .menu-list{
             list-style:none;margin:0;padding:0;
             display:flex;flex-direction:column;gap:2px;
         }
         .menu-list a{
             display:flex;align-items:center;gap:12px;
-            padding:12px 14px;border-radius:8px;
+            padding:13px 14px;border-radius:9px;
             color:var(--menu-text);text-decoration:none;
             font-size:14px;font-weight:500;
             transition:all .15s ease;
         }
         .menu-list a:hover{background:var(--menu-hover);color:var(--text)}
         .menu-list a svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
         .menu-divider{
             height:1px;
             background:var(--border);
-            margin:12px 4px;
+            margin:18px 4px 14px;
             pointer-events:none;
         }
         .menu-section-label{
-            font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+            font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
             color:var(--text-dim);
-            padding:8px 14px 6px;
+            padding:0 14px 8px;
         }
+
+        /* Legal accordion in fullscreen menu */
+        .menu-legal{
+            display:flex;flex-direction:column;gap:6px;
+        }
+        .menu-legal details{
+            border:1px solid var(--border);
+            border-radius:9px;
+            background:var(--surface);
+            overflow:hidden;
+        }
+        .menu-legal summary{
+            padding:14px 16px;cursor:pointer;
+            font-size:12px;font-weight:700;letter-spacing:.08em;
+            color:var(--text);list-style:none;
+            display:flex;align-items:center;justify-content:space-between;
+            gap:10px;user-select:none;text-transform:uppercase;
+            transition:color .2s ease;
+        }
+        .menu-legal summary::-webkit-details-marker{display:none}
+        .menu-legal summary::after{
+            content:"";width:6px;height:6px;
+            border-right:2px solid var(--text-dim);
+            border-bottom:2px solid var(--text-dim);
+            transform:rotate(45deg);transition:transform .25s ease;
+            flex-shrink:0;
+        }
+        .menu-legal details[open] summary::after{transform:rotate(-135deg)}
+        .menu-legal details[open] summary{color:var(--accent)}
+        .menu-legal-body{
+            padding:4px 16px 16px;
+            border-top:1px solid var(--border);
+            font-size:12.5px;line-height:1.65;color:var(--text-dim);
+        }
+        .menu-legal-body p{margin:10px 0}
+        .menu-legal-body p strong{color:var(--text)}
+        .menu-legal-body ul{margin:10px 0;padding-left:20px}
+        .menu-legal-body li{margin-bottom:6px}
+        .menu-legal-body a{color:var(--accent);text-decoration:none;font-weight:500}
+        .menu-legal-body a:hover{text-decoration:underline}
+
+        /* Contact list inside fullscreen menu */
+        .menu-contact-list{
+            list-style:none;
+            padding:0;
+            margin:0;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .menu-contact-list li{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            line-height:1.5;
+            padding:10px 14px;
+            border-radius:9px;
+            background:var(--surface);
+            border:1px solid var(--border);
+            transition:all .15s ease;
+        }
+        .menu-contact-list li:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .menu-contact-list svg{
+            flex-shrink:0;
+            opacity:.75;
+            width:16px;height:16px;
+            stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+        }
+        .menu-contact-list span{
+            color:var(--text-dim);
+            font-weight:500;
+            font-size:12px;
+            text-transform:uppercase;
+            letter-spacing:.05em;
+            min-width:72px;
+        }
+        .menu-contact-list a{
+            color:var(--text);
+            text-decoration:none;
+            font-weight:600;
+            word-break:break-all;
+        }
+        .menu-contact-list a:hover{color:var(--accent)}
 
         /* ============ ADS ============ */
         .ad-box{
@@ -458,77 +573,55 @@ layout: null
         }
         .cookie-ok:active{transform:translateY(0)}
 
-        /* ============ FOOTER ============ */
+        /* ============ FOOTER (bersih) ============ */
         footer.site-footer{
-            max-width:900px;margin:40px auto 0;
-            padding:20px 16px 28px;
+            max-width:1400px;margin:40px auto 0;
+            padding:24px 16px 32px;
             border-top:1px solid var(--border);
+            text-align:center;
         }
-        .foot-collapse{
-            border:1px solid var(--border);border-radius:6px;
-            overflow:hidden;background:var(--surface);margin-bottom:6px;
-        }
-        .foot-collapse summary{
-            padding:12px 16px;cursor:pointer;
-            font-size:11px;font-weight:600;letter-spacing:.05em;
-            color:var(--text);list-style:none;
-            display:flex;align-items:center;justify-content:space-between;
-            gap:10px;user-select:none;text-transform:uppercase;
-            transition:color .2s ease;
-        }
-        .foot-collapse summary::-webkit-details-marker{display:none}
-        .foot-collapse summary::after{
-            content:"";width:6px;height:6px;
-            border-right:2px solid var(--text-dim);
-            border-bottom:2px solid var(--text-dim);
-            transform:rotate(45deg);transition:transform .25s ease;
-            flex-shrink:0;
-        }
-        .foot-collapse[open] summary::after{transform:rotate(-135deg)}
-        .foot-collapse:target summary{color:var(--accent)}
-        .foot-collapse-body{
-            padding:4px 16px 14px;
-            border-top:1px solid var(--border);
-            font-size:12px;line-height:1.6;color:var(--text-dim);
-        }
-        .foot-collapse-body p{margin:8px 0}
-        .foot-collapse-body p strong{color:var(--text)}
-        .foot-collapse-body ul{margin:8px 0;padding-left:18px}
-        .foot-collapse-body li{margin-bottom:4px}
-        .foot-collapse-body a{color:var(--accent);text-decoration:none;font-weight:500}
-        .foot-collapse-body a:hover{text-decoration:underline}
-
-        /* ============ CONTACT (footer) ============ */
-        .contact-list{
-            list-style:none;
-            padding:0;
-            margin:8px 0;
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-        }
-        .contact-list li{
-            display:flex;
-            align-items:center;
-            gap:8px;
-            font-size:12.5px;
-            line-height:1.4;
-        }
-        .contact-list svg{
-            flex-shrink:0;
-            opacity:.7;
-        }
-        .contact-list span{
+        .foot-copy{
+            font-size:12px;
             color:var(--text-dim);
-            font-weight:500;
+            margin:0;
+            line-height:1.6;
         }
-        .contact-list a{
+        .foot-copy strong{
+            color:var(--text);
+            font-weight:600;
+        }
+        .foot-copy a{
             color:var(--accent);
             text-decoration:none;
             font-weight:500;
-            word-break:break-all;
         }
-        .contact-list a:hover{text-decoration:underline}
+        .foot-copy a:hover{text-decoration:underline}
+        .foot-sep{
+            display:inline-block;
+            margin:0 8px;
+            opacity:.4;
+        }
+        .foot-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            margin-top:10px;
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.15em;
+            text-transform:uppercase;
+            color:var(--text-dim);
+            padding:5px 12px;
+            border:1px solid var(--border-strong);
+            border-radius:999px;
+        }
+        .foot-badge::before{
+            content:"";
+            width:6px;height:6px;
+            border-radius:50%;
+            background:var(--accent);
+            box-shadow:0 0 8px var(--accent);
+        }
 
         /* ============ RESPONSIVE ============ */
         @media(min-width:600px){
@@ -537,6 +630,8 @@ layout: null
             .section-title{font-size:20px}
             .section-title::before{height:20px}
             .brand-name{font-size:16px}
+            .menu-head{padding:16px 24px}
+            .menu-body{padding:24px 24px 48px}
         }
 
         @media(min-width:900px){
@@ -549,6 +644,9 @@ layout: null
             .card-play svg{width:24px;height:24px}
             .card-title{font-size:11.5px;padding:24px 12px 10px}
             .brand-name{font-size:17px}
+            .menu-head{padding:18px 32px}
+            .menu-body{padding:28px 32px 56px}
+            .menu-content{max-width:760px}
         }
 
         @media(max-width:600px){
@@ -559,6 +657,8 @@ layout: null
                 font-size:12.5px;
             }
             .cookie-ok{padding:7px 14px;font-size:12.5px}
+            .menu-contact-list span{min-width:64px;font-size:11px}
+            .menu-contact-list li{font-size:12.5px;padding:10px 12px}
         }
     </style>
 
@@ -587,44 +687,133 @@ layout: null
         </div>
     </header>
 
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <aside class="menu-panel" id="menuPanel">
+    <aside class="menu-panel" id="menuPanel" role="dialog" aria-label="Navigation and information" aria-modal="true">
         <div class="menu-head">
-            <span>Navigation</span>
+            <div class="menu-head-title">
+                <div class="menu-head-mark" id="menuHeadMark">Y</div>
+                <div class="menu-head-text">
+                    <span class="menu-head-name" id="menuHeadName">Yulianti</span>
+                    <span class="menu-head-sub">Menu &amp; Info</span>
+                </div>
+            </div>
             <button class="menu-close" id="menuClose" aria-label="Close">
                 <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="menu-body">
-            <ul class="menu-list">
-                <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Home</a></li>
-                <li><a href="#contact"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Contact</a></li>
-                <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg> Privacy Policy</a></li>
-                <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> Terms &amp; Conditions</a></li>
+            <div class="menu-content">
 
-                <li class="menu-divider" role="presentation"></li>
-                <li class="menu-section-label">Legal</li>
+                <!-- NAVIGATION -->
+                <ul class="menu-list">
+                    <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Home</a></li>
+                    <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg> Privacy Policy</a></li>
+                    <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> Terms &amp; Conditions</a></li>
+                </ul>
 
-                <li><a href="#legal-2257"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg> 18 U.S.C. § 2257</a></li>
-                <li><a href="#legal-dmca"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg> DMCA / Copyright</a></li>
-                <li><a href="#legal-disclaimer"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg> 18+ Disclaimer</a></li>
+                <div class="menu-divider" role="presentation"></div>
 
-                <li class="menu-divider" role="presentation"></li>
-                <li class="menu-section-label">Reach Us</li>
+                <!-- ABOUT -->
+                <div class="menu-section-label">About</div>
+                <div class="menu-legal" style="margin-bottom:18px">
+                    <details>
+                        <summary>About This Site</summary>
+                        <div class="menu-legal-body">
+                            <p><strong id="aboutBrandName">Yulianti</strong> is a curated gallery featuring authentic amateur videos from Indonesia and across Asia. We highlight real people and real moments — no studios, no scripts, just genuine content shared by creators from the region.</p>
+                            <p>Every video is hand-picked for quality and authenticity. New content is added daily.</p>
+                            <p>This site is intended for adults only (18+).</p>
+                        </div>
+                    </details>
+                </div>
 
-                <li><a href="https://wa.me/6285770366055" target="_blank" rel="noopener">
-                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    WhatsApp
-                </a></li>
-                <li><a href="https://t.me/yl4t1" target="_blank" rel="noopener">
-                    <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
-                    Telegram
-                </a></li>
-                <li><a href="mailto:admin@yulianti.xyz">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                    Email
-                </a></li>
-            </ul>
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- LEGAL -->
+                <div class="menu-section-label">Legal</div>
+                <div class="menu-legal">
+                    <details>
+                        <summary>18+ Disclaimer</summary>
+                        <div class="menu-legal-body">
+                            <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
+                            <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
+                            <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Cookie Policy</summary>
+                        <div class="menu-legal-body">
+                            <p>This site uses the following cookies:</p>
+                            <ul>
+                                <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
+                                <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
+                                <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
+                            </ul>
+                            <p>No third-party tracking cookies are used. No analytics services are integrated.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>DMCA / Copyright</summary>
+                        <div class="menu-legal-body">
+                            <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
+                            <p><strong>How to submit:</strong></p>
+                            <ul>
+                                <li>Identification of the copyrighted work</li>
+                                <li>URL of the allegedly infringing material</li>
+                                <li>Your full name and contact information</li>
+                                <li>A statement of good faith belief that the use is not authorized</li>
+                                <li>A statement under penalty of perjury that the information is accurate</li>
+                                <li>Your physical or electronic signature</li>
+                            </ul>
+                            <p>Send your notice via any channel listed in the <a href="#menu-contact">Contact</a> section. We respond to valid DMCA notices within 72 hours.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>18 U.S.C. § 2257 Statement</summary>
+                        <div class="menu-legal-body">
+                            <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
+
+                            <p>This website is <strong>not a primary or secondary producer</strong> of any sexually explicit content. All visual depictions of actual sexually explicit conduct that appear on this website are <strong>embedded from third-party platforms</strong> that are solely responsible for compliance with 18 U.S.C. § 2257 and 28 C.F.R. Part 75.</p>
+
+                            <p>We do not host, upload, store, or transmit any sexually explicit media on our servers. All video content is displayed via embedded players provided by third-party platforms. The original producers and hosting platforms of this content are responsible for maintaining all required records.</p>
+
+                            <p><strong>Age Verification of Performers</strong></p>
+                            <p>We require all third-party sources from which we embed content to confirm that all performers depicted were <strong>18 years of age or older</strong> at the time of production. We do not knowingly embed, publish, or link to content involving minors or non-consensual activity. Any such content that comes to our attention will be removed immediately and reported to the appropriate authorities.</p>
+
+                            <p><strong>Exemption Statement</strong></p>
+                            <p>Because this website does not produce any sexually explicit content, we are exempt from the record-keeping requirements of 18 U.S.C. § 2257 and 28 C.F.R. Part 75. This exemption applies under 28 C.F.R. § 75.1(c) (persons who are not primary or secondary producers).</p>
+
+                            <p>For compliance-related questions, takedown requests, or legal inquiries, see the <a href="#menu-contact">Contact</a> section below.</p>
+
+                            <p style="font-size:11px;opacity:.7;margin-top:10px">If you believe any content on this website violates applicable laws or involves non-consensual or underage activity, please contact us immediately. We cooperate fully with law enforcement.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- CONTACT -->
+                <div class="menu-section-label" id="menu-contact">Reach Us</div>
+                <ul class="menu-contact-list">
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span>WhatsApp</span>
+                        <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+                        <span>Telegram</span>
+                        <a href="https://t.me/yl4t1" target="_blank" rel="noopener noreferrer">@yl4t1</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                        <span>Email</span>
+                        <a href="mailto:admin@yulianti.xyz">admin@yulianti.xyz</a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </aside>
 
@@ -635,35 +824,36 @@ layout: null
         if (sub.toLowerCase() === "www") sub = host[1] || "";
         var clean = sub.replace(/-/g, " ");
         var display = clean.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+
         document.getElementById("brandName").textContent = display;
         document.getElementById("brandMark").textContent = display.charAt(0).toUpperCase();
+        document.getElementById("menuHeadName").textContent = display;
+        document.getElementById("menuHeadMark").textContent = display.charAt(0).toUpperCase();
+        var about = document.getElementById("aboutBrandName");
+        if (about) about.textContent = display;
 
         var panel = document.getElementById("menuPanel");
-        var overlay = document.getElementById("menuOverlay");
         document.getElementById("menuOpen").addEventListener("click", function(){
             panel.classList.add("open");
-            overlay.classList.add("open");
             document.body.style.overflow = "hidden";
         });
         function closeMenu(){
             panel.classList.remove("open");
-            overlay.classList.remove("open");
             document.body.style.overflow = "";
         }
         document.getElementById("menuClose").addEventListener("click", closeMenu);
-        overlay.addEventListener("click", closeMenu);
         document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
 
-        // Auto-close menu + open corresponding <details> when clicking anchor legal
-        document.querySelectorAll('.menu-panel a[href^="#"]').forEach(function(link){
-            link.addEventListener("click", function(e){
-                var id = link.getAttribute("href").slice(1);
-                var target = document.getElementById(id);
-                if (target) {
-                    // open the details if it is one
-                    if (target.tagName === "DETAILS") target.open = true;
-                    closeMenu();
-                }
+        // Tutup menu saat klik link internal / anchor
+        panel.querySelectorAll('a[href^="#"]').forEach(function(link){
+            link.addEventListener("click", function(){
+                closeMenu();
+            });
+        });
+        // Link navigasi (bukan anchor) juga tutup menu sebelum pindah halaman
+        panel.querySelectorAll('a[href]:not([href^="#"])').forEach(function(link){
+            link.addEventListener("click", function(){
+                closeMenu();
             });
         });
     })();
@@ -717,107 +907,18 @@ layout: null
     </div>
 
     <footer class="site-footer">
-
-        <details class="foot-collapse">
-            <summary>About</summary>
-            <div class="foot-collapse-body">
-                <p><strong>Yulianti</strong> is a curated gallery featuring authentic amateur videos from Indonesia and across Asia. We highlight real people and real moments — no studios, no scripts, just genuine content shared by creators from the region.</p>
-                <p>Every video is hand-picked for quality and authenticity. New content is added daily.</p>
-                <p>This site is intended for adults only (18+).</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse" id="legal-disclaimer">
-            <summary>18+ Disclaimer</summary>
-            <div class="foot-collapse-body">
-                <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
-                <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
-                <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse">
-            <summary>Cookie Policy</summary>
-            <div class="foot-collapse-body">
-                <p>This site uses the following cookies:</p>
-                <ul>
-                    <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
-                    <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
-                    <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
-                </ul>
-                <p>No third-party tracking cookies are used. No analytics services are integrated.</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse" id="legal-dmca">
-            <summary>DMCA / Copyright</summary>
-            <div class="foot-collapse-body">
-                <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
-                <p><strong>How to submit:</strong></p>
-                <ul>
-                    <li>Identification of the copyrighted work</li>
-                    <li>URL of the allegedly infringing material</li>
-                    <li>Your full name and contact information</li>
-                    <li>A statement of good faith belief that the use is not authorized</li>
-                    <li>A statement under penalty of perjury that the information is accurate</li>
-                    <li>Your physical or electronic signature</li>
-                </ul>
-                <p>Send your notice via any channel listed in the <a href="#contact">Contact</a> section. We respond to valid DMCA notices within 72 hours.</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse" id="legal-2257">
-            <summary>18 U.S.C. § 2257 Statement</summary>
-            <div class="foot-collapse-body">
-                <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
-
-                <p>This website is <strong>not a primary or secondary producer</strong> of any sexually explicit content. All visual depictions of actual sexually explicit conduct that appear on this website are <strong>embedded from third-party platforms</strong> that are solely responsible for compliance with 18 U.S.C. § 2257 and 28 C.F.R. Part 75.</p>
-
-                <p>We do not host, upload, store, or transmit any sexually explicit media on our servers. All video content is displayed via embedded players provided by third-party platforms. The original producers and hosting platforms of this content are responsible for maintaining all required records.</p>
-
-                <p><strong>Age Verification of Performers</strong></p>
-                <p>We require all third-party sources from which we embed content to confirm that all performers depicted were <strong>18 years of age or older</strong> at the time of production. We do not knowingly embed, publish, or link to content involving minors or non-consensual activity. Any such content that comes to our attention will be removed immediately and reported to the appropriate authorities.</p>
-
-                <p><strong>Exemption Statement</strong></p>
-                <p>Because this website does not produce any sexually explicit content, we are exempt from the record-keeping requirements of 18 U.S.C. § 2257 and 28 C.F.R. Part 75. This exemption applies under 28 C.F.R. § 75.1(c) (persons who are not primary or secondary producers).</p>
-
-                <p>For compliance-related questions, takedown requests, or legal inquiries, see the <a href="#contact">Contact</a> section below.</p>
-
-                <p style="font-size:11px;opacity:.7;margin-top:10px">If you believe any content on this website violates applicable laws or involves non-consensual or underage activity, please contact us immediately. We cooperate fully with law enforcement.</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse" id="contact">
-            <summary>Contact</summary>
-            <div class="foot-collapse-body">
-                <p>For DMCA notices, legal inquiries, or any other concerns:</p>
-                <ul class="contact-list">
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                        </svg>
-                        <span>WhatsApp:</span>
-                        <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/>
-                        </svg>
-                        <span>Telegram:</span>
-                        <a href="https://t.me/yl4t1" target="_blank" rel="noopener noreferrer">@yl4t1</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
-                        </svg>
-                        <span>Email:</span>
-                        <a href="mailto:admin@yulianti.xyz">admin@yulianti.xyz</a>
-                    </li>
-                </ul>
-                <p style="font-size:11px;opacity:.7;margin-top:10px">Response time: within 72 hours</p>
-            </div>
-        </details>
-
+        <p class="foot-copy">
+            &copy; <span id="footYear">2025</span> <strong id="footBrand">Yulianti</strong>
+            <span class="foot-sep">·</span> All rights reserved
+        </p>
+        <p class="foot-copy" style="margin-top:6px">
+            <a href="/privacy-policy.html">Privacy</a>
+            <span class="foot-sep">·</span>
+            <a href="/terms-and-conditions.html">Terms</a>
+            <span class="foot-sep">·</span>
+            <a href="#menu-contact" id="footContactLink">Contact</a>
+        </p>
+        <div class="foot-badge">18+ Only</div>
     </footer>
 
     <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice">
@@ -826,6 +927,31 @@ layout: null
     </div>
 
     <script>
+    // Tahun otomatis + brand name di footer
+    (function(){
+        var y = document.getElementById("footYear");
+        if (y) y.textContent = new Date().getFullYear();
+        var fb = document.getElementById("footBrand");
+        if (fb && window.__SITE_NAME__) fb.textContent = window.__SITE_NAME__;
+    })();
+
+    // Klik "Contact" di footer → buka menu panel
+    (function(){
+        var link = document.getElementById("footContactLink");
+        var panel = document.getElementById("menuPanel");
+        if (!link || !panel) return;
+        link.addEventListener("click", function(e){
+            e.preventDefault();
+            panel.classList.add("open");
+            document.body.style.overflow = "hidden";
+            // buka section contact
+            setTimeout(function(){
+                var c = document.getElementById("menu-contact");
+                if (c) c.scrollIntoView({behavior:"smooth", block:"center"});
+            }, 380);
+        });
+    })();
+
     (function(){
         var allPosts = [
             {% for post in category_posts %}
@@ -1020,8 +1146,6 @@ layout: null
     </script>
 
     {% include /ads/gobloggugel/umum.html %}
-    {% include footer.html %}
 
 </body>
 </html>
-    
