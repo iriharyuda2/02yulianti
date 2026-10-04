@@ -107,6 +107,12 @@ layout: null
             transition:background .3s ease,color .3s ease;
         }
 
+        /* Global SVG defaults */
+        svg{display:block}
+        .ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .ico-sm{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .ico-lg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
         /* ============ HEADER ============ */
         .site-header{
             position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -222,7 +228,7 @@ layout: null
         }
         .menu-close:hover{background:var(--surface-2);border-color:var(--border-strong)}
         .menu-close:active{transform:scale(.94)}
-        .menu-close svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-close svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
         .menu-body{
             flex:1;
@@ -245,9 +251,16 @@ layout: null
             font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
             color:var(--text-dim);
             padding:0 14px 8px;
+            display:flex;align-items:center;gap:8px;
+        }
+        .menu-section-label svg{
+            width:12px;height:12px;
+            stroke:currentColor;fill:none;stroke-width:2.2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.75;
         }
 
-        /* Accordion in fullscreen menu */
+        /* Accordion */
         .menu-legal{
             display:flex;flex-direction:column;gap:6px;
         }
@@ -261,19 +274,30 @@ layout: null
             padding:14px 16px;cursor:pointer;
             font-size:12px;font-weight:700;letter-spacing:.08em;
             color:var(--text);list-style:none;
-            display:flex;align-items:center;justify-content:space-between;
-            gap:10px;user-select:none;text-transform:uppercase;
+            display:flex;align-items:center;gap:12px;
+            user-select:none;text-transform:uppercase;
             transition:color .2s ease;
         }
         .menu-legal summary::-webkit-details-marker{display:none}
-        .menu-legal summary::after{
-            content:"";width:6px;height:6px;
+        .menu-legal summary .summary-ico{
+            width:16px;height:16px;flex-shrink:0;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            opacity:.9;
+        }
+        .menu-legal summary .summary-text{
+            flex:1;
+        }
+        .menu-legal summary .chev{
+            width:8px;height:8px;
             border-right:2px solid var(--text-dim);
             border-bottom:2px solid var(--text-dim);
             transform:rotate(45deg);transition:transform .25s ease;
             flex-shrink:0;
+            margin-top:-3px;
         }
-        .menu-legal details[open] summary::after{transform:rotate(-135deg)}
+        .menu-legal details[open] summary .chev{transform:rotate(-135deg);margin-top:3px}
         .menu-legal details[open] summary{color:var(--accent)}
         .menu-legal-body{
             padding:4px 16px 16px;
@@ -287,7 +311,7 @@ layout: null
         .menu-legal-body a{color:var(--accent);text-decoration:none;font-weight:500}
         .menu-legal-body a:hover{text-decoration:underline}
 
-        /* Home button at top */
+        /* Home button */
         .menu-home{
             display:flex;align-items:center;gap:12px;
             padding:13px 14px;border-radius:9px;
@@ -299,9 +323,20 @@ layout: null
             margin-bottom:14px;
         }
         .menu-home:hover{background:var(--surface-2);color:var(--text);border-color:var(--border-strong)}
-        .menu-home svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .menu-home svg{
+            width:18px;height:18px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            flex-shrink:0;
+        }
+        .menu-home .arrow{
+            margin-left:auto;
+            width:14px;height:14px;
+            opacity:.5;
+        }
 
-        /* Contact list inside fullscreen menu */
+        /* Contact list */
         .menu-contact-list{
             list-style:none;
             padding:0;
@@ -313,35 +348,51 @@ layout: null
         .menu-contact-list li{
             display:flex;
             align-items:center;
-            gap:10px;
+            gap:12px;
             font-size:13px;
             line-height:1.5;
-            padding:10px 14px;
+            padding:11px 14px;
             border-radius:9px;
             background:var(--surface);
             border:1px solid var(--border);
             transition:all .15s ease;
         }
         .menu-contact-list li:hover{background:var(--surface-2);border-color:var(--border-strong)}
-        .menu-contact-list svg{
+        .menu-contact-list .contact-ico{
             flex-shrink:0;
-            opacity:.75;
-            width:16px;height:16px;
-            stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+            width:32px;height:32px;
+            border-radius:8px;
+            display:flex;align-items:center;justify-content:center;
+            background:linear-gradient(135deg,var(--accent-soft),transparent);
+            border:1px solid var(--accent-soft);
+            color:var(--accent);
         }
-        .menu-contact-list span{
+        .menu-contact-list .contact-ico svg{
+            width:16px;height:16px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
+        .menu-contact-list .contact-meta{
+            display:flex;flex-direction:column;
+            min-width:0;
+            flex:1;
+        }
+        .menu-contact-list .contact-label{
             color:var(--text-dim);
-            font-weight:500;
-            font-size:12px;
+            font-weight:600;
+            font-size:10px;
             text-transform:uppercase;
-            letter-spacing:.05em;
-            min-width:72px;
+            letter-spacing:.1em;
+            line-height:1.2;
         }
         .menu-contact-list a{
             color:var(--text);
             text-decoration:none;
             font-weight:600;
+            font-size:13px;
+            line-height:1.3;
             word-break:break-all;
+            margin-top:2px;
         }
         .menu-contact-list a:hover{color:var(--accent)}
 
@@ -379,14 +430,24 @@ layout: null
             font-family:'Playfair Display',Georgia,serif;
             font-size:18px;font-weight:900;letter-spacing:-.02em;
             color:var(--text);margin:0;
-            display:flex;align-items:center;gap:8px;
+            display:flex;align-items:center;gap:10px;
         }
         .section-title::before{
             content:'';width:3px;height:18px;border-radius:2px;
             background:linear-gradient(180deg,var(--accent),var(--accent-2));
+            flex-shrink:0;
         }
         .section-title.featured-style::before{
             background:linear-gradient(180deg,#f43f5e,#f59e0b);
+        }
+        .section-title .section-ico{
+            width:16px;height:16px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            opacity:.85;
+            flex-shrink:0;
+            margin-left:auto;
         }
 
         /* ============ GRID ============ */
@@ -452,10 +513,18 @@ layout: null
             color:var(--dur-fg);
             font-size:10px;font-weight:700;
             letter-spacing:.04em;
-            padding:3px 7px;border-radius:999px;
+            padding:3px 7px 3px 5px;
+            border-radius:999px;
             z-index:3;pointer-events:none;
             font-variant-numeric:tabular-nums;
             border:1px solid var(--accent-soft);
+            display:flex;align-items:center;gap:3px;
+        }
+        .card-dur svg{
+            width:9px;height:9px;
+            stroke:currentColor;fill:currentColor;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.9;
         }
 
         .card-title{
@@ -515,6 +584,11 @@ layout: null
             cursor:default;color:var(--text-dim);
             min-width:auto;padding:0 4px;
         }
+        .pagination .chev-btn svg{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2.5;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
 
         /* ============ COOKIE BANNER ============ */
         .cookie-banner{
@@ -543,6 +617,19 @@ layout: null
             opacity:1;
             transform:translateX(-50%) translateY(0);
         }
+        .cookie-banner .cookie-ico{
+            flex-shrink:0;
+            width:32px;height:32px;
+            border-radius:8px;
+            display:flex;align-items:center;justify-content:center;
+            background:var(--accent-soft);
+            color:var(--accent);
+        }
+        .cookie-banner .cookie-ico svg{
+            width:18px;height:18px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
         .cookie-banner p{
             margin:0;
             flex:1;
@@ -560,6 +647,12 @@ layout: null
             font-family:'Inter',sans-serif;
             flex-shrink:0;
             transition:all .15s ease;
+            display:inline-flex;align-items:center;gap:6px;
+        }
+        .cookie-ok svg{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2.5;
+            stroke-linecap:round;stroke-linejoin:round;
         }
         .cookie-ok:hover{
             filter:brightness(1.1);
@@ -579,6 +672,14 @@ layout: null
             color:var(--text-dim);
             margin:0;
             line-height:1.6;
+            display:flex;align-items:center;justify-content:center;
+            gap:8px;flex-wrap:wrap;
+        }
+        .foot-copy .copy-ico{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.7;
         }
         .foot-copy strong{
             color:var(--text);
@@ -587,8 +688,8 @@ layout: null
         .foot-badge{
             display:inline-flex;
             align-items:center;
-            gap:5px;
-            margin-top:10px;
+            gap:6px;
+            margin-top:12px;
             font-size:10px;
             font-weight:700;
             letter-spacing:.15em;
@@ -598,12 +699,11 @@ layout: null
             border:1px solid var(--border-strong);
             border-radius:999px;
         }
-        .foot-badge::before{
-            content:"";
-            width:6px;height:6px;
-            border-radius:50%;
-            background:var(--accent);
-            box-shadow:0 0 8px var(--accent);
+        .foot-badge svg{
+            width:12px;height:12px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
         }
 
         /* ============ RESPONSIVE ============ */
@@ -612,6 +712,7 @@ layout: null
             .page-wrap{padding:0 16px}
             .section-title{font-size:20px}
             .section-title::before{height:20px}
+            .section-title .section-ico{width:18px;height:18px}
             .brand-name{font-size:16px}
             .menu-head{padding:16px 24px}
             .menu-body{padding:24px 24px 48px}
@@ -640,8 +741,8 @@ layout: null
                 font-size:12.5px;
             }
             .cookie-ok{padding:7px 14px;font-size:12.5px}
-            .menu-contact-list span{min-width:64px;font-size:11px}
             .menu-contact-list li{font-size:12.5px;padding:10px 12px}
+            .foot-copy{font-size:11.5px}
         }
     </style>
 
@@ -660,12 +761,30 @@ layout: null
                     <span class="brand-tagline">Indonesia &amp; Asia · Real &amp; Amateur</span>
                 </div>
             </div>
-            <button class="icon-btn" id="themeToggle" aria-label="Theme">
-                <svg id="sunIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-                <svg id="moonIcon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <!-- Sun (light indicator) -->
+                <svg id="sunIcon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2"/>
+                    <path d="M12 20v2"/>
+                    <path d="M4.93 4.93l1.41 1.41"/>
+                    <path d="M17.66 17.66l1.41 1.41"/>
+                    <path d="M2 12h2"/>
+                    <path d="M20 12h2"/>
+                    <path d="M6.34 17.66l-1.41 1.41"/>
+                    <path d="M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <!-- Moon (dark indicator) -->
+                <svg id="moonIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
             </button>
-            <button class="icon-btn" id="menuOpen" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            <button class="icon-btn" id="menuOpen" aria-label="Open menu">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 7h16"/>
+                    <path d="M4 12h16"/>
+                    <path d="M4 17h10"/>
+                </svg>
             </button>
         </div>
     </header>
@@ -679,8 +798,11 @@ layout: null
                     <span class="menu-head-sub">Menu &amp; Info</span>
                 </div>
             </div>
-            <button class="menu-close" id="menuClose" aria-label="Close">
-                <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <button class="menu-close" id="menuClose" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="M6 6l12 12"/>
+                </svg>
             </button>
         </div>
         <div class="menu-body">
@@ -688,17 +810,38 @@ layout: null
 
                 <!-- HOME -->
                 <a href="/" class="menu-home">
-                    <svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
-                    Back to Home
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <path d="M9 22V12h6v10"/>
+                    </svg>
+                    <span>Back to Home</span>
+                    <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
                 </a>
 
                 <div class="menu-divider" role="presentation"></div>
 
                 <!-- ABOUT -->
-                <div class="menu-section-label">About</div>
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                    About
+                </div>
                 <div class="menu-legal" style="margin-bottom:18px">
                     <details>
-                        <summary>About This Site</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <path d="M9 22V12h6v10"/>
+                            </svg>
+                            <span class="summary-text">About This Site</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p><strong id="aboutBrandName">Yulianti</strong> is a curated gallery featuring authentic amateur videos from Indonesia and across Asia. We highlight real people and real moments — no studios, no scripts, just genuine content shared by creators from the region.</p>
                             <p>Every video is hand-picked for quality and authenticity. New content is added daily.</p>
@@ -710,10 +853,22 @@ layout: null
                 <div class="menu-divider" role="presentation"></div>
 
                 <!-- POLICIES -->
-                <div class="menu-section-label">Policies</div>
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                    </svg>
+                    Policies
+                </div>
                 <div class="menu-legal" style="margin-bottom:18px">
                     <details>
-                        <summary>Privacy Policy</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span class="summary-text">Privacy Policy</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p><strong>Effective date:</strong> <span class="js-year">2025</span></p>
                             <p>We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we handle information when you visit our site.</p>
@@ -743,7 +898,16 @@ layout: null
                     </details>
 
                     <details>
-                        <summary>Terms &amp; Conditions</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                <path d="M14 3v6h6"/>
+                                <path d="M8 13h8"/>
+                                <path d="M8 17h5"/>
+                            </svg>
+                            <span class="summary-text">Terms &amp; Conditions</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p><strong>Effective date:</strong> <span class="js-year">2025</span></p>
                             <p>By accessing or using this website, you agree to be bound by these Terms &amp; Conditions. If you do not agree, please do not use this site.</p>
@@ -788,10 +952,24 @@ layout: null
                 <div class="menu-divider" role="presentation"></div>
 
                 <!-- LEGAL -->
-                <div class="menu-section-label">Legal</div>
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    Legal
+                </div>
                 <div class="menu-legal" style="margin-bottom:18px">
                     <details>
-                        <summary>18+ Disclaimer</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <path d="M12 9v4"/>
+                                <path d="M12 17h.01"/>
+                            </svg>
+                            <span class="summary-text">18+ Disclaimer</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
                             <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
@@ -800,7 +978,17 @@ layout: null
                     </details>
 
                     <details>
-                        <summary>Cookie Policy</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="8.5" cy="10.5" r="1"/>
+                                <circle cx="15.5" cy="10.5" r="1"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M12 2a10 10 0 0 0 0 20"/>
+                            </svg>
+                            <span class="summary-text">Cookie Policy</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p>This site uses the following cookies:</p>
                             <ul>
@@ -813,7 +1001,17 @@ layout: null
                     </details>
 
                     <details>
-                        <summary>DMCA / Copyright</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M9 9h.01"/>
+                                <path d="M15 15h.01"/>
+                                <path d="M9.5 14.5a4 4 0 0 0 5 0"/>
+                                <path d="M12 3v3"/>
+                            </svg>
+                            <span class="summary-text">DMCA / Copyright</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
                             <p><strong>How to submit:</strong></p>
@@ -830,7 +1028,14 @@ layout: null
                     </details>
 
                     <details>
-                        <summary>18 U.S.C. § 2257 Statement</summary>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span class="summary-text">18 U.S.C. § 2257 Statement</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
                         <div class="menu-legal-body">
                             <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
 
@@ -854,22 +1059,47 @@ layout: null
                 <div class="menu-divider" role="presentation"></div>
 
                 <!-- CONTACT -->
-                <div class="menu-section-label" id="menu-contact">Reach Us</div>
+                <div class="menu-section-label" id="menu-contact">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    Reach Us
+                </div>
                 <ul class="menu-contact-list">
                     <li>
-                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                        <span>WhatsApp</span>
-                        <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">WhatsApp</span>
+                            <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>
+                        </span>
                     </li>
                     <li>
-                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
-                        <span>Telegram</span>
-                        <a href="https://t.me/yl4t1" target="_blank" rel="noopener noreferrer">@yl4t1</a>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M22 2 11 13"/>
+                                <path d="M22 2l-7 20-4-9-9-4z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">Telegram</span>
+                            <a href="https://t.me/yl4t1" target="_blank" rel="noopener noreferrer">@yl4t1</a>
+                        </span>
                     </li>
                     <li>
-                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                        <span>Email</span>
-                        <a href="mailto:admin@yulianti.xyz">admin@yulianti.xyz</a>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                <path d="m3 7 9 6 9-6"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:admin@yulianti.xyz">admin@yulianti.xyz</a>
+                        </span>
                     </li>
                 </ul>
 
@@ -904,14 +1134,11 @@ layout: null
         document.getElementById("menuClose").addEventListener("click", closeMenu);
         document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
 
-        // Tutup menu saat klik link anchor ke dalam menu
         panel.querySelectorAll('a[href^="#"]').forEach(function(link){
             link.addEventListener("click", function(){
-                // biarkan scroll ke target sebelum close
                 setTimeout(closeMenu, 100);
             });
         });
-        // Link keluar menu → tutup
         panel.querySelectorAll('a[href]:not([href^="#"])').forEach(function(link){
             link.addEventListener("click", function(){
                 closeMenu();
@@ -969,23 +1196,50 @@ layout: null
 
     <footer class="site-footer">
         <p class="foot-copy">
-            &copy; <span id="footYear">2025</span> <strong id="footBrand">Yulianti</strong> — All rights reserved
+            <svg class="copy-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M14.5 9.5a3 3 0 1 0 0 5"/>
+            </svg>
+            <span>&copy; <span id="footYear">2025</span> <strong id="footBrand">Yulianti</strong> — All rights reserved</span>
         </p>
-        <div class="foot-badge">18+ Only</div>
+        <div class="foot-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <path d="M12 9v4"/>
+                <path d="M12 17h.01"/>
+            </svg>
+            18+ Only
+        </div>
     </footer>
 
     <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice">
+        <span class="cookie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="8.5" cy="10.5" r="1"/>
+                <circle cx="15.5" cy="10.5" r="1"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M12 2a10 10 0 0 0 0 20"/>
+            </svg>
+        </span>
         <p>This site uses cookies to improve your experience.</p>
-        <button class="cookie-ok" id="cookieOk" type="button">OK</button>
+        <button class="cookie-ok" id="cookieOk" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12l5 5L20 7"/>
+            </svg>
+            OK
+        </button>
     </div>
 
     <script>
-    // Tahun otomatis + brand name di footer
     (function(){
         var y = document.getElementById("footYear");
         if (y) y.textContent = new Date().getFullYear();
         var fb = document.getElementById("footBrand");
         if (fb && window.__SITE_NAME__) fb.textContent = window.__SITE_NAME__;
+        document.querySelectorAll(".js-year").forEach(function(el){
+            el.textContent = new Date().getFullYear();
+        });
     })();
 
     (function(){
@@ -1049,8 +1303,13 @@ layout: null
             var dur = formatDuration(60 + (hashCode(post.url) % 841));
             return '<a href="' + escapeHtml(post.url) + '" class="card">' +
                        '<div class="card-media">' + img +
-                           '<span class="card-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>' +
-                           '<span class="card-dur">' + dur + '</span>' +
+                           '<span class="card-play" aria-hidden="true">' +
+                               '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+                           '</span>' +
+                           '<span class="card-dur">' +
+                               '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
+                               dur +
+                           '</span>' +
                            '<h3 class="card-title">' + escapeHtml(post.title) + '</h3>' +
                        '</div>' +
                    '</a>';
@@ -1059,7 +1318,11 @@ layout: null
             if (!posts.length) return "";
             return '<section class="section">' +
                        '<div class="section-head">' +
-                           '<h2 class="section-title' + (isFeatured ? ' featured-style' : '') + '">' + name + '</h2>' +
+                           '<h2 class="section-title' + (isFeatured ? ' featured-style' : '') + '">' + name +
+                               '<svg class="section-ico" viewBox="0 0 24 24" aria-hidden="true">' +
+                                   '<path d="M12 3l2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z"/>' +
+                               '</svg>' +
+                           '</h2>' +
                        '</div>' +
                        '<div class="grid">' + posts.map(buildCard).join("") + '</div>' +
                    '</section>';
@@ -1114,13 +1377,21 @@ layout: null
             if (opts.disabled) { el = document.createElement("span"); el.className = "disabled"; }
             else { el = document.createElement("a"); el.href = page === 1 ? "./" : "?pag=" + page; }
             if (opts.active) el.classList.add("active");
-            el.textContent = text;
+            if (opts.svg) {
+                el.classList.add("chev-btn");
+                el.innerHTML = opts.svg;
+            } else {
+                el.textContent = text;
+            }
             return el;
         }
+        var chevLeftSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+        var chevRightSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+
         function drawPagination(current) {
             if (totalPages <= 1) return;
             nav.innerHTML = "";
-            nav.appendChild(makeLink("‹", current - 1, { disabled: current === 1 }));
+            nav.appendChild(makeLink("", current - 1, { disabled: current === 1, svg: chevLeftSVG }));
             var pages = [];
             if (totalPages <= 7) {
                 for (var i = 1; i <= totalPages; i++) pages.push(i);
@@ -1143,7 +1414,7 @@ layout: null
                     nav.appendChild(makeLink(p, p, { active: p === current }));
                 }
             });
-            nav.appendChild(makeLink("›", current + 1, { disabled: current === totalPages }));
+            nav.appendChild(makeLink("", current + 1, { disabled: current === totalPages, svg: chevRightSVG }));
         }
 
         nav.addEventListener("click", function(e){
@@ -1185,3 +1456,4 @@ layout: null
 
 </body>
 </html>
+    
