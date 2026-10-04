@@ -24,6 +24,7 @@ layout: null
             return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
         };
         var displayDomain = formatText(fullName);
+        window.__SITE_NAME__ = displayDomain;
         document.title = displayDomain + " · Gallery";
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
@@ -55,15 +56,14 @@ layout: null
             --accent-soft: rgba(168,85,247,.15);
             --shadow: 0 8px 32px rgba(0,0,0,.5);
             --ad-bg: #0e0e15;
-            --play-bg: rgba(10,10,15,.65);
-            --play-fg: #ffffff;
+            --play-bg: rgba(0,0,0,.45);
+            --play-fg: rgba(255,255,255,.85);
             --dur-bg: rgba(10,10,15,.85);
             --dur-fg: #a855f7;
             --header-bg: rgba(10,10,15,.85);
             --menu-bg: #16161f;
             --menu-hover: #1d1d29;
             --menu-text: #b0b0c0;
-            --radius: 4px;
         }
 
         body.light-mode {
@@ -80,8 +80,8 @@ layout: null
             --accent-soft: rgba(124,58,237,.1);
             --shadow: 0 8px 32px rgba(0,0,0,.08);
             --ad-bg: #eeeee9;
-            --play-bg: rgba(255,255,255,.9);
-            --play-fg: #14141a;
+            --play-bg: rgba(0,0,0,.4);
+            --play-fg: rgba(255,255,255,.9);
             --dur-bg: rgba(20,20,26,.9);
             --dur-fg: #ffffff;
             --header-bg: rgba(250,250,249,.9);
@@ -106,10 +106,10 @@ layout: null
             backdrop-filter:blur(24px) saturate(1.8);
             -webkit-backdrop-filter:blur(24px) saturate(1.8);
             border-bottom:1px solid var(--border);
-            padding:14px 20px;
+            padding:10px 14px;
         }
         .header-inner{
-            display:flex;align-items:center;gap:14px;
+            display:flex;align-items:center;gap:12px;
             max-width:1400px;margin:0 auto;
         }
         .brand{
@@ -117,11 +117,11 @@ layout: null
             flex:1;min-width:0;
         }
         .brand-mark{
-            width:36px;height:36px;flex-shrink:0;
-            border-radius:10px;
+            width:34px;height:34px;flex-shrink:0;
+            border-radius:9px;
             background:linear-gradient(135deg,var(--accent),var(--accent-2));
             display:flex;align-items:center;justify-content:center;
-            color:#fff;font-weight:900;font-size:16px;
+            color:#fff;font-weight:900;font-size:15px;
             font-family:'Playfair Display',serif;
             box-shadow:0 4px 16px var(--accent-soft);
         }
@@ -129,24 +129,24 @@ layout: null
             display:flex;flex-direction:column;min-width:0;
         }
         .brand-name{
-            font-size:15px;font-weight:700;letter-spacing:-.02em;
+            font-size:14px;font-weight:700;letter-spacing:-.02em;
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
             color:var(--text);
         }
         .brand-tag{
-            font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+            font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
             color:var(--text-dim);
         }
         .icon-btn{
-            width:38px;height:38px;flex-shrink:0;
+            width:36px;height:36px;flex-shrink:0;
             background:var(--surface);border:1px solid var(--border);
-            border-radius:10px;cursor:pointer;padding:0;
+            border-radius:9px;cursor:pointer;padding:0;
             display:flex;align-items:center;justify-content:center;
             color:var(--text);transition:all .2s ease;
         }
         .icon-btn:hover{background:var(--surface-2);border-color:var(--border-strong)}
         .icon-btn:active{transform:scale(.94)}
-        .icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
         /* ============ MENU PANEL ============ */
         .menu-panel{
@@ -165,32 +165,32 @@ layout: null
         .menu-overlay.open{opacity:1;visibility:visible}
         .menu-head{
             display:flex;align-items:center;justify-content:space-between;
-            padding:20px 22px;border-bottom:1px solid var(--border);
+            padding:18px 20px;border-bottom:1px solid var(--border);
         }
         .menu-head span{
-            font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+            font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
             color:var(--text-dim);
         }
         .menu-close{
-            width:32px;height:32px;border-radius:8px;
+            width:30px;height:30px;border-radius:8px;
             background:var(--surface);border:1px solid var(--border);
             cursor:pointer;display:flex;align-items:center;justify-content:center;
             color:var(--text);padding:0;
         }
-        .menu-close svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-close svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
         .menu-list{
-            list-style:none;margin:0;padding:12px 12px;
+            list-style:none;margin:0;padding:10px 10px;
             display:flex;flex-direction:column;gap:2px;overflow-y:auto;
         }
         .menu-list a{
             display:flex;align-items:center;gap:12px;
-            padding:14px 16px;border-radius:10px;
+            padding:13px 14px;border-radius:8px;
             color:var(--menu-text);text-decoration:none;
             font-size:14px;font-weight:500;
             transition:all .15s ease;
         }
         .menu-list a:hover{background:var(--menu-hover);color:var(--text)}
-        .menu-list a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .menu-list a svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
         /* ============ ADS ============ */
         .ad-box{
@@ -202,13 +202,13 @@ layout: null
         .ad-mobile{display:flex}
         .ad-both{display:flex}
         .ad-break{
-            padding:14px 0;background:var(--ad-bg);
+            padding:8px 0;background:var(--ad-bg);
             border-bottom:1px solid var(--border);
         }
-        .ad-break:first-child{margin-top:64px}
-        .ad-break.bottom{border-top:1px solid var(--border);border-bottom:none;margin-top:32px}
+        .ad-break:first-child{margin-top:54px}
+        .ad-break.bottom{border-top:1px solid var(--border);border-bottom:none;margin-top:20px}
         .ad-inline{
-            margin:32px 0;padding:14px 0;
+            margin:20px 0;padding:8px 0;
             background:var(--ad-bg);
             border-top:1px solid var(--border);
             border-bottom:1px solid var(--border);
@@ -216,53 +216,53 @@ layout: null
 
         /* ============ LAYOUT ============ */
         .page-wrap{
-            max-width:1400px;margin:0 auto;padding:0 16px;
+            max-width:1400px;margin:0 auto;padding:0 12px;
         }
 
         /* ============ SECTION ============ */
-        .section{margin:40px 0}
-        .section:first-child{margin-top:24px}
+        .section{margin:24px 0}
+        .section:first-child{margin-top:16px}
         .section-head{
             display:flex;align-items:baseline;justify-content:space-between;
-            margin-bottom:16px;gap:12px;
+            margin-bottom:10px;gap:10px;
         }
         .section-title{
             font-family:'Playfair Display',Georgia,serif;
-            font-size:22px;font-weight:900;letter-spacing:-.02em;
+            font-size:18px;font-weight:900;letter-spacing:-.02em;
             color:var(--text);margin:0;
-            display:flex;align-items:center;gap:10px;
+            display:flex;align-items:center;gap:8px;
         }
         .section-title::before{
-            content:'';width:4px;height:22px;border-radius:2px;
+            content:'';width:3px;height:18px;border-radius:2px;
             background:linear-gradient(180deg,var(--accent),var(--accent-2));
         }
         .section-title.featured-style::before{
             background:linear-gradient(180deg,#f43f5e,#f59e0b);
         }
         .section-count{
-            font-size:11px;font-weight:600;letter-spacing:.1em;
+            font-size:10px;font-weight:600;letter-spacing:.08em;
             color:var(--text-dim);text-transform:uppercase;
         }
 
-        /* ============ GRID (seragam) ============ */
+        /* ============ GRID ============ */
         .grid{
-            display:grid;gap:10px;
+            display:grid;gap:6px;
             grid-template-columns:repeat(2,1fr);
         }
         @media(min-width:600px){
-            .grid{grid-template-columns:repeat(3,1fr);gap:12px}
+            .grid{grid-template-columns:repeat(3,1fr);gap:8px}
         }
         @media(min-width:900px){
-            .grid{grid-template-columns:repeat(5,1fr);gap:14px}
+            .grid{grid-template-columns:repeat(5,1fr);gap:10px}
         }
         @media(min-width:1200px){
-            .grid{grid-template-columns:repeat(6,1fr);gap:16px}
+            .grid{grid-template-columns:repeat(6,1fr);gap:10px}
         }
 
         /* ============ CARD ============ */
         .card{
             position:relative;display:block;
-            border-radius:var(--radius);overflow:hidden;
+            border-radius:6px;overflow:hidden;
             background:var(--surface);
             text-decoration:none;
             transition:transform .3s cubic-bezier(.4,0,.2,1);
@@ -280,47 +280,85 @@ layout: null
         .card:hover .card-media img{transform:scale(1.05)}
 
         .card-play{
-            position:absolute;top:8px;left:8px;
-            width:36px;height:36px;
+            position:absolute;
+            top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:52px;height:52px;
             background:var(--play-bg);
-            backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-            border-radius:10px;
+            backdrop-filter:blur(4px);
+            -webkit-backdrop-filter:blur(4px);
+            border-radius:50%;
             display:flex;align-items:center;justify-content:center;
             color:var(--play-fg);
             z-index:2;pointer-events:none;
             transition:all .25s ease;
+            border:1px solid rgba(255,255,255,.15);
         }
-        .card-play svg{width:14px;height:14px;fill:currentColor;margin-left:2px}
+        .card-play svg{width:20px;height:20px;fill:currentColor;margin-left:3px}
         .card:hover .card-play{
-            background:var(--accent);
+            background:rgba(0,0,0,.7);
             color:#fff;
-            transform:scale(1.08);
+            transform:translate(-50%,-50%) scale(1.1);
         }
 
         .card-dur{
-            position:absolute;bottom:8px;right:8px;
+            position:absolute;bottom:6px;right:6px;
             background:var(--dur-bg);
             color:var(--dur-fg);
             font-size:10px;font-weight:700;
             letter-spacing:.04em;
-            padding:4px 8px;border-radius:999px;
+            padding:3px 7px;border-radius:999px;
             z-index:2;pointer-events:none;
             font-variant-numeric:tabular-nums;
             border:1px solid var(--accent-soft);
         }
 
+        /* ============ PAGINATION ============ */
+        .pagination{
+            display:flex;justify-content:center;align-items:center;
+            gap:6px;margin:32px 0 16px;flex-wrap:wrap;
+        }
+        .pagination a,
+        .pagination span{
+            display:inline-flex;align-items:center;justify-content:center;
+            min-width:38px;height:38px;padding:0 12px;
+            background:var(--surface);color:var(--text);
+            border:1px solid var(--border);border-radius:8px;
+            font-size:13px;font-weight:600;text-decoration:none;
+            transition:all .15s ease;cursor:pointer;
+        }
+        .pagination a:hover{
+            background:var(--surface-2);
+            border-color:var(--border-strong);
+            transform:translateY(-1px);
+        }
+        .pagination .active{
+            background:var(--accent);color:#fff;
+            border-color:var(--accent);
+            box-shadow:0 4px 16px var(--accent-soft);
+        }
+        .pagination .disabled{
+            opacity:.35;cursor:not-allowed;pointer-events:none;
+        }
+        .pagination .dots{
+            background:transparent;border:none;
+            cursor:default;color:var(--text-dim);
+            min-width:auto;padding:0 4px;
+        }
+
         /* ============ FOOTER ============ */
         footer.site-footer{
-            max-width:900px;margin:64px auto 0;padding:32px 20px 40px;
+            max-width:900px;margin:40px auto 0;
+            padding:20px 16px 28px;
             border-top:1px solid var(--border);
         }
         .foot-collapse{
-            border:1px solid var(--border);border-radius:var(--radius);
-            overflow:hidden;background:var(--surface);margin-bottom:8px;
+            border:1px solid var(--border);border-radius:6px;
+            overflow:hidden;background:var(--surface);margin-bottom:6px;
         }
         .foot-collapse summary{
-            padding:14px 18px;cursor:pointer;
-            font-size:12px;font-weight:600;letter-spacing:.05em;
+            padding:12px 16px;cursor:pointer;
+            font-size:11px;font-weight:600;letter-spacing:.05em;
             color:var(--text);list-style:none;
             display:flex;align-items:center;justify-content:space-between;
             gap:10px;user-select:none;text-transform:uppercase;
@@ -335,9 +373,9 @@ layout: null
         }
         .foot-collapse[open] summary::after{transform:rotate(-135deg)}
         .foot-collapse-body{
-            padding:4px 18px 18px;
+            padding:4px 16px 14px;
             border-top:1px solid var(--border);
-            font-size:12.5px;line-height:1.7;color:var(--text-dim);
+            font-size:12px;line-height:1.6;color:var(--text-dim);
         }
         .foot-collapse-body p{margin:8px 0}
         .foot-collapse-body p strong{color:var(--text)}
@@ -352,21 +390,21 @@ layout: null
             .ad-mobile{display:none}
             .ad-both{display:flex}
 
-            .site-header{padding:14px 24px}
-            .brand-name{font-size:16px}
-            .page-wrap{padding:0 24px}
-            .section-title{font-size:26px}
-            .section-title::before{height:26px}
+            .site-header{padding:10px 20px}
+            .brand-name{font-size:15px}
+            .page-wrap{padding:0 16px}
+            .section-title{font-size:20px}
+            .section-title::before{height:20px}
         }
 
         @media(min-width:900px){
-            .site-header{padding:14px 32px}
-            .page-wrap{padding:0 32px}
-            .section{margin:56px 0}
-            .section-title{font-size:32px}
-            .section-title::before{height:32px;width:5px}
-            .card-play{width:42px;height:42px}
-            .card-play svg{width:16px;height:16px}
+            .site-header{padding:10px 28px}
+            .page-wrap{padding:0 20px}
+            .section{margin:32px 0}
+            .section-title{font-size:22px}
+            .section-title::before{height:22px;width:4px}
+            .card-play{width:60px;height:60px}
+            .card-play svg{width:24px;height:24px}
         }
     </style>
 
@@ -470,147 +508,12 @@ layout: null
           {% assign category_posts = site.posts %}
         {% endif %}
 
-        {% assign featured_posts = category_posts | slice: 0, 5 %}
-        {% if featured_posts.size >= 5 %}
-        <section class="section">
-            <div class="section-head">
-                <h2 class="section-title featured-style">Featured</h2>
-                <span class="section-count">{{ featured_posts.size }} items</span>
-            </div>
-            <div class="grid">
-                {% for post in featured_posts %}
-                <a href="{{ post.url }}" class="card">
-                    <div class="card-media">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <span class="card-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                        <span class="card-dur" data-duration="{{ post.url }}"></span>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+        <div id="posts-data" style="display:none"
+             data-total="{{ category_posts.size }}"></div>
 
-        <div class="ad-inline">
-            <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
-            <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-        </div>
+        <div id="sections-container"></div>
 
-        {% assign latest_posts = category_posts | slice: 5, 5 %}
-        {% if latest_posts.size > 0 %}
-        <section class="section">
-            <div class="section-head">
-                <h2 class="section-title">Latest</h2>
-                <span class="section-count">New drops</span>
-            </div>
-            <div class="grid">
-                {% for post in latest_posts %}
-                <a href="{{ post.url }}" class="card">
-                    <div class="card-media">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <span class="card-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                        <span class="card-dur" data-duration="{{ post.url }}"></span>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <div class="ad-inline">
-            <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
-        </div>
-
-        {% assign stories_posts = category_posts | slice: 10, 4 %}
-        {% if stories_posts.size > 0 %}
-        <section class="section">
-            <div class="section-head">
-                <h2 class="section-title">Stories</h2>
-                <span class="section-count">Curated</span>
-            </div>
-            <div class="grid">
-                {% for post in stories_posts %}
-                <a href="{{ post.url }}" class="card">
-                    <div class="card-media">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <span class="card-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                        <span class="card-dur" data-duration="{{ post.url }}"></span>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <div class="ad-inline">
-            <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
-        </div>
-
-        {% assign popular_posts = category_posts | slice: 14, 6 %}
-        {% if popular_posts.size > 0 %}
-        <section class="section">
-            <div class="section-head">
-                <h2 class="section-title">Popular</h2>
-                <span class="section-count">Trending</span>
-            </div>
-            <div class="grid">
-                {% for post in popular_posts %}
-                <a href="{{ post.url }}" class="card">
-                    <div class="card-media">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <span class="card-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                        <span class="card-dur" data-duration="{{ post.url }}"></span>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <div class="ad-inline">
-            <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
-        </div>
-
-        {% assign archive_posts = category_posts | slice: 20, 5 %}
-        {% if archive_posts.size > 0 %}
-        <section class="section">
-            <div class="section-head">
-                <h2 class="section-title">Archive</h2>
-                <span class="section-count">All time</span>
-            </div>
-            <div class="grid">
-                {% for post in archive_posts %}
-                <a href="{{ post.url }}" class="card">
-                    <div class="card-media">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <span class="card-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                        <span class="card-dur" data-duration="{{ post.url }}"></span>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+        <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
 
     </div>
 
@@ -670,9 +573,48 @@ layout: null
 
     </footer>
 
-    <!-- AVATAR + DURATION SCRIPT -->
     <script>
-    (function() {
+    (function(){
+        // ============ DATA ============
+        var allPosts = [
+            {% for post in category_posts %}
+            {
+                url: "{{ post.url }}",
+                image: "{{ post.image | relative_url }}",
+                title: {{ post.title | jsonify }}
+            }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        ];
+
+        var sectionNames = ["Featured","Latest","Stories","Popular","Archive"];
+        var perSection = 10;
+        var totalPerPage = 50;
+        var totalPages = Math.ceil(allPosts.length / totalPerPage);
+        var currentPage = 1;
+
+        var container = document.getElementById("sections-container");
+        var nav = document.getElementById("pagination");
+
+        if (!nav) return;
+
+        if (totalPages <= 1) {
+            nav.remove();
+        }
+
+        // ============ HELPERS ============
+        function pageURL(n) {
+            var base = window.location.origin + window.location.pathname;
+            return n === 1 ? base : base + "?pag=" + n;
+        }
+
+        function getPageFromURL() {
+            var params = new URLSearchParams(window.location.search);
+            var p = parseInt(params.get("pag"), 10);
+            if (isNaN(p) || p < 1) return 1;
+            if (p > totalPages) return totalPages;
+            return p;
+        }
+
         function hashCode(str) {
             var h = 0;
             for (var i = 0; i < str.length; i++) {
@@ -680,17 +622,140 @@ layout: null
             }
             return Math.abs(h);
         }
+
         function formatDuration(seconds) {
             var m = Math.floor(seconds / 60);
             var s = seconds % 60;
-            return m + ':' + (s < 10 ? '0' : '') + s;
+            return m + ":" + (s < 10 ? "0" : "") + s;
         }
-        document.querySelectorAll('[data-duration]').forEach(function(el) {
-            var seed = el.getAttribute('data-duration') || '';
-            var h = hashCode(seed);
-            var seconds = 60 + (h % 841);
-            el.textContent = formatDuration(seconds);
+
+        function escapeHtml(str) {
+            return String(str || "").replace(/[&<>"']/g, function(c){
+                return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+            });
+        }
+
+        // ============ BUILD ============
+        function buildCard(post) {
+            var img = post.image
+                ? '<img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '" loading="lazy">'
+                : '';
+            var h = hashCode(post.url);
+            var dur = formatDuration(60 + (h % 841));
+            return '<a href="' + escapeHtml(post.url) + '" class="card">' +
+                       '<div class="card-media">' +
+                           img +
+                           '<span class="card-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>' +
+                           '<span class="card-dur">' + dur + '</span>' +
+                       '</div>' +
+                   '</a>';
+        }
+
+        function renderSection(name, posts, isFeatured) {
+            if (!posts.length) return "";
+            var cards = posts.map(buildCard).join("");
+            return '<section class="section">' +
+                       '<div class="section-head">' +
+                           '<h2 class="section-title' + (isFeatured ? ' featured-style' : '') + '">' + name + '</h2>' +
+                           '<span class="section-count">' + posts.length + ' items</span>' +
+                       '</div>' +
+                       '<div class="grid">' + cards + '</div>' +
+                   '</section>';
+        }
+
+        function renderPage(page) {
+            currentPage = page;
+            var start = (page - 1) * totalPerPage;
+            var pagePosts = allPosts.slice(start, start + totalPerPage);
+
+            var html = "";
+            for (var i = 0; i < sectionNames.length; i++) {
+                var sStart = i * perSection;
+                var sPosts = pagePosts.slice(sStart, sStart + perSection);
+                html += renderSection(sectionNames[i], sPosts, i === 0);
+            }
+            container.innerHTML = html;
+
+            // Title & canonical
+            var baseName = window.__SITE_NAME__ || document.title.split(" — ")[0];
+            document.title = page === 1
+                ? baseName + " · Gallery"
+                : baseName + " · Gallery — Page " + page + " of " + totalPages;
+
+            var canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) canonical.setAttribute("href", pageURL(page));
+
+            drawPagination(page);
+        }
+
+        // ============ PAGINATION UI ============
+        function makeLink(text, page, opts) {
+            opts = opts || {};
+            var el;
+            if (opts.disabled) {
+                el = document.createElement("span");
+                el.className = "disabled";
+            } else {
+                el = document.createElement("a");
+                el.href = page === 1 ? "./" : "?pag=" + page;
+            }
+            if (opts.active) el.classList.add("active");
+            el.textContent = text;
+            return el;
+        }
+
+        function drawPagination(current) {
+            if (totalPages <= 1) return;
+            nav.innerHTML = "";
+            nav.appendChild(makeLink("‹", current - 1, { disabled: current === 1 }));
+
+            var pages = [];
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) pages.push(i);
+            } else {
+                pages.push(1);
+                if (current > 3) pages.push("...");
+                var from = Math.max(2, current - 1);
+                var to = Math.min(totalPages - 1, current + 1);
+                for (var j = from; j <= to; j++) pages.push(j);
+                if (current < totalPages - 2) pages.push("...");
+                pages.push(totalPages);
+            }
+
+            pages.forEach(function (p) {
+                if (p === "...") {
+                    var span = document.createElement("span");
+                    span.className = "dots";
+                    span.textContent = "…";
+                    nav.appendChild(span);
+                } else {
+                    nav.appendChild(makeLink(p, p, { active: p === current }));
+                }
+            });
+
+            nav.appendChild(makeLink("›", current + 1, { disabled: current === totalPages }));
+        }
+
+        // ============ EVENTS ============
+        nav.addEventListener("click", function (e) {
+            var link = e.target.closest("a[href]");
+            if (!link) return;
+            var href = link.getAttribute("href");
+            if (href.indexOf("?pag=") !== 0 && href !== "./") return;
+            e.preventDefault();
+            var url = href === "./" ? window.location.pathname : "?pag=" + href.split("=")[1];
+            history.pushState({}, "", url);
+            renderPage(getPageFromURL());
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
+
+        window.addEventListener("popstate", function () {
+            renderPage(getPageFromURL());
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // ============ INIT ============
+        renderPage(getPageFromURL());
     })();
     </script>
 
