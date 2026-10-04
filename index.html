@@ -346,6 +346,63 @@ layout: null
             min-width:auto;padding:0 4px;
         }
 
+        /* ============ COOKIE BANNER ============ */
+        .cookie-banner{
+            position:fixed;
+            bottom:16px;
+            left:50%;
+            transform:translateX(-50%) translateY(20px);
+            max-width:520px;
+            width:calc(100% - 32px);
+            background:var(--surface);
+            color:var(--text);
+            border:1px solid var(--border-strong);
+            border-radius:12px;
+            padding:14px 16px;
+            box-shadow:0 12px 40px rgba(0,0,0,.5);
+            font-size:13px;
+            line-height:1.5;
+            z-index:1200;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            opacity:0;
+            transition:opacity .3s ease,transform .3s ease;
+        }
+        .cookie-banner.show{
+            opacity:1;
+            transform:translateX(-50%) translateY(0);
+        }
+        .cookie-banner p{
+            margin:0;
+            flex:1;
+            color:var(--text);
+        }
+        .cookie-banner a{
+            color:var(--accent);
+            text-decoration:none;
+            font-weight:500;
+        }
+        .cookie-banner a:hover{text-decoration:underline}
+        .cookie-ok{
+            background:var(--accent);
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            padding:8px 18px;
+            cursor:pointer;
+            font-size:13px;
+            font-weight:600;
+            font-family:'Inter',sans-serif;
+            flex-shrink:0;
+            transition:all .15s ease;
+        }
+        .cookie-ok:hover{
+            filter:brightness(1.1);
+            transform:translateY(-1px);
+        }
+        .cookie-ok:active{transform:translateY(0)}
+
         /* ============ FOOTER ============ */
         footer.site-footer{
             max-width:900px;margin:40px auto 0;
@@ -405,6 +462,16 @@ layout: null
             .section-title::before{height:22px;width:4px}
             .card-play{width:60px;height:60px}
             .card-play svg{width:24px;height:24px}
+        }
+
+        @media(max-width:600px){
+            .cookie-banner{
+                bottom:12px;
+                width:calc(100% - 24px);
+                padding:12px 14px;
+                font-size:12.5px;
+            }
+            .cookie-ok{padding:7px 14px;font-size:12.5px}
         }
     </style>
 
@@ -508,8 +575,13 @@ layout: null
           {% assign category_posts = site.posts %}
         {% endif %}
 
-        <div id="posts-data" style="display:none"
-             data-total="{{ category_posts.size }}"></div>
+        <!-- Template iklan untuk disisipkan antar section (server-side) -->
+        <div id="ad-slots" style="display:none">
+            <div data-ad="1">{% include /ads/banner/01.html %}</div>
+            <div data-ad="2">{% include /ads/banner/02.html %}</div>
+            <div data-ad="3">{% include /ads/banner/03.html %}</div>
+            <div data-ad="8">{% include /ads/banner/08.html %}</div>
+        </div>
 
         <div id="sections-container"></div>
 
@@ -573,6 +645,12 @@ layout: null
 
     </footer>
 
+    <!-- COOKIE BANNER -->
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice">
+        <p>This site uses cookies to improve your experience. <a href="/privacy-policy.html">Learn more</a></p>
+        <button class="cookie-ok" id="cookieOk" type="button">OK</button>
+    </div>
+
     <script>
     (function(){
         // ============ DATA ============
@@ -596,10 +674,15 @@ layout: null
         var nav = document.getElementById("pagination");
 
         if (!nav) return;
-
         if (totalPages <= 1) {
             nav.remove();
         }
+
+        // ============ AD SLOTS CACHE ============
+        var adSlots = {};
+        document.querySelectorAll("#ad-slots > div").forEach(function(el){
+            adSlots[el.getAttribute("data-ad")] = el.innerHTML;
+        });
 
         // ============ HELPERS ============
         function pageURL(n) {
@@ -663,18 +746,44 @@ layout: null
                    '</section>';
         }
 
+        function renderAd(key) {
+            if (!adSlots[key]) return "";
+            return '<div class="ad-inline"><div class="ad-box ad-both">' + adSlots[key] + '</div></div>';
+        }
+
         function renderPage(page) {
             currentPage = page;
             var start = (page - 1) * totalPerPage;
             var pagePosts = allPosts.slice(start, start + totalPerPage);
 
             var html = "";
+            var adKeys = ["1", "2", "3", "8"];
+            var adIdx = 0;
+
             for (var i = 0; i < sectionNames.length; i++) {
                 var sStart = i * perSection;
                 var sPosts = pagePosts.slice(sStart, sStart + perSection);
                 html += renderSection(sectionNames[i], sPosts, i === 0);
+
+                // Sisipkan iklan setelah section (kecuali section terakhir)
+                if (i < sectionNames.length - 1 && sPosts.length > 0) {
+                    var adKey = adKeys[adIdx % adKeys.length];
+                    adIdx++;
+                    html += renderAd(adKey);
+                }
             }
             container.innerHTML = html;
+
+            // Re-execute scripts yang baru di-inject (biar iklan jalan)
+            container.querySelectorAll("script").forEach(function(oldScript) {
+                var newScript = document.createElement("script");
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                Array.from(oldScript.attributes).forEach(function(attr) {
+                    if (attr.name !== "src") newScript.setAttribute(attr.name, attr.value);
+                });
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
 
             // Title & canonical
             var baseName = window.__SITE_NAME__ || document.title.split(" — ")[0];
@@ -756,6 +865,27 @@ layout: null
 
         // ============ INIT ============
         renderPage(getPageFromURL());
+    })();
+
+    // ============ COOKIE BANNER ============
+    (function(){
+        var KEY = "cookie-accepted-v1";
+        var banner = document.getElementById("cookieBanner");
+        var okBtn = document.getElementById("cookieOk");
+        if (!banner) return;
+
+        if (localStorage.getItem(KEY) === "1") {
+            banner.remove();
+            return;
+        }
+
+        setTimeout(function(){ banner.classList.add("show"); }, 300);
+
+        okBtn.addEventListener("click", function(){
+            localStorage.setItem(KEY, "1");
+            banner.classList.remove("show");
+            setTimeout(function(){ banner.remove(); }, 300);
+        });
     })();
     </script>
 
