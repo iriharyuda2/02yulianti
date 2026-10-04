@@ -55,6 +55,7 @@ layout: null
             --surface-2: #1d1d29;
             --text: #f0f0f5;
             --text-dim: #8a8a9a;
+            --text-muted: #6a6a78;
             --border: rgba(255,255,255,.06);
             --border-strong: rgba(255,255,255,.12);
             --accent: #a855f7;
@@ -79,6 +80,7 @@ layout: null
             --surface-2: #f5f5f3;
             --text: #14141a;
             --text-dim: #6b6b76;
+            --text-muted: #9a9aa3;
             --border: rgba(0,0,0,.06);
             --border-strong: rgba(0,0,0,.12);
             --accent: #7c3aed;
@@ -198,13 +200,18 @@ layout: null
             color:var(--text);padding:0;
         }
         .menu-close svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-body{
+            flex:1;
+            overflow-y:auto;
+            padding:10px 10px 20px;
+        }
         .menu-list{
-            list-style:none;margin:0;padding:10px 10px;
-            display:flex;flex-direction:column;gap:2px;overflow-y:auto;
+            list-style:none;margin:0;padding:0;
+            display:flex;flex-direction:column;gap:2px;
         }
         .menu-list a{
             display:flex;align-items:center;gap:12px;
-            padding:13px 14px;border-radius:8px;
+            padding:12px 14px;border-radius:8px;
             color:var(--menu-text);text-decoration:none;
             font-size:14px;font-weight:500;
             transition:all .15s ease;
@@ -214,13 +221,13 @@ layout: null
         .menu-divider{
             height:1px;
             background:var(--border);
-            margin:6px 4px;
+            margin:12px 4px;
             pointer-events:none;
         }
         .menu-section-label{
             font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
             color:var(--text-dim);
-            padding:8px 14px 4px;
+            padding:8px 14px 6px;
         }
 
         /* ============ ADS ============ */
@@ -491,7 +498,7 @@ layout: null
         .foot-collapse-body a{color:var(--accent);text-decoration:none;font-weight:500}
         .foot-collapse-body a:hover{text-decoration:underline}
 
-        /* ============ CONTACT LIST ============ */
+        /* ============ CONTACT (footer) ============ */
         .contact-list{
             list-style:none;
             padding:0;
@@ -588,28 +595,37 @@ layout: null
                 <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
         </div>
-        <ul class="menu-list">
-            <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Home</a></li>
-            <li><a href="/contact.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Contact</a></li>
-            <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg> Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> Terms & Conditions</a></li>
+        <div class="menu-body">
+            <ul class="menu-list">
+                <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Home</a></li>
+                <li><a href="#contact"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Contact</a></li>
+                <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg> Privacy Policy</a></li>
+                <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> Terms &amp; Conditions</a></li>
 
-            <li class="menu-divider" role="presentation"></li>
-            <li class="menu-section-label">Reach Us</li>
+                <li class="menu-divider" role="presentation"></li>
+                <li class="menu-section-label">Legal</li>
 
-            <li><a href="https://wa.me/6285770366055" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                WhatsApp
-            </a></li>
-            <li><a href="https://t.me/yl4t1" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
-                Telegram · @yl4t1
-            </a></li>
-            <li><a href="mailto:admin@yulianti.xyz">
-                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                admin@yulianti.xyz
-            </a></li>
-        </ul>
+                <li><a href="#legal-2257"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg> 18 U.S.C. § 2257</a></li>
+                <li><a href="#legal-dmca"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg> DMCA / Copyright</a></li>
+                <li><a href="#legal-disclaimer"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg> 18+ Disclaimer</a></li>
+
+                <li class="menu-divider" role="presentation"></li>
+                <li class="menu-section-label">Reach Us</li>
+
+                <li><a href="https://wa.me/6285770366055" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    WhatsApp
+                </a></li>
+                <li><a href="https://t.me/yl4t1" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+                    Telegram
+                </a></li>
+                <li><a href="mailto:admin@yulianti.xyz">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                    Email
+                </a></li>
+            </ul>
+        </div>
     </aside>
 
     <script>
@@ -637,6 +653,19 @@ layout: null
         document.getElementById("menuClose").addEventListener("click", closeMenu);
         overlay.addEventListener("click", closeMenu);
         document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
+
+        // Auto-close menu + open corresponding <details> when clicking anchor legal
+        document.querySelectorAll('.menu-panel a[href^="#"]').forEach(function(link){
+            link.addEventListener("click", function(e){
+                var id = link.getAttribute("href").slice(1);
+                var target = document.getElementById(id);
+                if (target) {
+                    // open the details if it is one
+                    if (target.tagName === "DETAILS") target.open = true;
+                    closeMenu();
+                }
+            });
+        });
     })();
 
     (function() {
@@ -698,7 +727,7 @@ layout: null
             </div>
         </details>
 
-        <details class="foot-collapse">
+        <details class="foot-collapse" id="legal-disclaimer">
             <summary>18+ Disclaimer</summary>
             <div class="foot-collapse-body">
                 <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
@@ -720,7 +749,7 @@ layout: null
             </div>
         </details>
 
-        <details class="foot-collapse">
+        <details class="foot-collapse" id="legal-dmca">
             <summary>DMCA / Copyright</summary>
             <div class="foot-collapse-body">
                 <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
@@ -737,7 +766,7 @@ layout: null
             </div>
         </details>
 
-        <details class="foot-collapse">
+        <details class="foot-collapse" id="legal-2257">
             <summary>18 U.S.C. § 2257 Statement</summary>
             <div class="foot-collapse-body">
                 <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
