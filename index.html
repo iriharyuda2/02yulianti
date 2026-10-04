@@ -25,10 +25,10 @@ layout: null
         };
         var displayDomain = formatText(fullName);
         window.__SITE_NAME__ = displayDomain;
-        document.title = displayDomain + " · Gallery";
+        document.title = displayDomain + " · Indonesian & Asian Amateur";
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Curated visual gallery, updated daily.";
+        metaDesc.content = "Curated amateur videos from Indonesia and across Asia. Real people, real moments. Updated daily. 18+ only.";
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
@@ -131,10 +131,31 @@ layout: null
             font-family:'Playfair Display',serif;
             box-shadow:0 4px 16px var(--accent-soft);
         }
+        .brand-text{
+            display:flex;flex-direction:column;min-width:0;
+        }
         .brand-name{
-            font-size:15px;font-weight:700;letter-spacing:-.02em;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-            color:var(--text);
+            font-size:15px;
+            font-weight:800;
+            letter-spacing:-.02em;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+            -webkit-background-clip:text;
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+            color:var(--accent);
+        }
+        .brand-tagline{
+            font-size:9px;
+            font-weight:500;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+            color:var(--text-dim);
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
         .icon-btn{
             width:36px;height:36px;flex-shrink:0;
@@ -315,7 +336,6 @@ layout: null
             border:1px solid var(--accent-soft);
         }
 
-        /* === CARD TITLE OVERLAY (in grid) === */
         .card-title{
             position:absolute;
             bottom:0;
@@ -509,6 +529,7 @@ layout: null
             .page-wrap{padding:0 16px}
             .section-title{font-size:20px}
             .section-title::before{height:20px}
+            .brand-name{font-size:16px}
         }
 
         @media(min-width:900px){
@@ -520,6 +541,7 @@ layout: null
             .card-play{width:60px;height:60px}
             .card-play svg{width:24px;height:24px}
             .card-title{font-size:11.5px;padding:24px 12px 10px}
+            .brand-name{font-size:17px}
         }
 
         @media(max-width:600px){
@@ -545,6 +567,7 @@ layout: null
                 <div class="brand-mark" id="brandMark">Y</div>
                 <div class="brand-text">
                     <span class="brand-name" id="brandName">Yulianti</span>
+                    <span class="brand-tagline">Indonesia &amp; Asia · Real &amp; Amateur</span>
                 </div>
             </div>
             <button class="icon-btn" id="themeToggle" aria-label="Theme">
@@ -665,6 +688,15 @@ layout: null
     </div>
 
     <footer class="site-footer">
+
+        <details class="foot-collapse">
+            <summary>About</summary>
+            <div class="foot-collapse-body">
+                <p><strong>Yulianti</strong> is a curated gallery featuring authentic amateur videos from Indonesia and across Asia. We highlight real people and real moments — no studios, no scripts, just genuine content shared by creators from the region.</p>
+                <p>Every video is hand-picked for quality and authenticity. New content is added daily.</p>
+                <p>This site is intended for adults only (18+).</p>
+            </div>
+        </details>
 
         <details class="foot-collapse">
             <summary>18+ Disclaimer</summary>
@@ -875,10 +907,10 @@ layout: null
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             });
 
-            var baseName = window.__SITE_NAME__ || document.title.split(" — ")[0];
+            var baseName = window.__SITE_NAME__ || document.title.split(" · ")[0];
             document.title = page === 1
-                ? baseName + " · Gallery"
-                : baseName + " · Gallery — Page " + page + " of " + totalPages;
+                ? baseName + " · Indonesian & Asian Amateur"
+                : baseName + " · Indonesian & Asian Amateur — Page " + page + " of " + totalPages;
 
             var canonical = document.querySelector('link[rel="canonical"]');
             if (canonical) canonical.setAttribute("href", pageURL(page));
@@ -963,3 +995,4 @@ layout: null
 
 </body>
 </html>
+    
