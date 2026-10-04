@@ -131,17 +131,10 @@ layout: null
             font-family:'Playfair Display',serif;
             box-shadow:0 4px 16px var(--accent-soft);
         }
-        .brand-text{
-            display:flex;flex-direction:column;min-width:0;
-        }
         .brand-name{
-            font-size:14px;font-weight:700;letter-spacing:-.02em;
+            font-size:15px;font-weight:700;letter-spacing:-.02em;
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
             color:var(--text);
-        }
-        .brand-tag{
-            font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
-            color:var(--text-dim);
         }
         .icon-btn{
             width:36px;height:36px;flex-shrink:0;
@@ -311,16 +304,42 @@ layout: null
         }
 
         .card-dur{
-            position:absolute;bottom:6px;right:6px;
+            position:absolute;top:6px;right:6px;
             background:var(--dur-bg);
             color:var(--dur-fg);
             font-size:10px;font-weight:700;
             letter-spacing:.04em;
             padding:3px 7px;border-radius:999px;
-            z-index:2;pointer-events:none;
+            z-index:3;pointer-events:none;
             font-variant-numeric:tabular-nums;
             border:1px solid var(--accent-soft);
         }
+
+        /* === CARD TITLE OVERLAY (in grid) === */
+        .card-title{
+            position:absolute;
+            bottom:0;
+            left:0;
+            right:0;
+            font-family:'Inter',system-ui,sans-serif;
+            font-size:10.5px;
+            font-weight:400;
+            line-height:1.35;
+            color:#fff;
+            opacity:.7;
+            padding:22px 10px 8px;
+            margin:0;
+            overflow:hidden;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            text-overflow:ellipsis;
+            background:linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,0) 100%);
+            z-index:2;
+            pointer-events:none;
+            transition:opacity .2s ease;
+        }
+        .card:hover .card-title{opacity:1}
 
         /* ============ PAGINATION ============ */
         .pagination{
@@ -487,7 +506,6 @@ layout: null
         /* ============ RESPONSIVE ============ */
         @media(min-width:600px){
             .site-header{padding:10px 20px}
-            .brand-name{font-size:15px}
             .page-wrap{padding:0 16px}
             .section-title{font-size:20px}
             .section-title::before{height:20px}
@@ -501,6 +519,7 @@ layout: null
             .section-title::before{height:22px;width:4px}
             .card-play{width:60px;height:60px}
             .card-play svg{width:24px;height:24px}
+            .card-title{font-size:11.5px;padding:24px 12px 10px}
         }
 
         @media(max-width:600px){
@@ -526,7 +545,6 @@ layout: null
                 <div class="brand-mark" id="brandMark">Y</div>
                 <div class="brand-text">
                     <span class="brand-name" id="brandName">Yulianti</span>
-                    <span class="brand-tag">Visual Gallery</span>
                 </div>
             </div>
             <button class="icon-btn" id="themeToggle" aria-label="Theme">
@@ -810,7 +828,9 @@ layout: null
                        '<div class="card-media">' + img +
                            '<span class="card-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>' +
                            '<span class="card-dur">' + dur + '</span>' +
-                       '</div></a>';
+                           '<h3 class="card-title">' + escapeHtml(post.title) + '</h3>' +
+                       '</div>' +
+                   '</a>';
         }
         function renderSection(name, posts, isFeatured) {
             if (!posts.length) return "";
