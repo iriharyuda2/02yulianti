@@ -9,6 +9,11 @@ layout: null
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
     <meta name='admaven-placement' content=BqTk6qHaE>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
     <script>
     (function() {
         var hostname = location.hostname;
@@ -19,24 +24,15 @@ layout: null
             return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
         };
         var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
+        document.title = displayDomain + " · Gallery";
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
+        metaDesc.content = displayDomain + " - Curated visual gallery, updated daily.";
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
-        metaAuthor.name = "author";
-        metaAuthor.content = displayDomain;
-        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
         canonical.setAttribute("href", location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
     })();
     </script>
 
@@ -44,327 +40,334 @@ layout: null
 
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:var(--bg-color)}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:var(--bg-color);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:var(--text-color);line-height:1.3;-webkit-font-smoothing:antialiased;
-        }
 
         :root {
-            --bg-color: #050505;
-            --header-bg: rgba(5,5,5,.97);
-            --text-color: #fff;
-            --border-color: rgba(255,255,255,.08);
-            --menu-bg: #1a1a1a;
-            --menu-border: #333;
-            --menu-text: #ccc;
-            --menu-hover-bg: #2a2a2a;
-            --card-bg: #0a0a0a;
-            --ad-bg: #080808;
-            --desc-color: rgba(255,255,255,.65);
-            --btn-bg: rgba(255,255,255,.05);
-            --btn-border: rgba(255,255,255,.1);
-            --icon-fill: #fff;
-            --icon-stroke: #fff;
-            --section-title: #fff;
-            --featured-title: #ff6b6b;
-            --play-bg: rgba(0,0,0,.5);
-            --play-fg: rgba(255,255,255,.85);
-            --duration-bg: rgba(0,0,0,.75);
-            --duration-fg: #ffffff;
+            --bg: #0a0a0f;
+            --bg-2: #12121a;
+            --surface: #16161f;
+            --surface-2: #1d1d29;
+            --text: #f0f0f5;
+            --text-dim: #8a8a9a;
+            --border: rgba(255,255,255,.06);
+            --border-strong: rgba(255,255,255,.12);
+            --accent: #a855f7;
+            --accent-2: #06b6d4;
+            --accent-soft: rgba(168,85,247,.15);
+            --shadow: 0 8px 32px rgba(0,0,0,.5);
+            --ad-bg: #0e0e15;
+            --play-bg: rgba(10,10,15,.65);
+            --play-fg: #ffffff;
+            --dur-bg: rgba(10,10,15,.85);
+            --dur-fg: #a855f7;
+            --header-bg: rgba(10,10,15,.85);
+            --menu-bg: #16161f;
+            --menu-hover: #1d1d29;
+            --menu-text: #b0b0c0;
+            --radius: 4px;
         }
 
         body.light-mode {
-            --bg-color: #f5f5f7;
-            --header-bg: rgba(245,245,247,.97);
-            --text-color: #1d1d1f;
-            --border-color: rgba(0,0,0,.08);
+            --bg: #fafaf9;
+            --bg-2: #f0f0ee;
+            --surface: #ffffff;
+            --surface-2: #f5f5f3;
+            --text: #14141a;
+            --text-dim: #6b6b76;
+            --border: rgba(0,0,0,.06);
+            --border-strong: rgba(0,0,0,.12);
+            --accent: #7c3aed;
+            --accent-2: #0891b2;
+            --accent-soft: rgba(124,58,237,.1);
+            --shadow: 0 8px 32px rgba(0,0,0,.08);
+            --ad-bg: #eeeee9;
+            --play-bg: rgba(255,255,255,.9);
+            --play-fg: #14141a;
+            --dur-bg: rgba(20,20,26,.9);
+            --dur-fg: #ffffff;
+            --header-bg: rgba(250,250,249,.9);
             --menu-bg: #ffffff;
-            --menu-border: #e5e5e5;
-            --menu-text: #1d1d1f;
-            --menu-hover-bg: #f0f0f0;
-            --card-bg: #ffffff;
-            --ad-bg: #eaeaea;
-            --desc-color: rgba(0,0,0,.55);
-            --btn-bg: rgba(0,0,0,.05);
-            --btn-border: rgba(0,0,0,.1);
-            --icon-fill: #1d1d1f;
-            --icon-stroke: #1d1d1f;
-            --section-title: #1d1d1f;
-            --featured-title: #d32f2f;
-            --play-bg: rgba(0,0,0,.45);
-            --play-fg: rgba(255,255,255,.9);
-            --duration-bg: rgba(0,0,0,.7);
-            --duration-fg: #ffffff;
+            --menu-hover: #f5f5f3;
+            --menu-text: #4a4a52;
         }
 
+        html{overflow-x:hidden;background:var(--bg)}
+        body{
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
+            background:var(--bg);color:var(--text);
+            font-family:'Inter',system-ui,-apple-system,sans-serif;
+            line-height:1.4;-webkit-font-smoothing:antialiased;
+            transition:background .3s ease,color .3s ease;
+        }
+
+        /* ============ HEADER ============ */
         .site-header{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:var(--header-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid var(--border-color);
-            padding:12px 12px;
+            position:fixed;top:0;left:0;right:0;z-index:1000;
+            background:var(--header-bg);
+            backdrop-filter:blur(24px) saturate(1.8);
+            -webkit-backdrop-filter:blur(24px) saturate(1.8);
+            border-bottom:1px solid var(--border);
+            padding:14px 20px;
         }
         .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
+            display:flex;align-items:center;gap:14px;
+            max-width:1400px;margin:0 auto;
         }
-        .site-avatar{flex-shrink:0;line-height:0}
-        .site-avatar svg{width:34px;height:34px}
-        .site-title{
-            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-color);
+        .brand{
+            display:flex;align-items:center;gap:10px;
+            flex:1;min-width:0;
         }
-        .menu-btn, .theme-btn{
-            width:42px;height:42px;flex-shrink:0;
-            background:var(--btn-bg);border:1px solid var(--btn-border);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s ease;
+        .brand-mark{
+            width:36px;height:36px;flex-shrink:0;
+            border-radius:10px;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-weight:900;font-size:16px;
+            font-family:'Playfair Display',serif;
+            box-shadow:0 4px 16px var(--accent-soft);
         }
-        .menu-btn:active, .theme-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
-        .menu-btn svg, .theme-btn svg{width:22px;height:22px;stroke:var(--icon-stroke);fill:none;stroke-width:2;stroke-linecap:round}
+        .brand-text{
+            display:flex;flex-direction:column;min-width:0;
+        }
+        .brand-name{
+            font-size:15px;font-weight:700;letter-spacing:-.02em;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            color:var(--text);
+        }
+        .brand-tag{
+            font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+            color:var(--text-dim);
+        }
+        .icon-btn{
+            width:38px;height:38px;flex-shrink:0;
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:10px;cursor:pointer;padding:0;
+            display:flex;align-items:center;justify-content:center;
+            color:var(--text);transition:all .2s ease;
+        }
+        .icon-btn:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .icon-btn:active{transform:scale(.94)}
+        .icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-        .slide-menu{
-            display:none;position:fixed;top:58px;right:8px;z-index:999;
-            background:var(--menu-bg);border:1px solid var(--menu-border);border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
+        /* ============ MENU PANEL ============ */
+        .menu-panel{
+            position:fixed;top:0;right:0;height:100%;width:300px;max-width:88vw;
+            background:var(--menu-bg);z-index:1100;
+            transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+            display:flex;flex-direction:column;
+            border-left:1px solid var(--border);
         }
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
-        .slide-menu a{
-            display:flex;align-items:center;gap:8px;padding:13px 16px;color:var(--menu-text);text-decoration:none;
-            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
+        .menu-panel.open{transform:translateX(0)}
+        .menu-overlay{
+            position:fixed;inset:0;background:rgba(0,0,0,.5);
+            opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+            z-index:1050;backdrop-filter:blur(2px);
         }
-        .slide-menu a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
-        .slide-menu a:active{background:var(--menu-hover-bg);color:var(--text-color)}
+        .menu-overlay.open{opacity:1;visibility:visible}
+        .menu-head{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:20px 22px;border-bottom:1px solid var(--border);
+        }
+        .menu-head span{
+            font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+            color:var(--text-dim);
+        }
+        .menu-close{
+            width:32px;height:32px;border-radius:8px;
+            background:var(--surface);border:1px solid var(--border);
+            cursor:pointer;display:flex;align-items:center;justify-content:center;
+            color:var(--text);padding:0;
+        }
+        .menu-close svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-list{
+            list-style:none;margin:0;padding:12px 12px;
+            display:flex;flex-direction:column;gap:2px;overflow-y:auto;
+        }
+        .menu-list a{
+            display:flex;align-items:center;gap:12px;
+            padding:14px 16px;border-radius:10px;
+            color:var(--menu-text);text-decoration:none;
+            font-size:14px;font-weight:500;
+            transition:all .15s ease;
+        }
+        .menu-list a:hover{background:var(--menu-hover);color:var(--text)}
+        .menu-list a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-        .desktop-nav{display:none!important}
-
+        /* ============ ADS ============ */
         .ad-box{
             display:flex;justify-content:center;align-items:center;
             margin:0 auto;max-width:100%;overflow:hidden;
             background:var(--ad-bg);min-height:50px;
         }
-        .ad-box ins{max-width:100%}
-
         .ad-desktop{display:none}
         .ad-mobile{display:flex}
         .ad-both{display:flex}
-
         .ad-break{
-            padding:12px 0;background:var(--ad-bg);
-            border-top:1px solid var(--border-color);
-            border-bottom:1px solid var(--border-color);
+            padding:14px 0;background:var(--ad-bg);
+            border-bottom:1px solid var(--border);
         }
-        .ad-break:first-child{margin-top:58px}
-
+        .ad-break:first-child{margin-top:64px}
+        .ad-break.bottom{border-top:1px solid var(--border);border-bottom:none;margin-top:32px}
         .ad-inline{
-            margin:24px 0;padding:12px 0;
+            margin:32px 0;padding:14px 0;
             background:var(--ad-bg);
-            border-top:1px solid var(--border-color);
-            border-bottom:1px solid var(--border-color);
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
         }
 
-        .main-layout{
-            display:block;width:100%;max-width:1280px;
-            margin:0 auto;padding:0;
-        }
-        .content-area{padding:0;width:100%}
-
-        .sidebar{display:none}
-
-        .gv2-section{margin:20px 0}
-        .gv2-section:first-child{margin-top:4px}
-        .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
-        .gv2-title h2{
-            margin:0;font-size:19px;font-weight:800;color:var(--section-title);letter-spacing:.2px;
-            display:flex;align-items:center;gap:8px;
-        }
-        .gv2-title h2 svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;}
-        .gv2-featured-title h2{color:var(--featured-title)}
-        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
-
-        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
-
-        .gv2-featured-big,
-        .gv2-featured-small{
-            grid-column:auto;grid-row:auto;
+        /* ============ LAYOUT ============ */
+        .page-wrap{
+            max-width:1400px;margin:0 auto;padding:0 16px;
         }
 
-        .gv2-card{
-            position:relative;overflow:hidden;border-radius:0;background:var(--card-bg);
-            -webkit-tap-highlight-color:transparent;
+        /* ============ SECTION ============ */
+        .section{margin:40px 0}
+        .section:first-child{margin-top:24px}
+        .section-head{
+            display:flex;align-items:baseline;justify-content:space-between;
+            margin-bottom:16px;gap:12px;
         }
-        .gv2-card-link{
-            display:block;width:100%;position:relative;
+        .section-title{
+            font-family:'Playfair Display',Georgia,serif;
+            font-size:22px;font-weight:900;letter-spacing:-.02em;
+            color:var(--text);margin:0;
+            display:flex;align-items:center;gap:10px;
         }
-        .gv2-card-link img{
+        .section-title::before{
+            content:'';width:4px;height:22px;border-radius:2px;
+            background:linear-gradient(180deg,var(--accent),var(--accent-2));
+        }
+        .section-title.featured-style::before{
+            background:linear-gradient(180deg,#f43f5e,#f59e0b);
+        }
+        .section-count{
+            font-size:11px;font-weight:600;letter-spacing:.1em;
+            color:var(--text-dim);text-transform:uppercase;
+        }
+
+        /* ============ GRID (seragam) ============ */
+        .grid{
+            display:grid;gap:10px;
+            grid-template-columns:repeat(2,1fr);
+        }
+        @media(min-width:600px){
+            .grid{grid-template-columns:repeat(3,1fr);gap:12px}
+        }
+        @media(min-width:900px){
+            .grid{grid-template-columns:repeat(5,1fr);gap:14px}
+        }
+        @media(min-width:1200px){
+            .grid{grid-template-columns:repeat(6,1fr);gap:16px}
+        }
+
+        /* ============ CARD ============ */
+        .card{
+            position:relative;display:block;
+            border-radius:var(--radius);overflow:hidden;
+            background:var(--surface);
+            text-decoration:none;
+            transition:transform .3s cubic-bezier(.4,0,.2,1);
+        }
+        .card:hover{transform:translateY(-2px)}
+        .card-media{
+            position:relative;
+            width:100%;aspect-ratio:9/16;
+            overflow:hidden;background:var(--surface-2);
+        }
+        .card-media img{
             width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .3s ease;aspect-ratio:9/16;
+            transition:transform .5s cubic-bezier(.4,0,.2,1);
         }
-        .gv2-card-link:active img{transform:scale(1.02)}
+        .card:hover .card-media img{transform:scale(1.05)}
 
-        /* === PLAY ICON OVERLAY === */
-        .gv2-play{
-            position:absolute;top:50%;left:50%;
-            transform:translate(-50%,-50%);
-            width:56px;height:56px;
+        .card-play{
+            position:absolute;top:8px;left:8px;
+            width:36px;height:36px;
+            background:var(--play-bg);
+            backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+            border-radius:10px;
             display:flex;align-items:center;justify-content:center;
-            background:var(--play-bg);color:var(--play-fg);
-            border-radius:50%;pointer-events:none;z-index:2;
-            transition:background .2s ease,transform .2s ease;
-            backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+            color:var(--play-fg);
+            z-index:2;pointer-events:none;
+            transition:all .25s ease;
         }
-        .gv2-play svg{width:24px;height:24px;margin-left:3px;display:block;}
-        .gv2-card:hover .gv2-play,
-        .gv2-card-link:active .gv2-play{
-            background:rgba(0,0,0,.7);
-            transform:translate(-50%,-50%) scale(1.08);
+        .card-play svg{width:14px;height:14px;fill:currentColor;margin-left:2px}
+        .card:hover .card-play{
+            background:var(--accent);
+            color:#fff;
+            transform:scale(1.08);
         }
 
-        /* === DURATION BADGE === */
-        .gv2-duration{
+        .card-dur{
             position:absolute;bottom:8px;right:8px;
-            background:var(--duration-bg);color:var(--duration-fg);
-            font-size:11px;font-weight:600;padding:3px 7px;
-            border-radius:5px;line-height:1.3;letter-spacing:.02em;
-            z-index:3;pointer-events:none;
-            backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+            background:var(--dur-bg);
+            color:var(--dur-fg);
+            font-size:10px;font-weight:700;
+            letter-spacing:.04em;
+            padding:4px 8px;border-radius:999px;
+            z-index:2;pointer-events:none;
             font-variant-numeric:tabular-nums;
+            border:1px solid var(--accent-soft);
         }
 
-        .gv2-card-body{display:none;}
-        .gv2-card-title-link{display:none;}
-        .gv2-card-desc{display:none;}
+        /* ============ FOOTER ============ */
+        footer.site-footer{
+            max-width:900px;margin:64px auto 0;padding:32px 20px 40px;
+            border-top:1px solid var(--border);
+        }
+        .foot-collapse{
+            border:1px solid var(--border);border-radius:var(--radius);
+            overflow:hidden;background:var(--surface);margin-bottom:8px;
+        }
+        .foot-collapse summary{
+            padding:14px 18px;cursor:pointer;
+            font-size:12px;font-weight:600;letter-spacing:.05em;
+            color:var(--text);list-style:none;
+            display:flex;align-items:center;justify-content:space-between;
+            gap:10px;user-select:none;text-transform:uppercase;
+        }
+        .foot-collapse summary::-webkit-details-marker{display:none}
+        .foot-collapse summary::after{
+            content:"";width:6px;height:6px;
+            border-right:2px solid var(--text-dim);
+            border-bottom:2px solid var(--text-dim);
+            transform:rotate(45deg);transition:transform .25s ease;
+            flex-shrink:0;
+        }
+        .foot-collapse[open] summary::after{transform:rotate(-135deg)}
+        .foot-collapse-body{
+            padding:4px 18px 18px;
+            border-top:1px solid var(--border);
+            font-size:12.5px;line-height:1.7;color:var(--text-dim);
+        }
+        .foot-collapse-body p{margin:8px 0}
+        .foot-collapse-body p strong{color:var(--text)}
+        .foot-collapse-body ul{margin:8px 0;padding-left:18px}
+        .foot-collapse-body li{margin-bottom:4px}
+        .foot-collapse-body a{color:var(--accent);text-decoration:none;font-weight:500}
+        .foot-collapse-body a:hover{text-decoration:underline}
 
-        .excerpt{display:none}
-
+        /* ============ RESPONSIVE ============ */
         @media(min-width:600px){
             .ad-desktop{display:flex}
             .ad-mobile{display:none}
             .ad-both{display:flex}
 
-            .site-header{padding:12px 16px}
-            .site-title{font-size:17px}
-            .ad-break{padding:16px 0}
-            .ad-break:first-child{margin-top:60px}
-            .ad-inline{margin:28px 0;padding:14px 0}
-            .gv2-title{padding:0 12px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 8px;gap:6px}
-
-            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-featured-big{grid-column:1 / -1}
-            .gv2-latest{grid-template-columns:repeat(3,1fr);gap:6px}
-            .gv2-stories{grid-template-columns:repeat(3,1fr);gap:6px}
-            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:6px}
-            .gv2-archive{grid-template-columns:repeat(3,1fr);gap:6px}
-
-            .gv2-card{border-radius:6px}
-            .gv2-card-link img{aspect-ratio:9/16}
-
-            .gv2-play{width:52px;height:52px;}
-            .gv2-play svg{width:22px;height:22px;}
+            .site-header{padding:14px 24px}
+            .brand-name{font-size:16px}
+            .page-wrap{padding:0 24px}
+            .section-title{font-size:26px}
+            .section-title::before{height:26px}
         }
 
         @media(min-width:900px){
-            body{max-width:1280px;margin:0 auto}
-
-            .site-header{
-                left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;
-            }
-            .site-title{font-size:15px;font-weight:600;color:var(--menu-text)}
-
-            .ad-break:first-child{margin-top:62px}
-
-            .main-layout{padding:0 8px}
-
-            .gv2-section{margin:32px 0}
-            .gv2-section:first-child{margin-top:8px}
-            .gv2-title{padding:0 14px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 14px;gap:10px}
-
-            .gv2-featured{
-                grid-template-columns:repeat(4,1fr);
-                gap:10px;
-            }
-            .gv2-featured-big{grid-column:1 / -1}
-            .gv2-featured-big .gv2-card-link img{aspect-ratio:9/16;height:100%}
-
-            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
-            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
-            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
-            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
-
-            .gv2-card{border-radius:12px}
-            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
-
-            .gv2-play{width:64px;height:64px;}
-            .gv2-play svg{width:28px;height:28px;}
+            .site-header{padding:14px 32px}
+            .page-wrap{padding:0 32px}
+            .section{margin:56px 0}
+            .section-title{font-size:32px}
+            .section-title::before{height:32px;width:5px}
+            .card-play{width:42px;height:42px}
+            .card-play svg{width:16px;height:16px}
         }
-
-        @media(min-width:1100px){
-            .gv2-grid{gap:12px}
-            .gv2-featured{gap:12px}
-            .gv2-latest{gap:12px}
-            .gv2-stories{gap:12px}
-            .gv2-tutorials{gap:12px}
-            .gv2-archive{gap:12px}
-        }
-
-        .footer-collapse {
-            max-width: 760px;
-            margin: 0 auto 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            background: var(--card-bg);
-        }
-        .footer-collapse summary {
-            padding: 12px 16px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-color);
-            list-style: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            user-select: none;
-        }
-        .footer-collapse summary::-webkit-details-marker { display: none; }
-        .footer-collapse summary::after {
-            content: "";
-            width: 8px;
-            height: 8px;
-            border-right: 2px solid var(--menu-text);
-            border-bottom: 2px solid var(--menu-text);
-            transform: rotate(45deg);
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-            margin-right: 4px;
-        }
-        .footer-collapse[open] summary::after { transform: rotate(-135deg); }
-        .footer-collapse-content {
-            padding: 4px 16px 16px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.82rem;
-            line-height: 1.6;
-            color: var(--menu-text);
-        }
-        .footer-collapse-content p { margin: 8px 0; }
-        .footer-collapse-content p strong { color: var(--text-color); }
-        .footer-collapse-content ul { margin: 8px 0; padding-left: 20px; }
-        .footer-collapse-content li { margin-bottom: 4px; }
-        .footer-collapse-content a { color: #6cb6ff; text-decoration: none; }
-        .footer-collapse-content a:hover { text-decoration: underline; }
     </style>
 
 {% include head.html %}
@@ -375,303 +378,261 @@ layout: null
 
     <header class="site-header">
         <div class="header-inner">
-            <div id="domainAvatar" class="site-avatar"></div>
-            <span id="blogMainTitle" class="site-title"></span>
-            <button class="theme-btn" id="themeToggle" aria-label="Toggle Theme">
-                <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                </svg>
-                <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <div class="brand">
+                <div class="brand-mark" id="brandMark">Y</div>
+                <div class="brand-text">
+                    <span class="brand-name" id="brandName">Yulianti</span>
+                    <span class="brand-tag">Visual Gallery</span>
+                </div>
+            </div>
+            <button class="icon-btn" id="themeToggle" aria-label="Theme">
+                <svg id="sunIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg id="moonIcon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
-                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
+            <button class="icon-btn" id="menuOpen" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
             </button>
         </div>
     </header>
 
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a></li>
-            <li><a href="/contact.html"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a></li>
-            <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Terms & Conditions</a></li>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="menu-panel" id="menuPanel">
+        <div class="menu-head">
+            <span>Navigation</span>
+            <button class="menu-close" id="menuClose" aria-label="Close">
+                <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <ul class="menu-list">
+            <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Home</a></li>
+            <li><a href="/contact.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Contact</a></li>
+            <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg> Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> Terms & Conditions</a></li>
         </ul>
-    </nav>
+    </aside>
 
     <script>
-    (function(){
+    (function() {
         var host = window.location.hostname.split(".");
         var sub = host[0];
         if (sub.toLowerCase() === "www") sub = host[1] || "";
         var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var menuIcon = btn.querySelector("svg:first-child");
-        var closeIcon = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            menuIcon.style.display = open ? "none" : "block";
-            closeIcon.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                menuIcon.style.display = "block";
-                closeIcon.style.display = "none";
-            }
-        });
-        panel.addEventListener("click", function(e){
-            e.stopPropagation();
-        });
-    })();
-    </script>
+        var display = clean.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+        document.getElementById("brandName").textContent = display;
+        document.getElementById("brandMark").textContent = display.charAt(0).toUpperCase();
 
-    <script>
+        var panel = document.getElementById("menuPanel");
+        var overlay = document.getElementById("menuOverlay");
+        document.getElementById("menuOpen").addEventListener("click", function(){
+            panel.classList.add("open");
+            overlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+        });
+        function closeMenu(){
+            panel.classList.remove("open");
+            overlay.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+        document.getElementById("menuClose").addEventListener("click", closeMenu);
+        overlay.addEventListener("click", closeMenu);
+        document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
+    })();
+
     (function() {
         var body = document.body;
-        var themeBtn = document.getElementById('themeToggle');
-        var sunIcon = document.getElementById('sunIcon');
-        var moonIcon = document.getElementById('moonIcon');
-
-        var savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            body.classList.add('light-mode');
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
+        var btn = document.getElementById("themeToggle");
+        var sun = document.getElementById("sunIcon");
+        var moon = document.getElementById("moonIcon");
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            sun.style.display = "none";
+            moon.style.display = "block";
         }
-
-        themeBtn.addEventListener('click', function() {
-            body.classList.toggle('light-mode');
-            var isLight = body.classList.contains('light-mode');
-
-            if (isLight) {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-                localStorage.setItem('theme', 'light');
-            } else {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-                localStorage.setItem('theme', 'dark');
-            }
+        btn.addEventListener("click", function() {
+            body.classList.toggle("light-mode");
+            var isLight = body.classList.contains("light-mode");
+            sun.style.display = isLight ? "none" : "block";
+            moon.style.display = isLight ? "block" : "none";
+            localStorage.setItem("theme", isLight ? "light" : "dark");
         });
     })();
     </script>
 
-
     <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
+        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
+        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
     </div>
 
-    <div class="main-layout">
+    <div class="page-wrap">
 
-        <main class="content-area">
+        {% assign category_posts = site.categories[''] %}
+        {% if category_posts == nil or category_posts.size == 0 %}
+          {% assign category_posts = site.posts %}
+        {% endif %}
 
-            {% assign category_posts = site.categories[''] %}
-            {% if category_posts == nil or category_posts.size == 0 %}
-              {% assign category_posts = site.posts %}
-            {% endif %}
-
-            {% assign featured_posts = category_posts | slice: 0, 5 %}
-            {% if featured_posts.size >= 5 %}
-            <section class="gv2-section">
-                <div class="gv2-title gv2-featured-title">
-                    <h2>
-                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                        Featured
-                    </h2>
-                </div>
-                <div class="gv2-grid gv2-featured">
-                    {% for post in featured_posts %}
-                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
-                        <a href="{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <span class="gv2-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            </span>
-                            <span class="gv2-duration" data-duration="{{ post.url }}"></span>
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <div class="ad-inline">
-                <div class="ad-box ad-desktop">
-                    {% include /ads/banner/01.html %}
-                </div>
-                <div class="ad-box ad-mobile">
-                    {% include /ads/banner/04.html %}
-                </div>
+        {% assign featured_posts = category_posts | slice: 0, 5 %}
+        {% if featured_posts.size >= 5 %}
+        <section class="section">
+            <div class="section-head">
+                <h2 class="section-title featured-style">Featured</h2>
+                <span class="section-count">{{ featured_posts.size }} items</span>
             </div>
-
-            {% assign latest_posts = category_posts | slice: 5, 5 %}
-            {% if latest_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title">
-                    <h2>
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        Latest
-                    </h2>
-                </div>
-                <div class="gv2-grid gv2-latest">
-                    {% for post in latest_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <span class="gv2-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            </span>
-                            <span class="gv2-duration" data-duration="{{ post.url }}"></span>
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/02.html %}
-                </div>
+            <div class="grid">
+                {% for post in featured_posts %}
+                <a href="{{ post.url }}" class="card">
+                    <div class="card-media">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="card-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="card-dur" data-duration="{{ post.url }}"></span>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
+        </section>
+        {% endif %}
 
-            {% assign stories_posts = category_posts | slice: 10, 4 %}
-            {% if stories_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title">
-                    <h2>
-                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                        Stories
-                    </h2>
-                </div>
-                <div class="gv2-grid gv2-stories">
-                    {% for post in stories_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <span class="gv2-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            </span>
-                            <span class="gv2-duration" data-duration="{{ post.url }}"></span>
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
+        <div class="ad-inline">
+            <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
+            <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
+        </div>
 
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/03.html %}
-                </div>
+        {% assign latest_posts = category_posts | slice: 5, 5 %}
+        {% if latest_posts.size > 0 %}
+        <section class="section">
+            <div class="section-head">
+                <h2 class="section-title">Latest</h2>
+                <span class="section-count">New drops</span>
             </div>
-
-            {% assign popular_posts = category_posts | slice: 14, 6 %}
-            {% if popular_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title">
-                    <h2>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        Popular
-                    </h2>
-                </div>
-                <div class="gv2-grid gv2-tutorials">
-                    {% for post in popular_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <span class="gv2-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            </span>
-                            <span class="gv2-duration" data-duration="{{ post.url }}"></span>
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/08.html %}
-                </div>
+            <div class="grid">
+                {% for post in latest_posts %}
+                <a href="{{ post.url }}" class="card">
+                    <div class="card-media">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="card-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="card-dur" data-duration="{{ post.url }}"></span>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
+        </section>
+        {% endif %}
 
-            {% assign archive_posts = category_posts | slice: 20, 5 %}
-            {% if archive_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title">
-                    <h2>
-                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                        Archive
-                    </h2>
-                </div>
-                <div class="gv2-grid gv2-archive">
-                    {% for post in archive_posts %}
-                    <article class="gv2-card">
-                        <a href="{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <span class="gv2-play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            </span>
-                            <span class="gv2-duration" data-duration="{{ post.url }}"></span>
-                        </a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
+        </div>
 
-        </main>
+        {% assign stories_posts = category_posts | slice: 10, 4 %}
+        {% if stories_posts.size > 0 %}
+        <section class="section">
+            <div class="section-head">
+                <h2 class="section-title">Stories</h2>
+                <span class="section-count">Curated</span>
+            </div>
+            <div class="grid">
+                {% for post in stories_posts %}
+                <a href="{{ post.url }}" class="card">
+                    <div class="card-media">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="card-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="card-dur" data-duration="{{ post.url }}"></span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
+        </div>
+
+        {% assign popular_posts = category_posts | slice: 14, 6 %}
+        {% if popular_posts.size > 0 %}
+        <section class="section">
+            <div class="section-head">
+                <h2 class="section-title">Popular</h2>
+                <span class="section-count">Trending</span>
+            </div>
+            <div class="grid">
+                {% for post in popular_posts %}
+                <a href="{{ post.url }}" class="card">
+                    <div class="card-media">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="card-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="card-dur" data-duration="{{ post.url }}"></span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <div class="ad-inline">
+            <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
+        </div>
+
+        {% assign archive_posts = category_posts | slice: 20, 5 %}
+        {% if archive_posts.size > 0 %}
+        <section class="section">
+            <div class="section-head">
+                <h2 class="section-title">Archive</h2>
+                <span class="section-count">All time</span>
+            </div>
+            <div class="grid">
+                {% for post in archive_posts %}
+                <a href="{{ post.url }}" class="card">
+                    <div class="card-media">
+                        {% if post.image %}
+                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="card-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="card-dur" data-duration="{{ post.url }}"></span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
     </div>
 
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
+    <div class="ad-break bottom">
+        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
+        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
     </div>
 
-    <footer style="max-width:1280px;margin:40px auto 0;padding:32px 20px;border-top:1px solid var(--border-color);font-size:0.82rem;line-height:1.6;color:var(--menu-text);">
+    <footer class="site-footer">
 
-        <details class="footer-collapse">
+        <details class="foot-collapse">
             <summary>18+ Disclaimer</summary>
-            <div class="footer-collapse-content">
+            <div class="foot-collapse-body">
                 <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
                 <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
                 <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
             </div>
         </details>
 
-        <details class="footer-collapse">
+        <details class="foot-collapse">
             <summary>DMCA / Copyright</summary>
-            <div class="footer-collapse-content">
+            <div class="foot-collapse-body">
                 <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
                 <p><strong>How to submit:</strong></p>
                 <ul>
@@ -686,9 +647,9 @@ layout: null
             </div>
         </details>
 
-        <details class="footer-collapse">
+        <details class="foot-collapse">
             <summary>Cookie Policy</summary>
-            <div class="footer-collapse-content">
+            <div class="foot-collapse-body">
                 <p>This site uses the following cookies:</p>
                 <ul>
                     <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
@@ -699,9 +660,9 @@ layout: null
             </div>
         </details>
 
-        <details class="footer-collapse">
+        <details class="foot-collapse">
             <summary>Contact</summary>
-            <div class="footer-collapse-content">
+            <div class="foot-collapse-body">
                 <p>For DMCA notices, legal inquiries, or any other concerns:</p>
                 <p>WhatsApp: <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a><br>Response time: within 72 hours</p>
             </div>
@@ -711,22 +672,6 @@ layout: null
 
     <!-- AVATAR + DURATION SCRIPT -->
     <script>
-    (function() {
-        // Avatar
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-
-    // Duration acak tapi konsisten
     (function() {
         function hashCode(str) {
             var h = 0;
@@ -743,7 +688,7 @@ layout: null
         document.querySelectorAll('[data-duration]').forEach(function(el) {
             var seed = el.getAttribute('data-duration') || '';
             var h = hashCode(seed);
-            var seconds = 60 + (h % 841); // 1:00 - 15:00
+            var seconds = 60 + (h % 841);
             el.textContent = formatDuration(seconds);
         });
     })();
