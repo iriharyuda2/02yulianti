@@ -39,6 +39,12 @@ layout: null
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
+    <meta name="rating" content="adult">
+    <meta name="rating" content="mature">
+    <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
+    <meta name="content-rating" content="adult">
+    <meta name="audience" content="adult">
+
     <style>
         *,*::before,*::after{box-sizing:border-box}
 
@@ -90,7 +96,7 @@ layout: null
             --menu-text: #4a4a52;
         }
 
-        html{overflow-x:hidden;background:var(--bg)}
+        html{overflow-x:hidden;background:var(--bg);scroll-behavior:smooth}
         body{
             width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
             background:var(--bg);color:var(--text);
@@ -422,6 +428,7 @@ layout: null
             color:var(--text);list-style:none;
             display:flex;align-items:center;justify-content:space-between;
             gap:10px;user-select:none;text-transform:uppercase;
+            transition:color .2s ease;
         }
         .foot-collapse summary::-webkit-details-marker{display:none}
         .foot-collapse summary::after{
@@ -432,6 +439,7 @@ layout: null
             flex-shrink:0;
         }
         .foot-collapse[open] summary::after{transform:rotate(-135deg)}
+        .foot-collapse:target summary{color:var(--accent)}
         .foot-collapse-body{
             padding:4px 16px 14px;
             border-top:1px solid var(--border);
@@ -650,23 +658,6 @@ layout: null
         </details>
 
         <details class="foot-collapse">
-            <summary>DMCA / Copyright</summary>
-            <div class="foot-collapse-body">
-                <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
-                <p><strong>How to submit:</strong></p>
-                <ul>
-                    <li>Identification of the copyrighted work</li>
-                    <li>URL of the allegedly infringing material</li>
-                    <li>Your full name and contact information</li>
-                    <li>A statement of good faith belief that the use is not authorized</li>
-                    <li>A statement under penalty of perjury that the information is accurate</li>
-                    <li>Your physical or electronic signature</li>
-                </ul>
-                <p>Send your notice via WhatsApp to <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>. We respond to valid DMCA notices within 72 hours.</p>
-            </div>
-        </details>
-
-        <details class="foot-collapse">
             <summary>Cookie Policy</summary>
             <div class="foot-collapse-body">
                 <p>This site uses the following cookies:</p>
@@ -680,6 +671,44 @@ layout: null
         </details>
 
         <details class="foot-collapse">
+            <summary>DMCA / Copyright</summary>
+            <div class="foot-collapse-body">
+                <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
+                <p><strong>How to submit:</strong></p>
+                <ul>
+                    <li>Identification of the copyrighted work</li>
+                    <li>URL of the allegedly infringing material</li>
+                    <li>Your full name and contact information</li>
+                    <li>A statement of good faith belief that the use is not authorized</li>
+                    <li>A statement under penalty of perjury that the information is accurate</li>
+                    <li>Your physical or electronic signature</li>
+                </ul>
+                <p>Send your notice via any channel listed in the <a href="#contact">Contact</a> section. We respond to valid DMCA notices within 72 hours.</p>
+            </div>
+        </details>
+
+        <details class="foot-collapse">
+            <summary>18 U.S.C. § 2257 Statement</summary>
+            <div class="foot-collapse-body">
+                <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
+
+                <p>This website is <strong>not a primary or secondary producer</strong> of any sexually explicit content. All visual depictions of actual sexually explicit conduct that appear on this website are <strong>embedded from third-party platforms</strong> that are solely responsible for compliance with 18 U.S.C. § 2257 and 28 C.F.R. Part 75.</p>
+
+                <p>We do not host, upload, store, or transmit any sexually explicit media on our servers. All video content is displayed via embedded players provided by third-party platforms. The original producers and hosting platforms of this content are responsible for maintaining all required records.</p>
+
+                <p><strong>Age Verification of Performers</strong></p>
+                <p>We require all third-party sources from which we embed content to confirm that all performers depicted were <strong>18 years of age or older</strong> at the time of production. We do not knowingly embed, publish, or link to content involving minors or non-consensual activity. Any such content that comes to our attention will be removed immediately and reported to the appropriate authorities.</p>
+
+                <p><strong>Exemption Statement</strong></p>
+                <p>Because this website does not produce any sexually explicit content, we are exempt from the record-keeping requirements of 18 U.S.C. § 2257 and 28 C.F.R. Part 75. This exemption applies under 28 C.F.R. § 75.1(c) (persons who are not primary or secondary producers).</p>
+
+                <p>For compliance-related questions, takedown requests, or legal inquiries, see the <a href="#contact">Contact</a> section below.</p>
+
+                <p style="font-size:11px;opacity:.7;margin-top:10px">If you believe any content on this website violates applicable laws or involves non-consensual or underage activity, please contact us immediately. We cooperate fully with law enforcement.</p>
+            </div>
+        </details>
+
+        <details class="foot-collapse" id="contact">
             <summary>Contact</summary>
             <div class="foot-collapse-body">
                 <p>For DMCA notices, legal inquiries, or any other concerns:</p>
