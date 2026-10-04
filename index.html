@@ -209,9 +209,6 @@ layout: null
             margin:0 auto;max-width:100%;overflow:hidden;
             background:var(--ad-bg);min-height:50px;
         }
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
         .ad-break{
             padding:8px 0;background:var(--ad-bg);
             border-bottom:1px solid var(--border);
@@ -234,8 +231,7 @@ layout: null
         .section{margin:24px 0}
         .section:first-child{margin-top:16px}
         .section-head{
-            display:flex;align-items:baseline;justify-content:space-between;
-            margin-bottom:10px;gap:10px;
+            margin-bottom:10px;
         }
         .section-title{
             font-family:'Playfair Display',Georgia,serif;
@@ -249,10 +245,6 @@ layout: null
         }
         .section-title.featured-style::before{
             background:linear-gradient(180deg,#f43f5e,#f59e0b);
-        }
-        .section-count{
-            font-size:10px;font-weight:600;letter-spacing:.08em;
-            color:var(--text-dim);text-transform:uppercase;
         }
 
         /* ============ GRID ============ */
@@ -486,10 +478,6 @@ layout: null
 
         /* ============ RESPONSIVE ============ */
         @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
             .site-header{padding:10px 20px}
             .brand-name{font-size:15px}
             .page-wrap{padding:0 16px}
@@ -623,8 +611,7 @@ layout: null
     </script>
 
     <div class="ad-break">
-        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
+        <div class="ad-box">{% include /ads/banner/01.html %}</div>
     </div>
 
     <div class="page-wrap">
@@ -635,10 +622,10 @@ layout: null
         {% endif %}
 
         <div id="ad-slots" style="display:none">
-            <div data-ad="1">{% include /ads/banner/01.html %}</div>
-            <div data-ad="2">{% include /ads/banner/02.html %}</div>
-            <div data-ad="3">{% include /ads/banner/03.html %}</div>
-            <div data-ad="8">{% include /ads/banner/08.html %}</div>
+            <div data-ad="1">{% include /ads/banner/02.html %}</div>
+            <div data-ad="2">{% include /ads/banner/03.html %}</div>
+            <div data-ad="3">{% include /ads/banner/04.html %}</div>
+            <div data-ad="4">{% include /ads/banner/05.html %}</div>
         </div>
 
         <div id="sections-container"></div>
@@ -648,8 +635,7 @@ layout: null
     </div>
 
     <div class="ad-break bottom">
-        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
+        <div class="ad-box">{% include /ads/banner/06.html %}</div>
     </div>
 
     <footer class="site-footer">
@@ -802,14 +788,13 @@ layout: null
             return '<section class="section">' +
                        '<div class="section-head">' +
                            '<h2 class="section-title' + (isFeatured ? ' featured-style' : '') + '">' + name + '</h2>' +
-                           '<span class="section-count">' + posts.length + ' items</span>' +
                        '</div>' +
                        '<div class="grid">' + posts.map(buildCard).join("") + '</div>' +
                    '</section>';
         }
         function renderAd(key) {
             if (!adSlots[key]) return "";
-            return '<div class="ad-inline"><div class="ad-box ad-both">' + adSlots[key] + '</div></div>';
+            return '<div class="ad-inline"><div class="ad-box">' + adSlots[key] + '</div></div>';
         }
         function renderPage(page) {
             currentPage = page;
@@ -817,7 +802,7 @@ layout: null
             var pagePosts = allPosts.slice(start, start + totalPerPage);
 
             var html = "";
-            var adKeys = ["1","2","3","8"];
+            var adKeys = ["1","2","3","4"];
             var adIdx = 0;
 
             for (var i = 0; i < sectionNames.length; i++) {
