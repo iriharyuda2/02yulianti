@@ -5,7 +5,7 @@ layout: null
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Yulianti</title>
   <link rel="canonical" id="canonicalLink" href="">
   <meta name="robots" content="index, follow">
@@ -35,7 +35,7 @@ layout: null
       --menu-bg: #ffffff; --overlay: rgba(0,0,0,0.4);
       --duration-bg: rgba(0,0,0,0.7); --duration-fg: #ffffff;
       --share-bg: rgba(255,255,255,0.9); --share-fg: #222222;
-      --ad-bg: #f4f4f4; --ad-border: #dddddd;
+      --ad-bg: #f4f4f4;
     }
     [data-theme="dark"] {
       --bg: #0f1115; --bg-card: #181b22; --text: #e8e8e8; --text-muted: #9aa0a6;
@@ -45,7 +45,7 @@ layout: null
       --menu-bg: #181b22; --overlay: rgba(0,0,0,0.6);
       --duration-bg: rgba(0,0,0,0.75); --duration-fg: #ffffff;
       --share-bg: rgba(40,44,54,0.9); --share-fg: #e8e8e8;
-      --ad-bg: #1c1f26; --ad-border: #2a2e37;
+      --ad-bg: #080808;
     }
 
     * { box-sizing: border-box; }
@@ -115,50 +115,43 @@ layout: null
     .menu a:hover { background: var(--btn-bg); color: var(--link); }
     body.menu-open { overflow: hidden; }
 
-    .ad-slot {
-      display: flex; align-items: center; justify-content: center;
-      background: var(--ad-bg); border: 1px dashed var(--ad-border);
-      border-radius: 10px; width: 300px; height: 250px;
-      margin: 0 auto; overflow: hidden; position: relative;
-      min-height: 250px;
-    }
-    .ad-slot > * {
-      display: block; width: 100%; height: 100%; position: relative; z-index: 1;
-    }
-    .ad-footer { margin: 0 auto 32px; }
-
-    .ad-desktop-only { display: none; }
-    @media (min-width: 701px) {
-      .ad-desktop-only { display: flex; }
+    /* === AD BOX (pola contoh yang sukses) === */
+    .ad-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      max-width: 100%;
+      overflow: hidden;
+      background: var(--ad-bg);
+      min-height: 50px;
     }
 
-    .ad-in-grid {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      justify-items: center;
-      width: 100%;
-      margin: 10px 0;
-    }
-    .ad-in-grid .ad-slot {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      aspect-ratio: 300 / 250;
-      margin: 0;
-    }
+    .ad-desktop { display: none; }
+    .ad-mobile { display: flex; }
+    .ad-both { display: flex; }
 
     @media (min-width: 701px) {
-      .ad-in-grid {
-        grid-template-columns: repeat(3, 1fr);
-        justify-items: stretch;
-      }
-      .ad-in-grid .ad-slot {
-        max-width: 100%;
-        width: 100%;
-        aspect-ratio: 300 / 250;
-      }
+      .ad-desktop { display: flex; }
+      .ad-mobile { display: none; }
+      .ad-both { display: flex; }
+    }
+
+    /* Ad break (atas & bawah) */
+    .ad-break {
+      padding: 12px 0;
+      background: var(--ad-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Ad inline (antar grid) */
+    .ad-inline {
+      margin: 24px 0;
+      padding: 12px 0;
+      background: var(--ad-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .grid {
@@ -382,10 +375,6 @@ layout: null
       footer { font-size: 0.78rem; padding: 24px 0; }
       .footer-collapse summary { padding: 11px 14px; font-size: 0.82rem; }
       .footer-collapse-content { padding: 4px 14px 14px; font-size: 0.78rem; }
-      .ad-slot {
-        width: 100%; max-width: 300px; height: auto;
-        aspect-ratio: 300 / 250;
-      }
     }
   </style>
 
@@ -462,6 +451,16 @@ layout: null
     <a href="/privacy-policy.html">Privacy Policy</a>
   </aside>
 
+  <!-- AD BREAK: ATAS -->
+  <div class="ad-break">
+    <div class="ad-box ad-desktop">
+      {% include /ads/banner/06.html %}
+    </div>
+    <div class="ad-box ad-mobile">
+      {% include /ads/banner/04.html %}
+    </div>
+  </div>
+
   <div class="grid" id="grid">
     {% for post in site.posts limit: 100 %}
       <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}" data-index="{{ forloop.index0 }}">
@@ -486,23 +485,17 @@ layout: null
           </svg>
         </button>
       </div>
-
-      {% assign mod = forloop.index | modulo: 9 %}
-      {% if mod == 0 and forloop.index != forloop.length %}
-        {% assign break_num = forloop.index | divided_by: 9 %}
-        {% assign base = break_num | minus: 1 | times: 3 | plus: 2 %}
-        {% assign b1_pad = base | prepend: '0' | slice: -2, 2 %}
-        {% assign b2 = base | plus: 1 %}
-        {% assign b2_pad = b2 | prepend: '0' | slice: -2, 2 %}
-        {% assign b3 = base | plus: 2 %}
-        {% assign b3_pad = b3 | prepend: '0' | slice: -2, 2 %}
-        <div class="ad-in-grid" data-after-post="{{ forloop.index }}">
-          <div class="ad-slot ad-desktop-only">{% include /ads/banner/{{ b2_pad }}.html %}</div>
-          <div class="ad-slot ad-desktop-only">{% include /ads/banner/{{ b3_pad }}.html %}</div>
-          <div class="ad-slot">{% include /ads/banner/{{ b1_pad }}.html %}</div>
-        </div>
-      {% endif %}
     {% endfor %}
+  </div>
+
+  <!-- AD INLINE: SETELAH GRID -->
+  <div class="ad-inline">
+    <div class="ad-box ad-desktop">
+      {% include /ads/banner/02.html %}
+    </div>
+    <div class="ad-box ad-mobile">
+      {% include /ads/banner/04.html %}
+    </div>
   </div>
 
   <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
@@ -524,8 +517,11 @@ layout: null
   </div>
 
   <footer>
-    <div class="ad-slot ad-footer">
-      {% include /ads/banner/01.html %}
+    <div class="ad-box ad-desktop" style="margin-bottom:24px;">
+      {% include /ads/banner/07.html %}
+    </div>
+    <div class="ad-box ad-mobile" style="margin-bottom:24px;">
+      {% include /ads/banner/04.html %}
     </div>
 
     <details class="footer-collapse">
@@ -775,7 +771,6 @@ layout: null
       var PER_PAGE = 27;
 
       var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
-      var ads = Array.prototype.slice.call(document.querySelectorAll('.ad-in-grid'));
       var nav = document.getElementById('pagination');
       var totalPages = Math.ceil(items.length / PER_PAGE);
       var currentPage = 1;
@@ -830,12 +825,6 @@ layout: null
         items.forEach(function (el, i) {
           var show = (i >= start && i < end);
           el.style.display = show ? '' : 'none';
-        });
-
-        ads.forEach(function (ad) {
-          var afterPost = parseInt(ad.getAttribute('data-after-post'), 10);
-          var show = (afterPost > start && afterPost <= end);
-          ad.style.display = show ? '' : 'none';
         });
       }
 
