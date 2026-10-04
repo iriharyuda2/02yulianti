@@ -1,917 +1,720 @@
 ---
 layout: null
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Yulianti</title>
-  <link rel="canonical" id="canonicalLink" href="">
-  <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
-  <meta name="rating" content="adult">
-  <meta name="rating" content="mature">
-  <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
-  <meta name="content-rating" content="adult">
-  <meta name="audience" content="adult">
-
-  <script>
-    (function () {
-      var saved = localStorage.getItem('theme');
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var theme = saved || (prefersDark ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
+    <meta name='admaven-placement' content=BqTk6qHaE>
+    <script>
+    (function() {
+        var hostname = location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+        var formatText = function(str) {
+            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        };
+        var displayDomain = formatText(fullName);
+        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
+        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
+        metaDesc.name = "description";
+        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
+        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
+        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
+        metaAuthor.name = "author";
+        metaAuthor.content = displayDomain;
+        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
+        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
+        canonical.setAttribute("rel", "canonical");
+        canonical.setAttribute("href", location.href);
+        if (!canonical.parentNode) document.head.appendChild(canonical);
+        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
+        var schemaScript = document.createElement("script");
+        schemaScript.type = "application/ld+json";
+        schemaScript.textContent = JSON.stringify(schemaData);
+        document.head.appendChild(schemaScript);
     })();
-  </script>
+    </script>
 
-  <style>
-    :root,
-    [data-theme="light"] {
-      --bg: #ffffff; --bg-card: #ffffff; --text: #222222; --text-muted: #888888;
-      --border: #eeeeee; --link: #0366d6; --shadow: rgba(0,0,0,0.08);
-      --btn-bg: #f4f4f4; --btn-text: #222222;
-      --play-bg: rgba(0,0,0,0.45); --play-fg: rgba(255,255,255,0.9);
-      --menu-bg: #ffffff; --overlay: rgba(0,0,0,0.4);
-      --duration-bg: rgba(0,0,0,0.7); --duration-fg: #ffffff;
-      --share-bg: rgba(255,255,255,0.9); --share-fg: #222222;
-      --ad-bg: #f4f4f4;
-    }
-    [data-theme="dark"] {
-      --bg: #0f1115; --bg-card: #181b22; --text: #e8e8e8; --text-muted: #9aa0a6;
-      --border: #2a2e37; --link: #6cb6ff; --shadow: rgba(0,0,0,0.4);
-      --btn-bg: #232733; --btn-text: #e8e8e8;
-      --play-bg: rgba(0,0,0,0.5); --play-fg: rgba(255,255,255,0.85);
-      --menu-bg: #181b22; --overlay: rgba(0,0,0,0.6);
-      --duration-bg: rgba(0,0,0,0.75); --duration-fg: #ffffff;
-      --share-bg: rgba(40,44,54,0.9); --share-fg: #e8e8e8;
-      --ad-bg: #080808;
-    }
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
-    * { box-sizing: border-box; }
+    <style>
+        *,*::before,*::after{box-sizing:border-box}
+        html{overflow-x:hidden;background:var(--bg-color)}
+        body{
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
+            background:var(--bg-color);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            color:var(--text-color);line-height:1.3;-webkit-font-smoothing:antialiased;
+        }
 
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-                   "Noto Sans", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", sans-serif;
-      background: var(--bg); color: var(--text);
-      max-width: 1100px; margin: 40px auto; padding: 0 20px;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
+        :root {
+            --bg-color: #050505;
+            --header-bg: rgba(5,5,5,.97);
+            --text-color: #fff;
+            --border-color: rgba(255,255,255,.08);
+            --menu-bg: #1a1a1a;
+            --menu-border: #333;
+            --menu-text: #ccc;
+            --menu-hover-bg: #2a2a2a;
+            --card-bg: #0a0a0a;
+            --ad-bg: #080808;
+            --desc-color: rgba(255,255,255,.65);
+            --btn-bg: rgba(255,255,255,.05);
+            --btn-border: rgba(255,255,255,.1);
+            --icon-fill: #fff;
+            --icon-stroke: #fff;
+            --section-title: #fff;
+            --featured-title: #ff6b6b;
+        }
 
-    header {
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 2px solid var(--border); padding-bottom: 10px; gap: 12px;
-    }
-    header h1 { margin: 0; font-size: 1.6rem; }
-    .header-actions { display: flex; align-items: center; gap: 8px; }
+        body.light-mode {
+            --bg-color: #f5f5f7;
+            --header-bg: rgba(245,245,247,.97);
+            --text-color: #1d1d1f;
+            --border-color: rgba(0,0,0,.08);
+            --menu-bg: #ffffff;
+            --menu-border: #e5e5e5;
+            --menu-text: #1d1d1f;
+            --menu-hover-bg: #f0f0f0;
+            --card-bg: #ffffff;
+            --ad-bg: #eaeaea;
+            --desc-color: rgba(0,0,0,.55);
+            --btn-bg: rgba(0,0,0,.05);
+            --btn-border: rgba(0,0,0,.1);
+            --icon-fill: #1d1d1f;
+            --icon-stroke: #1d1d1f;
+            --section-title: #1d1d1f;
+            --featured-title: #d32f2f;
+        }
 
-    .toggle, .hamburger {
-      background: var(--btn-bg); color: var(--btn-text);
-      border: 1px solid var(--border); border-radius: 999px;
-      padding: 8px 14px; cursor: pointer; font-size: 0.95rem; line-height: 1;
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 6px; transition: background 0.2s ease, transform 0.1s ease;
-      white-space: nowrap;
-    }
-    .toggle:hover, .hamburger:hover { transform: scale(1.05); }
-    .toggle:active, .hamburger:active { transform: scale(0.97); }
-    .toggle svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
-    .hamburger { width: 42px; height: 42px; padding: 0; border-radius: 12px; }
-    .hamburger svg { display: block; }
+        .site-header{
+            width:100%;position:fixed;top:0;left:0;z-index:1000;
+            background:var(--header-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border-color);
+            padding:12px 12px;
+        }
+        .header-inner{
+            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
+        }
+        .site-avatar{flex-shrink:0;line-height:0}
+        .site-avatar svg{width:34px;height:34px}
+        .site-title{
+            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-color);
+        }
+        .menu-btn, .theme-btn{
+            width:42px;height:42px;flex-shrink:0;
+            background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;
+        }
+        .menu-btn:active, .theme-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
+        .menu-btn svg, .theme-btn svg{width:22px;height:22px;stroke:var(--icon-stroke);fill:none;stroke-width:2;stroke-linecap:round}
 
-    .menu-overlay {
-      position: fixed; inset: 0; background: var(--overlay);
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease; z-index: 90;
-    }
-    .menu-overlay.open { opacity: 1; visibility: visible; }
-    .menu {
-      position: fixed; top: 0; right: 0; height: 100%;
-      width: 280px; max-width: 85vw;
-      background: var(--menu-bg); border-left: 1px solid var(--border);
-      padding: 24px 20px; transform: translateX(100%);
-      transition: transform 0.28s ease; z-index: 100;
-      display: flex; flex-direction: column; gap: 4px;
-      box-shadow: -6px 0 24px var(--shadow); overflow-y: auto;
-    }
-    .menu.open { transform: translateX(0); }
-    .menu-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
-    }
-    .menu-header strong { font-size: 1.05rem; }
-    .menu-close {
-      background: transparent; border: none; color: var(--text);
-      cursor: pointer; padding: 4px; display: inline-flex;
-      align-items: center; justify-content: center; border-radius: 8px;
-      transition: background 0.15s ease;
-    }
-    .menu-close:hover { background: var(--btn-bg); }
-    .menu a {
-      color: var(--text); text-decoration: none; padding: 12px 14px;
-      border-radius: 8px; font-size: 0.98rem;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-    .menu a:hover { background: var(--btn-bg); color: var(--link); }
-    body.menu-open { overflow: hidden; }
+        .slide-menu{
+            display:none;position:fixed;top:58px;right:8px;z-index:999;
+            background:var(--menu-bg);border:1px solid var(--menu-border);border-radius:14px;padding:6px;
+            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
+        }
+        .slide-menu.open{display:block}
+        .slide-menu ul{list-style:none;margin:0;padding:0}
+        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
+        .slide-menu a{
+            display:flex;align-items:center;gap:8px;padding:13px 16px;color:var(--menu-text);text-decoration:none;
+            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
+        }
+        .slide-menu a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+        .slide-menu a:active{background:var(--menu-hover-bg);color:var(--text-color)}
 
-    /* === AD BOX (sama persis dengan kode sukses) === */
-    .ad-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto;
-      max-width: 100%;
-      overflow: hidden;
-      background: var(--ad-bg);
-      min-height: 50px;
-    }
-    .ad-box ins { max-width: 100%; }
+        .desktop-nav{display:none}
+        .desktop-nav a{
+            display:inline-flex;align-items:center;gap:6px;
+        }
+        .desktop-nav a svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 
-    .ad-desktop { display: none; }
-    .ad-mobile { display: flex; }
-    .ad-both { display: flex; }
+        .ad-box{
+            display:flex;justify-content:center;align-items:center;
+            margin:0 auto;max-width:100%;overflow:hidden;
+            background:var(--ad-bg);min-height:50px;
+        }
+        .ad-box ins{max-width:100%}
 
-    @media (min-width: 701px) {
-      .ad-desktop { display: flex; }
-      .ad-mobile { display: none; }
-      .ad-both { display: flex; }
-    }
+        .ad-desktop{display:none}
+        .ad-mobile{display:flex}
+        .ad-both{display:flex}
 
-    /* Ad break (atas & bawah) */
-    .ad-break {
-      padding: 12px 0;
-      background: var(--ad-bg);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
-    }
-    .ad-break.bottom {
-      margin-top: 20px;
-      margin-bottom: 0;
-    }
+        .ad-break{
+            padding:12px 0;background:var(--ad-bg);
+            border-top:1px solid var(--border-color);
+            border-bottom:1px solid var(--border-color);
+        }
+        .ad-break:first-child{margin-top:58px}
 
-    /* Ad inline (antar section) */
-    .ad-inline {
-      margin: 24px 0;
-      padding: 12px 0;
-      background: var(--ad-bg);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
+        .ad-inline{
+            margin:24px 0;padding:12px 0;
+            background:var(--ad-bg);
+            border-top:1px solid var(--border-color);
+            border-bottom:1px solid var(--border-color);
+        }
 
-    .grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
+        .main-layout{
+            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
+            margin:0 auto;padding:0;
+        }
+        .content-area{flex:1;min-width:0;padding:0;width:100%}
 
-    .card {
-      position: relative; display: block; border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden; background: var(--bg-card);
-      transition: transform 0.15s ease, box-shadow 0.15s ease,
-                  background 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px var(--shadow); }
-    .card-link { display: block; text-decoration: none; color: inherit; }
-    .card img {
-      width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
-      display: block; background: var(--btn-bg);
-    }
+        .sidebar{display:none}
+        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
 
-    .card .play {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 64px; height: 64px; display: flex;
-      align-items: center; justify-content: center;
-      background: var(--play-bg); color: var(--play-fg); border-radius: 50%;
-      pointer-events: none; transition: background 0.2s ease, transform 0.2s ease;
-      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); z-index: 2;
-    }
-    .card .play svg { width: 28px; height: 28px; margin-left: 3px; }
-    .card:hover .play {
-      background: rgba(0,0,0,0.65);
-      transform: translate(-50%, -50%) scale(1.08);
-    }
+        .gv2-section{margin:20px 0}
+        .gv2-section:first-child{margin-top:4px}
+        .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
+        .gv2-title h2{
+            margin:0;font-size:19px;font-weight:800;color:var(--section-title);letter-spacing:.2px;
+            display:flex;align-items:center;gap:8px;
+        }
+        .gv2-title h2 svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;}
+        .gv2-featured-title h2{color:var(--featured-title)}
+        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
 
-    .card .duration {
-      position: absolute; bottom: 10px; right: 10px;
-      background: var(--duration-bg); color: var(--duration-fg);
-      font-size: 0.75rem; font-weight: 600; padding: 3px 8px;
-      border-radius: 6px; line-height: 1.4; letter-spacing: 0.02em;
-      z-index: 3; pointer-events: none;
-      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-      font-variant-numeric: tabular-nums;
-    }
+        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
+        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
 
-    .card .share {
-      position: absolute; top: 10px; right: 10px;
-      width: 36px; height: 36px;
-      background: var(--share-bg); color: var(--share-fg);
-      border: none; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center;
-      cursor: pointer; padding: 0; z-index: 4;
-      opacity: 0; transform: translateY(-4px);
-      transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
-      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .card:hover .share, .card .share:focus-visible {
-      opacity: 1; transform: translateY(0);
-    }
-    .card .share:hover { background: var(--link); color: #fff; }
-    .card .share svg { width: 18px; height: 18px; }
-    @media (hover: none) {
-      .card .share { opacity: 1; transform: translateY(0); }
-    }
+        .gv2-featured-big,
+        .gv2-featured-small{
+            grid-column:auto;grid-row:auto;
+        }
 
-    .pagination {
-      display: flex; justify-content: center; align-items: center;
-      gap: 6px; margin: 30px 0 20px; flex-wrap: wrap;
-    }
-    .pagination a, .pagination span {
-      background: var(--btn-bg); color: var(--btn-text);
-      border: 1px solid var(--border); border-radius: 8px;
-      padding: 6px 12px; font-size: 0.9rem; min-width: 36px;
-      text-align: center; text-decoration: none; display: inline-block;
-      line-height: 1.4; transition: background 0.15s ease, transform 0.1s ease;
-    }
-    .pagination a:hover { transform: translateY(-2px); }
-    .pagination .active {
-      background: var(--link); color: #fff; border-color: var(--link);
-    }
-    .pagination .disabled {
-      opacity: 0.4; cursor: not-allowed; pointer-events: none;
-    }
-    .pagination .dots {
-      background: transparent; border: none; cursor: default;
-    }
+        .gv2-card{
+            position:relative;overflow:hidden;border-radius:0;background:var(--card-bg);
+            -webkit-tap-highlight-color:transparent;
+        }
+        .gv2-card-link{
+            display:block;width:100%;
+        }
+        .gv2-card-link img{
+            width:100%;height:100%;object-fit:cover;display:block;
+            transition:transform .3s ease;aspect-ratio:16/9;
+        }
+        .gv2-card-link:active img{transform:scale(1.02)}
 
-    .cookie-banner {
-      position: fixed; bottom: 16px; left: 16px; right: 16px;
-      max-width: 520px; margin: 0 auto;
-      background: var(--bg-card); color: var(--text);
-      border: 1px solid var(--border); border-radius: 12px;
-      padding: 16px 18px; box-shadow: 0 8px 28px var(--shadow);
-      font-size: 0.88rem; line-height: 1.5;
-      display: flex; flex-direction: column; gap: 12px; z-index: 300;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-    .cookie-banner.hide {
-      opacity: 0; transform: translateY(20px); pointer-events: none;
-    }
-    .cookie-text p { margin: 0; }
-    .cookie-text a { color: var(--link); text-decoration: underline; }
-    .cookie-actions { display: flex; gap: 8px; justify-content: flex-end; }
-    .cookie-btn {
-      padding: 8px 18px; border-radius: 8px; border: none;
-      cursor: pointer; font-size: 0.88rem; font-weight: 600;
-      transition: transform 0.1s ease, opacity 0.15s ease;
-    }
-    .cookie-reject {
-      background: transparent; color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-    .cookie-accept { background: var(--link); color: #fff; }
-    .cookie-btn:hover { opacity: 0.9; }
-    .cookie-btn:active { transform: scale(0.97); }
+        .gv2-card-body{display:none;}
+        .gv2-card-title-link{display:none;}
+        .gv2-card-desc{display:none;}
 
-    .toast {
-      position: fixed; bottom: 24px; left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--btn-bg); color: var(--btn-text);
-      border: 1px solid var(--border); padding: 10px 18px;
-      border-radius: 10px; font-size: 0.9rem;
-      box-shadow: 0 6px 24px var(--shadow);
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease; z-index: 200;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .excerpt{display:none}
 
-    footer {
-      margin-top: 40px; padding: 32px 0;
-      border-top: 1px solid var(--border);
-      font-size: 0.82rem; line-height: 1.6; color: var(--text-muted);
-    }
+        @media(min-width:600px){
+            .ad-desktop{display:flex}
+            .ad-mobile{display:none}
+            .ad-both{display:flex}
 
-    .footer-collapse {
-      max-width: 760px; margin: 0 auto 8px;
-      border: 1px solid var(--border); border-radius: 10px;
-      overflow: hidden; background: var(--bg-card);
-    }
-    .footer-collapse summary {
-      padding: 12px 16px; cursor: pointer;
-      font-weight: 600; font-size: 0.85rem; color: var(--text);
-      list-style: none; display: flex;
-      align-items: center; justify-content: space-between;
-      gap: 10px; user-select: none;
-      transition: background 0.15s ease;
-    }
-    .footer-collapse summary::-webkit-details-marker { display: none; }
-    .footer-collapse summary:hover { background: var(--btn-bg); }
-    .footer-collapse summary::after {
-      content: ""; width: 8px; height: 8px;
-      border-right: 2px solid var(--text-muted);
-      border-bottom: 2px solid var(--text-muted);
-      transform: rotate(45deg); transition: transform 0.2s ease;
-      flex-shrink: 0; margin-right: 4px;
-    }
-    .footer-collapse[open] summary::after { transform: rotate(-135deg); }
-    .footer-collapse-content {
-      padding: 4px 16px 16px; border-top: 1px solid var(--border);
-      font-size: 0.82rem; line-height: 1.6; color: var(--text-muted);
-    }
-    .footer-collapse-content p { margin: 8px 0; }
-    .footer-collapse-content p strong { color: var(--text); }
-    .footer-collapse-content ul { margin: 8px 0; padding-left: 20px; }
-    .footer-collapse-content li { margin-bottom: 4px; }
-    .footer-collapse-content a { color: var(--link); text-decoration: none; }
-    .footer-collapse-content a:hover { text-decoration: underline; }
+            .site-header{padding:12px 16px}
+            .site-title{font-size:17px}
+            .ad-break{padding:16px 0}
+            .ad-break:first-child{margin-top:60px}
+            .ad-inline{margin:28px 0;padding:14px 0}
+            .gv2-title{padding:0 12px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 8px;gap:6px}
 
-    .age-gate {
-      position: fixed; inset: 0; background: #0a0a0a; color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999; padding: 20px; overflow-y: auto;
-    }
-    .age-gate-box {
-      max-width: 500px; background: #15171c;
-      padding: 32px 26px; border-radius: 16px; border: 1px solid #2a2e37;
-    }
-    .age-gate-box h2 { margin: 0 0 14px; font-size: 1.35rem; }
-    .age-gate-box p {
-      color: #b8bcc2; line-height: 1.55; font-size: 0.95rem; margin: 0 0 16px;
-    }
-    .age-gate-warning {
-      background: #1c1f26; border-left: 3px solid #e8a33d;
-      padding: 14px 16px; border-radius: 8px; margin: 16px 0; font-size: 0.9rem;
-    }
-    .age-gate-warning strong { color: #e8a33d; display: block; margin-bottom: 8px; }
-    .age-gate-warning ul { margin: 0; padding-left: 20px; color: #b8bcc2; }
-    .age-gate-warning li { margin-bottom: 6px; line-height: 1.45; }
-    .age-gate-check {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 12px; background: #1c1f26; border-radius: 8px;
-      cursor: pointer; margin: 16px 0; font-size: 0.9rem; color: #e8e8e8;
-    }
-    .age-gate-check input {
-      margin-top: 3px; flex-shrink: 0; accent-color: #25D366;
-    }
-    .age-gate-actions { display: flex; gap: 10px; margin: 20px 0 12px; }
-    .age-yes, .age-no {
-      flex: 1; padding: 13px; border-radius: 10px; border: none;
-      cursor: pointer; font-size: 1rem; font-weight: 600;
-      transition: transform 0.1s ease, opacity 0.15s ease;
-    }
-    .age-yes { background: #25D366; color: #fff; }
-    .age-yes:disabled { opacity: 0.4; cursor: not-allowed; }
-    .age-no { background: #2a2e37; color: #e8e8e8; }
-    .age-yes:not(:disabled):hover, .age-no:hover { opacity: 0.9; }
-    .age-yes:not(:disabled):active, .age-no:active { transform: scale(0.98); }
-    .age-gate-legal {
-      font-size: 0.75rem; color: #6a6e76; text-align: center; margin: 0 !important;
-    }
+            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-featured-big{grid-column:1 / -1}
+            .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-stories{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-tutorials{grid-template-columns:1fr 1fr;gap:6px}
+            .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
 
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-      .card .play { width: 52px; height: 52px; }
-      .card .play svg { width: 22px; height: 22px; }
-      .cookie-banner {
-        left: 12px; right: 12px; bottom: 12px;
-        padding: 14px 16px; font-size: 0.85rem;
-      }
-      footer { font-size: 0.78rem; padding: 24px 0; }
-      .footer-collapse summary { padding: 11px 14px; font-size: 0.82rem; }
-      .footer-collapse-content { padding: 4px 14px 14px; font-size: 0.78rem; }
-    }
-  </style>
+            .gv2-card{border-radius:6px}
+            .gv2-card-link img{aspect-ratio:9/16}
+        }
 
-  {% include head.html %}
+        @media(min-width:900px){
+            body{max-width:1280px;margin:0 auto}
+
+            .site-header{
+                left:50%;transform:translateX(-50%);max-width:1280px;
+                padding:12px 20px;
+            }
+            .site-title{font-size:15px;font-weight:600;color:var(--menu-text)}
+            .menu-btn{display:none}
+            .slide-menu{display:none!important}
+
+            .ad-break:first-child{margin-top:62px}
+
+            .main-layout{flex-direction:row;padding:0 8px}
+            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
+            .sidebar-left{width:160px;border-right:1px solid var(--border-color)}
+            .sidebar-right{width:160px;border-left:1px solid var(--border-color)}
+
+            .gv2-section{margin:32px 0}
+            .gv2-section:first-child{margin-top:8px}
+            .gv2-title{padding:0 14px}
+            .gv2-title h2{font-size:22px}
+            .gv2-grid{padding:0 14px;gap:10px}
+
+            .gv2-featured{
+                grid-template-columns:2fr 1fr 1fr;
+                grid-template-rows:1fr 1fr;gap:10px;
+            }
+            .gv2-featured-big{
+                grid-column:1 / 2;grid-row:1 / 3;
+            }
+            .gv2-featured-big .gv2-card-link img{aspect-ratio:auto;height:100%}
+            .gv2-featured-small{grid-column:auto;grid-row:auto}
+            .gv2-featured-small .gv2-card-link img{aspect-ratio:9/16}
+
+            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
+            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
+            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
+            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
+
+            .gv2-card{border-radius:12px}
+            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
+
+            .desktop-nav{
+                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
+            }
+            .desktop-nav a{
+                padding:6px 12px;color:var(--menu-text);text-decoration:none;font-size:13px;
+                border-radius:6px;transition:all .15s ease;
+            }
+            .desktop-nav a:hover{color:var(--text-color);background:var(--menu-hover-bg)}
+        }
+
+        @media(min-width:1100px){
+            .sidebar-left{width:180px}
+            .sidebar-right{width:180px}
+            .gv2-grid{gap:12px}
+            .gv2-featured{gap:12px}
+            .gv2-latest{gap:12px}
+            .gv2-stories{gap:12px}
+            .gv2-tutorials{gap:12px}
+            .gv2-archive{gap:12px}
+        }
+
+        /* ===== FOOTER COLLAPSE ===== */
+        .footer-collapse {
+            max-width: 760px;
+            margin: 0 auto 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--card-bg);
+        }
+        .footer-collapse summary {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            user-select: none;
+        }
+        .footer-collapse summary::-webkit-details-marker { display: none; }
+        .footer-collapse summary::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--menu-text);
+            border-bottom: 2px solid var(--menu-text);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            margin-right: 4px;
+        }
+        .footer-collapse[open] summary::after { transform: rotate(-135deg); }
+        .footer-collapse-content {
+            padding: 4px 16px 16px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--menu-text);
+        }
+        .footer-collapse-content p { margin: 8px 0; }
+        .footer-collapse-content p strong { color: var(--text-color); }
+        .footer-collapse-content ul { margin: 8px 0; padding-left: 20px; }
+        .footer-collapse-content li { margin-bottom: 4px; }
+        .footer-collapse-content a { color: #6cb6ff; text-decoration: none; }
+        .footer-collapse-content a:hover { text-decoration: underline; }
+    </style>
+
+{% include head.html %}
+{% include verif.html %}
+
 </head>
 <body>
 
-  <div class="age-gate" id="ageGate" role="dialog" aria-modal="true">
-    <div class="age-gate-box">
-      <h2>Age Verification Required</h2>
-      <p>This website contains adult material intended for adults only.</p>
-      <div class="age-gate-warning">
-        <strong>By entering, you confirm that:</strong>
+    <header class="site-header">
+        <div class="header-inner">
+            <div id="domainAvatar" class="site-avatar"></div>
+            <span id="blogMainTitle" class="site-title"></span>
+            <button class="theme-btn" id="themeToggle" aria-label="Toggle Theme">
+                <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <nav id="blogMenuPanel" class="slide-menu">
         <ul>
-          <li>You are at least 18 years old (or the age of majority in your jurisdiction)</li>
-          <li>Viewing adult content is legal where you are located</li>
-          <li>You will not share this content with minors</li>
-          <li>You consent to viewing adult material</li>
+            <li><a href="/"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a></li>
+            <li><a href="/contact.html"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a></li>
+            <li><a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Terms & Conditions</a></li>
         </ul>
-      </div>
-      <label class="age-gate-check">
-        <input type="checkbox" id="ageCheck">
-        <span>I have read and agree to the above</span>
-      </label>
-      <div class="age-gate-actions">
-        <button class="age-yes" id="ageYes" type="button" disabled>Enter</button>
-        <button class="age-no" id="ageNo" type="button">Exit</button>
-      </div>
-      <p class="age-gate-legal">
-        Your choice is stored locally on your device.
-        See <a href="/privacy-policy.html" style="color:#6cb6ff;">Privacy Policy</a>.
-      </p>
-    </div>
-  </div>
+    </nav>
 
-  <header>
-    <h1>Yulianti</h1>
-    <div class="header-actions">
-      <button class="toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-        <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-        </svg>
-        <span id="themeLabel">Dark</span>
-      </button>
-
-      <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <div class="menu-overlay" id="menuOverlay"></div>
-  <aside class="menu" id="menu" aria-hidden="true">
-    <div class="menu-header">
-      <strong>Menu</strong>
-      <button class="menu-close" id="menuClose" aria-label="Close menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <a href="/">Home</a>
-    <a href="/terms-and-conditions.html">Terms and Conditions</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/privacy-policy.html">Privacy Policy</a>
-  </aside>
-
-  <!-- AD BREAK: ATAS -->
-  <div class="ad-break">
-    <div class="ad-box ad-desktop">
-      {% include /ads/banner/06.html %}
-    </div>
-    <div class="ad-box ad-mobile">
-      {% include /ads/banner/04.html %}
-    </div>
-  </div>
-
-  <div class="grid" id="grid">
-    {% for post in site.posts limit: 100 %}
-      <div class="card post-item" data-url="{{ post.url }}" data-title="{{ post.title | escape }}" data-index="{{ forloop.index0 }}">
-        <a class="card-link" href="{{ post.url }}" aria-label="{{ post.title }}">
-          {% if post.image %}
-            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-          {% endif %}
-          <span class="play" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </span>
-          <span class="duration" data-duration></span>
-        </a>
-        <button class="share" type="button" aria-label="Share" data-share>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-          </svg>
-        </button>
-      </div>
-    {% endfor %}
-  </div>
-
-  <!-- AD INLINE: SETELAH GRID -->
-  <div class="ad-inline">
-    <div class="ad-box ad-desktop">
-      {% include /ads/banner/02.html %}
-    </div>
-    <div class="ad-box ad-mobile">
-      {% include /ads/banner/04.html %}
-    </div>
-  </div>
-
-  <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
-    <div class="cookie-text">
-      <p>
-        We use cookies to operate this site, remember your preferences, and
-        measure traffic. You can accept or reject non-essential cookies.
-        <a href="/privacy-policy.html">Learn more</a>.
-      </p>
-    </div>
-    <div class="cookie-actions">
-      <button class="cookie-btn cookie-reject" id="cookieReject" type="button">Reject</button>
-      <button class="cookie-btn cookie-accept" id="cookieOk" type="button">Accept</button>
-    </div>
-  </div>
-
-  <footer>
-    <!-- AD BREAK: BAWAH -->
-    <div class="ad-break bottom">
-      <div class="ad-box ad-desktop">
-        {% include /ads/banner/07.html %}
-      </div>
-      <div class="ad-box ad-mobile">
-        {% include /ads/banner/04.html %}
-      </div>
-    </div>
-
-    <details class="footer-collapse">
-      <summary>18+ Disclaimer</summary>
-      <div class="footer-collapse-content">
-        <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
-        <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
-        <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
-      </div>
-    </details>
-
-    <details class="footer-collapse">
-      <summary>DMCA / Copyright</summary>
-      <div class="footer-collapse-content">
-        <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
-        <p><strong>How to submit:</strong></p>
-        <ul>
-          <li>Identification of the copyrighted work</li>
-          <li>URL of the allegedly infringing material</li>
-          <li>Your full name and contact information</li>
-          <li>A statement of good faith belief that the use is not authorized</li>
-          <li>A statement under penalty of perjury that the information is accurate</li>
-          <li>Your physical or electronic signature</li>
-        </ul>
-        <p>Send your notice via WhatsApp to <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>. We respond to valid DMCA notices within 72 hours. Repeat infringers will be blocked from accessing the site.</p>
-      </div>
-    </details>
-
-    <details class="footer-collapse">
-      <summary>Cookie Policy</summary>
-      <div class="footer-collapse-content">
-        <p>This site uses the following cookies:</p>
-        <ul>
-          <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
-          <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
-          <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
-        </ul>
-        <p>No third-party tracking cookies are used. No analytics services are integrated. Your data does not leave your browser except as described above.</p>
-      </div>
-    </details>
-
-    <details class="footer-collapse">
-      <summary>Contact</summary>
-      <div class="footer-collapse-content">
-        <p>For DMCA notices, legal inquiries, or any other concerns:</p>
-        <p>WhatsApp: <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a><br>Response time: within 72 hours</p>
-      </div>
-    </details>
-  </footer>
-
-  <script>
-    (function () {
-      var KEY = 'age-verified-v1';
-      var MAX_AGE_DAYS = 30;
-      function getCookie(name) {
-        var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-        return m ? m.pop() : '';
-      }
-      function setCookie(name, value, days) {
-        var d = new Date();
-        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-        document.cookie = name + '=' + value + ';expires=' + d.toUTCString() +
-                          ';path=/;SameSite=Lax' +
-                          (location.protocol === 'https:' ? ';Secure' : '');
-      }
-      var gate = document.getElementById('ageGate');
-      if (!gate) return;
-      if (localStorage.getItem(KEY) === '1' || getCookie(KEY) === '1') {
-        gate.remove();
-        return;
-      }
-      document.body.style.overflow = 'hidden';
-      var check = document.getElementById('ageCheck');
-      var yes = document.getElementById('ageYes');
-      check.addEventListener('change', function () {
-        yes.disabled = !check.checked;
-      });
-      yes.addEventListener('click', function () {
-        if (!check.checked) return;
-        localStorage.setItem(KEY, '1');
-        setCookie(KEY, '1', MAX_AGE_DAYS);
-        gate.remove();
-        document.body.style.overflow = '';
-      });
-      document.getElementById('ageNo').addEventListener('click', function () {
-        window.location.href = 'https://www.google.com';
-      });
+    <script>
+    (function(){
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var clean = sub.replace(/-/g, " ");
+        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
     })();
-
-    (function () {
-      var root = document.documentElement;
-      var btn = document.getElementById('themeToggle');
-      var iconMoon = document.getElementById('iconMoon');
-      var iconSun = document.getElementById('iconSun');
-      var label = document.getElementById('themeLabel');
-      function apply(theme) {
-        root.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        if (theme === 'dark') {
-          iconMoon.style.display = 'none';
-          iconSun.style.display = 'inline-block';
-          label.textContent = 'Light';
-        } else {
-          iconMoon.style.display = 'inline-block';
-          iconSun.style.display = 'none';
-          label.textContent = 'Dark';
-        }
-      }
-      apply(root.getAttribute('data-theme') || 'light');
-      btn.addEventListener('click', function () {
-        var current = root.getAttribute('data-theme');
-        apply(current === 'dark' ? 'light' : 'dark');
-      });
-    })();
-
-    (function () {
-      var menu = document.getElementById('menu');
-      var overlay = document.getElementById('menuOverlay');
-      var openBtn = document.getElementById('menuBtn');
-      var closeBtn = document.getElementById('menuClose');
-      function open() {
-        menu.classList.add('open');
-        overlay.classList.add('open');
-        menu.setAttribute('aria-hidden', 'false');
-        openBtn.setAttribute('aria-expanded', 'true');
-        document.body.classList.add('menu-open');
-      }
-      function close() {
-        menu.classList.remove('open');
-        overlay.classList.remove('open');
-        menu.setAttribute('aria-hidden', 'true');
-        openBtn.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('menu-open');
-      }
-      openBtn.addEventListener('click', open);
-      closeBtn.addEventListener('click', close);
-      overlay.addEventListener('click', close);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
-      });
-    })();
-
-    (function () {
-      function hashCode(str) {
-        var h = 0;
-        for (var i = 0; i < str.length; i++) {
-          h = ((h << 5) - h + str.charCodeAt(i)) | 0;
-        }
-        return Math.abs(h);
-      }
-      function formatDuration(seconds) {
-        var m = Math.floor(seconds / 60);
-        var s = seconds % 60;
-        return m + ':' + (s < 10 ? '0' : '') + s;
-      }
-      document.querySelectorAll('.post-item').forEach(function (card) {
-        var el = card.querySelector('[data-duration]');
-        if (!el) return;
-        var seed = card.getAttribute('data-url') || card.getAttribute('data-title') || '';
-        var h = hashCode(seed);
-        var seconds = 60 + (h % 841);
-        el.textContent = formatDuration(seconds);
-      });
-    })();
-
-    (function () {
-      var toast = document.getElementById('toast');
-      var toastTimer;
-      function showToast(msg) {
-        toast.textContent = msg;
-        toast.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () {
-          toast.classList.remove('show');
-        }, 2000);
-      }
-      function getShareURL(card) {
-        var path = card.getAttribute('data-url') || '';
-        return window.location.origin + path;
-      }
-      function getShareTitle(card) {
-        return card.getAttribute('data-title') || document.title;
-      }
-      document.querySelectorAll('[data-share]').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          var card = btn.closest('.post-item');
-          var url = getShareURL(card);
-          var title = getShareTitle(card);
-          var data = { title: title, url: url };
-          if (navigator.share) {
-            navigator.share(data).catch(function () {});
-            return;
-          }
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(function () {
-              showToast('Link copied');
-            }).catch(function () {
-              fallbackCopy(url);
-            });
-            return;
-          }
-          fallbackCopy(url);
+    (function(){
+        var btn = document.getElementById("blogMenuToggle");
+        var panel = document.getElementById("blogMenuPanel");
+        var menuIcon = btn.querySelector("svg:first-child");
+        var closeIcon = btn.querySelector("svg:last-child");
+        btn.addEventListener("click", function(e){
+            e.stopPropagation();
+            var open = panel.classList.toggle("open");
+            menuIcon.style.display = open ? "none" : "block";
+            closeIcon.style.display = open ? "block" : "none";
         });
-      });
-      function fallbackCopy(text) {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand('copy');
-          showToast('Link copied');
-        } catch (err) {
-          showToast('Copy failed');
-        }
-        document.body.removeChild(ta);
-      }
-    })();
-
-    (function () {
-      var KEY = 'cookie-consent';
-      var banner = document.getElementById('cookieBanner');
-      if (!banner) return;
-      var existing = localStorage.getItem(KEY);
-      if (existing === 'accepted' || existing === 'rejected') {
-        banner.remove();
-        return;
-      }
-      function decide(choice) {
-        localStorage.setItem(KEY, choice);
-        banner.classList.add('hide');
-        setTimeout(function () { banner.remove(); }, 300);
-      }
-      document.getElementById('cookieOk').addEventListener('click', function () {
-        decide('accepted');
-      });
-      document.getElementById('cookieReject').addEventListener('click', function () {
-        decide('rejected');
-      });
-    })();
-
-    (function () {
-      var PER_PAGE = 27;
-
-      var items = Array.prototype.slice.call(document.querySelectorAll('.post-item'));
-      var nav = document.getElementById('pagination');
-      var totalPages = Math.ceil(items.length / PER_PAGE);
-      var currentPage = 1;
-
-      if (totalPages <= 1) { nav.remove(); return; }
-
-      function pageURL(n) {
-        var base = window.location.origin + window.location.pathname;
-        return n === 1 ? base : base + '?pag=' + n;
-      }
-
-      function getPageFromURL() {
-        var params = new URLSearchParams(window.location.search);
-        var p = parseInt(params.get('pag'), 10);
-        if (isNaN(p) || p < 1) return 1;
-        if (p > totalPages) return totalPages;
-        return p;
-      }
-
-      function updateHead(page) {
-        var title = page === 1
-          ? 'Yulianti'
-          : 'Yulianti — Page ' + page + ' of ' + totalPages;
-        document.title = title;
-
-        var canonical = document.getElementById('canonicalLink');
-        if (canonical) canonical.setAttribute('href', pageURL(page));
-
-        var prev = document.head.querySelector('link[rel="prev"]');
-        var next = document.head.querySelector('link[rel="next"]');
-        if (prev) prev.remove();
-        if (next) next.remove();
-
-        if (page > 1) {
-          var l1 = document.createElement('link');
-          l1.rel = 'prev';
-          l1.href = pageURL(page - 1);
-          document.head.appendChild(l1);
-        }
-        if (page < totalPages) {
-          var l2 = document.createElement('link');
-          l2.rel = 'next';
-          l2.href = pageURL(page + 1);
-          document.head.appendChild(l2);
-        }
-      }
-
-      function updateGrid(page) {
-        var start = (page - 1) * PER_PAGE;
-        var end = start + PER_PAGE;
-
-        items.forEach(function (el, i) {
-          var show = (i >= start && i < end);
-          el.style.display = show ? '' : 'none';
+        document.addEventListener("click", function(e){
+            if(!panel.contains(e.target) && !btn.contains(e.target)){
+                panel.classList.remove("open");
+                menuIcon.style.display = "block";
+                closeIcon.style.display = "none";
+            }
         });
-      }
-
-      function makeLink(text, page, opts) {
-        opts = opts || {};
-        var el;
-        if (opts.disabled) {
-          el = document.createElement('span');
-          el.className = 'disabled';
-        } else {
-          el = document.createElement('a');
-          el.href = page === 1 ? './' : '?pag=' + page;
-        }
-        if (opts.active) el.classList.add('active');
-        el.textContent = text;
-        return el;
-      }
-
-      function drawPagination(current) {
-        nav.innerHTML = '';
-        nav.appendChild(makeLink('‹', current - 1, { disabled: current === 1 }));
-
-        var pages = [];
-        if (totalPages <= 7) {
-          for (var i = 1; i <= totalPages; i++) pages.push(i);
-        } else {
-          pages.push(1);
-          if (current > 3) pages.push('...');
-          var from = Math.max(2, current - 1);
-          var to = Math.min(totalPages - 1, current + 1);
-          for (var j = from; j <= to; j++) pages.push(j);
-          if (current < totalPages - 2) pages.push('...');
-          pages.push(totalPages);
-        }
-
-        pages.forEach(function (p) {
-          if (p === '...') {
-            var span = document.createElement('span');
-            span.className = 'dots';
-            span.textContent = '…';
-            nav.appendChild(span);
-          } else {
-            nav.appendChild(makeLink(p, p, { active: p === current }));
-          }
+        panel.addEventListener("click", function(e){
+            e.stopPropagation();
         });
-
-        nav.appendChild(makeLink('›', current + 1, { disabled: current === totalPages }));
-      }
-
-      function show(page, scroll) {
-        currentPage = page;
-        updateGrid(page);
-        drawPagination(page);
-        updateHead(page);
-        if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      window.addEventListener('popstate', function () {
-        show(getPageFromURL(), true);
-      });
-
-      nav.addEventListener('click', function (e) {
-        var link = e.target.closest('a[href]');
-        if (!link) return;
-        var href = link.getAttribute('href');
-        if (href.indexOf('?pag=') !== 0 && href !== './') return;
-        e.preventDefault();
-        var url = href === './' ? window.location.pathname : '?pag=' + href.split('=')[1];
-        history.pushState({}, '', url);
-        show(getPageFromURL(), true);
-      });
-
-      show(getPageFromURL(), false);
     })();
-  </script>
+    </script>
 
-  {% include /ads/gobloggugel/umum.html %}
-  {% include footer.html %}
+    <script>
+    (function() {
+        var body = document.body;
+        var themeBtn = document.getElementById('themeToggle');
+        var sunIcon = document.getElementById('sunIcon');
+        var moonIcon = document.getElementById('moonIcon');
+
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+
+        themeBtn.addEventListener('click', function() {
+            body.classList.toggle('light-mode');
+            var isLight = body.classList.contains('light-mode');
+
+            if (isLight) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'light');
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    })();
+    </script>
+
+
+    <!-- ==================== BANNER 06: TOP ==================== -->
+    <div class="ad-break">
+        <div class="ad-box ad-desktop">
+            {% include /ads/banner/06.html %}
+        </div>
+        <div class="ad-box ad-mobile">
+            {% include /ads/banner/04.html %}
+        </div>
+    </div>
+
+    <nav class="desktop-nav">
+        <a href="/"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+        <a href="/contact.html"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a>
+        <a href="/privacy-policy.html"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Privacy Policy</a>
+        <a href="/terms-and-conditions.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Terms & Conditions</a>
+    </nav>
+
+    <div class="main-layout">
+
+        <aside class="sidebar sidebar-left">
+            <div class="sticky-ad">
+                {% include /ads/banner/05.html %}
+            </div>
+        </aside>
+
+        <main class="content-area">
+
+            {% assign category_posts = site.categories['x01'] %}
+
+            <!-- ========== FEATURED ========== -->
+            {% assign featured_posts = category_posts | slice: 0, 5 %}
+            {% if featured_posts.size >= 5 %}
+            <section class="gv2-section">
+                <div class="gv2-title gv2-featured-title">
+                    <h2>
+                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        Featured
+                    </h2>
+                </div>
+                <div class="gv2-grid gv2-featured">
+                    {% for post in featured_posts %}
+                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <div class="ad-inline">
+                <div class="ad-box ad-desktop">
+                    {% include /ads/banner/01.html %}
+                </div>
+                <div class="ad-box ad-mobile">
+                    {% include /ads/banner/04.html %}
+                </div>
+            </div>
+
+            <!-- ========== LATEST ========== -->
+            {% assign latest_posts = category_posts | slice: 5, 5 %}
+            {% if latest_posts.size > 0 %}
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <h2>
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Latest
+                    </h2>
+                </div>
+                <div class="gv2-grid gv2-latest">
+                    {% for post in latest_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <div class="ad-inline">
+                <div class="ad-box ad-both">
+                    {% include /ads/banner/02.html %}
+                </div>
+            </div>
+
+            <!-- ========== STORIES ========== -->
+            {% assign stories_posts = category_posts | slice: 10, 4 %}
+            {% if stories_posts.size > 0 %}
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <h2>
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        Stories
+                    </h2>
+                </div>
+                <div class="gv2-grid gv2-stories">
+                    {% for post in stories_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <div class="ad-inline">
+                <div class="ad-box ad-both">
+                    {% include /ads/banner/03.html %}
+                </div>
+            </div>
+
+            <!-- ========== POPULAR ========== -->
+            {% assign popular_posts = category_posts | slice: 14, 6 %}
+            {% if popular_posts.size > 0 %}
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <h2>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Popular
+                    </h2>
+                </div>
+                <div class="gv2-grid gv2-tutorials">
+                    {% for post in popular_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <div class="ad-inline">
+                <div class="ad-box ad-both">
+                    {% include /ads/banner/08.html %}
+                </div>
+            </div>
+
+            <!-- ========== ARCHIVE ========== -->
+            {% assign archive_posts = category_posts | slice: 20, 5 %}
+            {% if archive_posts.size > 0 %}
+            <section class="gv2-section">
+                <div class="gv2-title">
+                    <h2>
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        Archive
+                    </h2>
+                </div>
+                <div class="gv2-grid gv2-archive">
+                    {% for post in archive_posts %}
+                    <article class="gv2-card">
+                        <a href="{{ post.url }}" class="gv2-card-link">
+                            {% if post.image %}
+                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                            {% endif %}
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+        </main>
+
+        <aside class="sidebar sidebar-right">
+            <div class="sticky-ad">
+                {% include /ads/banner/05.html %}
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- ==================== BANNER 07: BOTTOM ==================== -->
+    <div class="ad-break">
+        <div class="ad-box ad-desktop">
+            {% include /ads/banner/07.html %}
+        </div>
+        <div class="ad-box ad-mobile">
+            {% include /ads/banner/04.html %}
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="max-width:1280px;margin:40px auto 0;padding:32px 20px;border-top:1px solid var(--border-color);font-size:0.82rem;line-height:1.6;color:var(--menu-text);">
+
+        <details class="footer-collapse">
+            <summary>18+ Disclaimer</summary>
+            <div class="footer-collapse-content">
+                <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
+                <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
+                <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
+            </div>
+        </details>
+
+        <details class="footer-collapse">
+            <summary>DMCA / Copyright</summary>
+            <div class="footer-collapse-content">
+                <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
+                <p><strong>How to submit:</strong></p>
+                <ul>
+                    <li>Identification of the copyrighted work</li>
+                    <li>URL of the allegedly infringing material</li>
+                    <li>Your full name and contact information</li>
+                    <li>A statement of good faith belief that the use is not authorized</li>
+                    <li>A statement under penalty of perjury that the information is accurate</li>
+                    <li>Your physical or electronic signature</li>
+                </ul>
+                <p>Send your notice via WhatsApp to <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>. We respond to valid DMCA notices within 72 hours.</p>
+            </div>
+        </details>
+
+        <details class="footer-collapse">
+            <summary>Cookie Policy</summary>
+            <div class="footer-collapse-content">
+                <p>This site uses the following cookies:</p>
+                <ul>
+                    <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
+                    <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
+                    <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
+                </ul>
+                <p>No third-party tracking cookies are used. No analytics services are integrated.</p>
+            </div>
+        </details>
+
+        <details class="footer-collapse">
+            <summary>Contact</summary>
+            <div class="footer-collapse-content">
+                <p>For DMCA notices, legal inquiries, or any other concerns:</p>
+                <p>WhatsApp: <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a><br>Response time: within 72 hours</p>
+            </div>
+        </details>
+
+    </footer>
+
+    <!-- AVATAR SCRIPT -->
+    <script>
+    (function() {
+        var hostname = window.location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
+        var dh = h(fullName);
+        var clean = fullName.replace(/-/g," ");
+        var w = clean.split(" "), init = "";
+        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
+        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
+        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+    })();
+    </script>
+
+    {% include /ads/gobloggugel/umum.html %}
+    {% include footer.html %}
 
 </body>
 </html>
