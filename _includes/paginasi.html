@@ -1,0 +1,164 @@
+<style>
+.yul-pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:4px;
+  margin:12px auto;
+  padding:5px;
+  font-size:13px;
+}
+
+.yul-pagination a,
+.yul-pagination span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:30px;
+  height:30px;
+  padding:0 7px;
+  box-sizing:border-box;
+  border:1px solid #ccc;
+  border-radius:5px;
+  color:inherit;
+  background:transparent;
+  text-decoration:none;
+  line-height:1;
+}
+
+.yul-pagination a:hover{
+  background:rgba(128,128,128,.15);
+}
+
+.yul-pagination .active{
+  background:#888;
+  color:#fff;
+  border-color:#888;
+  font-weight:600;
+}
+
+.yul-pagination .dots{
+  border:0;
+  min-width:18px;
+  padding:0;
+}
+
+@media(max-width:480px){
+  .yul-pagination{
+    gap:3px;
+    margin:10px auto;
+    padding:3px;
+    font-size:12px;
+  }
+
+  .yul-pagination a,
+  .yul-pagination span{
+    min-width:28px;
+    height:28px;
+    padding:0 5px;
+  }
+
+  .yul-pagination .prev,
+  .yul-pagination .next{
+    padding:0 7px;
+  }
+}
+</style>
+
+<nav class="yul-pagination" id="yulPagination" aria-label="Pagination"></nav>
+
+<script>
+(function(){
+  const nav=document.getElementById('yulPagination');
+  const host=location.hostname.toLowerCase();
+  const total=5;
+
+  let current=1;
+
+  if(host!=='www.yulianti.xyz' && host!=='yulianti.xyz'){
+    const match=host.match(/^p(\d+)\.yulianti\.xyz$/);
+    if(match){
+      current=parseInt(match[1],10);
+    }
+  }
+
+  if(current<1 || current>total) current=1;
+
+  function url(page){
+    if(page===1){
+      return 'https://www.yulianti.xyz/';
+    }
+    return 'https://p'+String(page).padStart(2,'0')+'.yulianti.xyz/';
+  }
+
+  function addLink(page,text,className){
+    const a=document.createElement('a');
+    a.href=url(page);
+    a.textContent=text || page;
+    if(className) a.className=className;
+    if(page===current){
+      a.classList.add('active');
+      a.setAttribute('aria-current','page');
+    }
+    nav.appendChild(a);
+  }
+
+  function addDots(){
+    const span=document.createElement('span');
+    span.className='dots';
+    span.textContent='…';
+    nav.appendChild(span);
+  }
+
+  /* PREV */
+  if(current>1){
+    addLink(current-1,'‹ Prev','prev');
+  }
+
+  /* Halaman pertama */
+  if(current===1){
+    addLink(1);
+  }else{
+    addLink(1);
+  }
+
+  /* Titik setelah halaman pertama */
+  if(current>4){
+    addDots();
+  }
+
+  /* Nomor di sekitar halaman aktif */
+  let start=Math.max(2,current-2);
+  let end=Math.min(total-1,current+2);
+
+  if(current<=4){
+    start=2;
+    end=5;
+  }
+
+  if(current>=total-3){
+    start=total-4;
+    end=total-1;
+  }
+
+  for(let i=start;i<=end;i++){
+    addLink(i);
+  }
+
+  /* Titik sebelum halaman terakhir */
+  if(current<total-3){
+    addDots();
+  }
+
+  /* Halaman terakhir */
+  if(current!==1){
+    addLink(total);
+  }
+
+  /* NEXT */
+  if(current<total){
+    addLink(current+1,'Next ›','next');
+  }
+})();
+</script>
