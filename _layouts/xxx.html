@@ -2874,7 +2874,7 @@ layout: null
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": {{ page.title | jsonify }},
-        "description": {{ page.title | jsonify }} + " — Curated amateur videos from Indonesia and Asia. 18+ only.",
+        "description": {{ page.title | jsonify }},
         {% if page.image %}"thumbnailUrl": "{{ page.image | relative_url | absolute_url }}",{% endif %}
         {% if page.date %}"uploadDate": "{{ page.date | date_to_xmlschema }}",{% endif %}
         "url": "{{ page.url | absolute_url }}"
