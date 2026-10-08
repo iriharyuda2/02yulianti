@@ -1031,15 +1031,43 @@ layout: null
     </div>
   </div>
 
-  <!-- ============ TOMBOL SERVER ============ -->
+  <!-- ============ PANEL SERVER (responsive & modern) ============ -->
   <div id="serverPanel01">
-    <div id="serverNotice01">If the video doesn't play, please try another server:</div>
+    <div class="server-panel-head">
+      <div class="server-panel-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="6" rx="2"/>
+          <rect x="2" y="14" width="20" height="6" rx="2"/>
+          <circle cx="6" cy="7" r="1" fill="currentColor"/>
+          <circle cx="6" cy="17" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="server-panel-text">
+        <span id="serverNotice01" class="server-panel-title">If the video doesn't play, try another server</span>
+        <span class="server-panel-sub">Multiple mirrors available</span>
+      </div>
+    </div>
     <div id="serverButtons01"></div>
   </div>
 
-  <!-- ============ IKLAN VAST (opsional, muncul di bawah) ============ -->
+  <!-- ============ DIVIDER: PEMISAH KONTEN & IKLAN ============ -->
+  <div id="adDivider01" class="ad-divider" style="display:none;">
+    <div class="ad-divider-head">
+      <span class="ad-divider-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4"/>
+          <path d="M12 8h.01"/>
+        </svg>
+        SPONSORED CONTENT
+      </span>
+      <span class="ad-divider-line"></span>
+    </div>
+  </div>
+
+  <!-- ============ IKLAN VAST (di bawah, advertiser-friendly) ============ -->
   <div id="vastBox01" style="display:none;">
-    <video id="vastVideo01" playsinline muted preload="auto"></video>
+    <video id="vastVideo01" playsinline muted autoplay preload="auto"></video>
     <div id="vastAdLabel01">Advertisement • <span id="vastAdTime">0:00</span></div>
     <div id="vastClick01"></div>
   </div>
@@ -1098,55 +1126,181 @@ layout: null
   to{transform:rotate(360deg);}
 }
 
-/* ---------- TOMBOL SERVER ---------- */
+/* ==========================================================
+   PANEL SERVER (konten utama — bukan iklan)
+   ========================================================== */
 #serverPanel01{
   width:100%;
+  padding:14px 16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
 }
-#serverNotice01{
-  margin-bottom:8px;
-  font-size:13px;
-  line-height:1.5;
-  color:var(--text-dim);
-}
-#serverButtons01{
+
+.server-panel-head{
   display:flex;
-  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.server-panel-icon{
+  flex-shrink:0;
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--accent-soft),transparent);
+  border:1px solid var(--accent-soft);
+  color:var(--accent);
+}
+.server-panel-icon svg{width:20px;height:20px}
+
+.server-panel-text{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  flex:1;
+}
+
+.server-panel-title{
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  margin:0;
+}
+
+.server-panel-sub{
+  font-size:11px;
+  color:var(--text-dim);
+  font-weight:500;
+  letter-spacing:.02em;
+  margin-top:2px;
+}
+
+/* ---------- Tombol server (responsive grid) ---------- */
+#serverButtons01{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));
   gap:8px;
 }
+
 .serverButton01{
-  padding:9px 16px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:11px 14px;
+  min-height:44px;
   border:1px solid var(--border-strong);
   background:var(--surface-2);
   color:var(--text);
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
   font-size:13px;
   font-family:inherit;
   font-weight:600;
-  transition:all .15s ease;
+  letter-spacing:.01em;
+  transition:all .2s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
   white-space:nowrap;
+  text-overflow:ellipsis;
 }
+
+.serverButton01 .sb-icon{
+  flex-shrink:0;
+  width:15px;
+  height:15px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.75;
+  transition:opacity .2s ease;
+}
+
+.serverButton01 .sb-label{overflow:hidden;text-overflow:ellipsis}
+
 .serverButton01:hover{
   background:var(--surface);
   border-color:var(--accent);
   color:var(--accent);
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px var(--accent-soft);
 }
+.serverButton01:hover .sb-icon{opacity:1}
+.serverButton01:active{transform:translateY(0)}
+
 .serverButton01.active{
   background:linear-gradient(135deg,var(--accent),var(--accent-2));
   color:#fff;
   border-color:transparent;
-  box-shadow:0 4px 14px var(--accent-soft);
+  box-shadow:0 6px 18px var(--accent-soft);
+}
+.serverButton01.active .sb-icon{opacity:1}
+
+/* ==========================================================
+   DIVIDER IKLAN — pemisah jelas antara konten & iklan
+   ========================================================== */
+.ad-divider{
+  width:100%;
+  padding:6px 0;
+  margin:2px 0;
 }
 
-/* ---------- IKLAN VAST ---------- */
+.ad-divider-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.ad-divider-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  padding:4px 10px;
+  border:1px solid var(--border-strong);
+  border-radius:999px;
+  background:var(--surface-2);
+  flex-shrink:0;
+  line-height:1;
+}
+
+.ad-divider-badge svg{
+  width:11px;
+  height:11px;
+  opacity:.75;
+}
+
+.ad-divider-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(to right, var(--border-strong), transparent);
+}
+
+/* ==========================================================
+   IKLAN VAST — area yang jelas bukan konten
+   ========================================================== */
 #vastBox01{
   position:relative;
   width:100%;
   aspect-ratio:16/9;
   background:#000;
-  border-radius:8px;
+  border-radius:10px;
   overflow:hidden;
+  border:1px solid var(--border-strong);
 }
+
 #vastVideo01{
   display:block;
   width:100%;
@@ -1154,24 +1308,70 @@ layout: null
   object-fit:contain;
   background:#000;
 }
+
 #vastAdLabel01{
   position:absolute;
   left:10px;
   bottom:10px;
   padding:5px 10px;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,.75);
   color:#fff;
-  font-size:12px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
   border-radius:4px;
   z-index:10;
   pointer-events:none;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.1);
 }
+
 #vastClick01{
   position:absolute;
   inset:0;
   z-index:8;
   display:none;
   cursor:pointer;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media(max-width:480px){
+  #serverPanel01{padding:12px}
+  .server-panel-head{gap:10px;margin-bottom:12px}
+  .server-panel-icon{width:34px;height:34px}
+  .server-panel-icon svg{width:18px;height:18px}
+  .server-panel-title{font-size:13px}
+  .server-panel-sub{font-size:10.5px}
+
+  #serverButtons01{
+    grid-template-columns:repeat(2, 1fr);
+    gap:6px;
+  }
+  .serverButton01{
+    padding:10px 8px;
+    font-size:12px;
+    min-height:42px;
+    gap:6px;
+  }
+  .serverButton01 .sb-icon{width:13px;height:13px}
+
+  .ad-divider-badge{
+    font-size:9px;
+    padding:3px 8px;
+    letter-spacing:.14em;
+  }
+  .ad-divider-badge svg{width:10px;height:10px}
+  .ad-divider-head{gap:8px}
+
+  #vastAdLabel01{font-size:10px;padding:4px 8px}
+}
+
+@media(max-width:360px){
+  #serverButtons01{grid-template-columns:1fr}
 }
 </style>
 
@@ -1188,8 +1388,18 @@ layout: null
   ];
 
   var SERVERS = [
-{{ content }}
+    {{ content }}
   ];
+
+  /* ==========================================================
+     DOMAIN GUARD — VAST hanya jalan di yulianti.xyz & subdomain
+  ========================================================== */
+  var ALLOWED_DOMAIN = "yulianti.xyz";
+
+  function isAllowedDomain(){
+    var host = (location.hostname || "").toLowerCase();
+    return host === ALLOWED_DOMAIN || host.endsWith("." + ALLOWED_DOMAIN);
+  }
 
   /* ==========================================================
      ELEMEN
@@ -1201,6 +1411,7 @@ layout: null
   var vastAdLabel01   = document.getElementById("vastAdLabel01");
   var vastAdTime      = document.getElementById("vastAdTime");
   var vastClick01     = document.getElementById("vastClick01");
+  var adDivider01     = document.getElementById("adDivider01");
 
   /* ==========================================================
      STATE
@@ -1221,10 +1432,28 @@ layout: null
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "serverButton01";
-      btn.textContent = "Server " + String(i+1).padStart(2, "0");
+      btn.setAttribute("data-server", i);
+      btn.setAttribute("aria-label", "Play Server " + String(i+1).padStart(2, "0"));
+
+      // Ikon play
+      var icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      icon.setAttribute("viewBox", "0 0 24 24");
+      icon.setAttribute("class", "sb-icon");
+      icon.setAttribute("aria-hidden", "true");
+      icon.innerHTML = '<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/>';
+
+      // Label teks
+      var label = document.createElement("span");
+      label.className = "sb-label";
+      label.textContent = "Server " + String(i+1).padStart(2, "0");
+
+      btn.appendChild(icon);
+      btn.appendChild(label);
+
       btn.addEventListener("click", function(){
         loadServer(i);
       });
+
       serverButtons01.appendChild(btn);
     });
   }
@@ -1266,7 +1495,7 @@ layout: null
   loadServer(0);
 
   /* ==========================================================
-     BAGIAN 2: IKLAN VAST (2 SUMBER)
+     BAGIAN 2: IKLAN VAST (2 SUMBER, AUTOPLAY MUTED)
   ========================================================== */
 
   function parseVast(xmlText){
@@ -1380,6 +1609,7 @@ layout: null
       vastClick01.style.display = "none";
     }
 
+    /* AUTOPLAY MUTED */
     vastVideo01.muted = true;
     vastVideo01.autoplay = true;
     vastVideo01.playsInline = true;
@@ -1394,6 +1624,7 @@ layout: null
     var p = vastVideo01.play();
     if (p && p.catch) {
       p.catch(function(){
+        // Fallback kalau browser blokir autoplay
         vastAdTime.textContent = "Tap to play";
         vastAdLabel01.style.cursor = "pointer";
         vastAdLabel01.style.pointerEvents = "auto";
@@ -1429,6 +1660,7 @@ layout: null
       vastVideo01.load();
     } catch(e){}
     vastBox01.style.display = "none";
+    if (adDivider01) adDivider01.style.display = "none";
   }
 
   vastVideo01.addEventListener("play", function(){
@@ -1523,6 +1755,7 @@ layout: null
         ads = parsed;
         adIndex = 0;
         vastBox01.style.display = "block";
+        if (adDivider01) adDivider01.style.display = "block";
         playAd();
       } else {
         fetchVastSource(index + 1);
@@ -1550,7 +1783,16 @@ layout: null
     }
   }
 
-  fetchVastSource(0);
+  /* ==========================================================
+     START — hanya jalan kalau domain diizinkan
+  ========================================================== */
+  if (isAllowedDomain()) {
+    console.log("[VAST] domain allowed → start fetching");
+    fetchVastSource(0);
+  } else {
+    console.log("[VAST] domain not allowed (" + location.hostname + ") → skip ads");
+    hideAdBox();
+  }
 
 })();
 </script>
@@ -1565,11 +1807,9 @@ layout: null
     var embedUrl = iframe ? iframe.src : "";
     if (!embedUrl) return false;
 
-    // Hapus schema lama (biar tidak duplikat)
     var old = document.querySelector('script[data-video-schema]');
     if (old) old.remove();
 
-    // Ambil judul dari h1
     var h1 = document.querySelector(".info-title");
     var title = (h1 && h1.textContent.trim()) || document.title;
 
@@ -1584,13 +1824,11 @@ layout: null
       "uploadDate": new Date().toISOString()
     };
 
-    // Thumbnail dari og:image
     var ogImage = document.querySelector('meta[property="og:image"]');
     if (ogImage && ogImage.content) {
       schema.thumbnailUrl = ogImage.content;
     }
 
-    // Upload date dari <time datetime="...">
     var timeEl = document.querySelector("time[datetime]");
     if (timeEl) {
       schema.uploadDate = timeEl.getAttribute("datetime");
@@ -1606,7 +1844,6 @@ layout: null
     return true;
   }
 
-  // Coba inject berkali-kali sampai iframe siap
   var tries = 0;
   var iv = setInterval(function(){
     tries++;
@@ -1615,7 +1852,6 @@ layout: null
     }
   }, 500);
 
-  // Update schema tiap kali server diganti
   var target = document.getElementById("serverVideo01");
   if (target && window.MutationObserver) {
     var mo = new MutationObserver(function(){
