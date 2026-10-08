@@ -8,7 +8,6 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
@@ -44,7 +43,6 @@ layout: null
     <meta name="content-rating" content="adult">
     <meta name="audience" content="adult">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="video.other">
     <meta property="og:title" content="{{ page.title | escape }}">
     <meta property="og:description" content="Watch {{ page.title | escape }} — curated amateur videos from Indonesia and Asia. 18+ only.">
@@ -377,7 +375,6 @@ layout: null
             overflow:hidden;text-overflow:ellipsis;
         }
 
-        /* Brand hover colors */
         .share-btn.wa:hover{border-color:#25d366;color:#25d366}
         .share-btn.tg:hover{border-color:#229ed9;color:#229ed9}
         .share-btn.fb:hover{border-color:#1877f2;color:#1877f2}
@@ -457,7 +454,6 @@ layout: null
             color:var(--accent);opacity:.85;
         }
 
-        /* Related grid */
         .grid{
             display:grid;gap:6px;
             grid-template-columns:repeat(2,1fr);
@@ -544,7 +540,6 @@ layout: null
         }
         .card:hover .card-title{opacity:1}
 
-        /* ============ RELATED LOAD MORE ============ */
         #relatedGrid .card.hidden{
             display: none;
         }
@@ -709,7 +704,6 @@ layout: null
     </style>
 
 {% include head.html %}
-
 
 </head>
 <body>
@@ -1029,57 +1023,130 @@ layout: null
             <div class="player-content" id="playerContent">
                 <div id="videoGallery01">
 
-  <div id="vastBox01">
-
-    <video
-      id="vastVideo01"
-      playsinline
-      autoplay
-      muted
-      preload="auto">
-    </video>
-
-    <div id="vastAdLabel01">
-      Advertisement
+  <!-- ============ VIDEO SERVER (player utama) ============ -->
+  <div id="serverVideo01">
+    <div class="svg-loading">
+      <div class="spinner"></div>
+      <span>Loading video...</span>
     </div>
-
-    <div id="vastClick01"></div>
-
   </div>
 
-
-  <div id="serverVideo01"></div>
-
-
+  <!-- ============ TOMBOL SERVER ============ -->
   <div id="serverPanel01">
-
-    <div id="serverNotice01">
-      If the video doesn't play, please try another server.
-    </div>
-
+    <div id="serverNotice01">If the video doesn't play, please try another server:</div>
     <div id="serverButtons01"></div>
+  </div>
 
+  <!-- ============ IKLAN VAST (opsional, muncul di bawah) ============ -->
+  <div id="vastBox01" style="display:none;">
+    <video id="vastVideo01" playsinline muted preload="auto"></video>
+    <div id="vastAdLabel01">Advertisement • <span id="vastAdTime">0:00</span></div>
+    <div id="vastClick01"></div>
   </div>
 
 </div>
 
-
 <style>
-
 #videoGallery01{
   width:100%;
-  max-width:100%;
   margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
+/* ---------- VIDEO SERVER ---------- */
+#serverVideo01{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  border-radius:8px;
+  overflow:hidden;
+}
+#serverVideo01 iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.svg-loading{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:var(--text-dim);
+  font-size:13px;
+  font-family:'Inter',sans-serif;
+  background:#000;
+}
+.spinner{
+  width:32px;
+  height:32px;
+  border:3px solid rgba(255,255,255,.15);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+/* ---------- TOMBOL SERVER ---------- */
+#serverPanel01{
+  width:100%;
+}
+#serverNotice01{
+  margin-bottom:8px;
+  font-size:13px;
+  line-height:1.5;
+  color:var(--text-dim);
+}
+#serverButtons01{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.serverButton01{
+  padding:9px 16px;
+  border:1px solid var(--border-strong);
+  background:var(--surface-2);
+  color:var(--text);
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+  font-family:inherit;
+  font-weight:600;
+  transition:all .15s ease;
+  white-space:nowrap;
+}
+.serverButton01:hover{
+  background:var(--surface);
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.serverButton01.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 4px 14px var(--accent-soft);
+}
+
+/* ---------- IKLAN VAST ---------- */
 #vastBox01{
   position:relative;
   width:100%;
   aspect-ratio:16/9;
   background:#000;
+  border-radius:8px;
   overflow:hidden;
 }
-
 #vastVideo01{
   display:block;
   width:100%;
@@ -1087,20 +1154,18 @@ layout: null
   object-fit:contain;
   background:#000;
 }
-
 #vastAdLabel01{
   position:absolute;
   left:10px;
   bottom:10px;
-  padding:6px 10px;
-  background:rgba(0,0,0,.65);
+  padding:5px 10px;
+  background:rgba(0,0,0,.7);
   color:#fff;
-  font-size:13px;
-  line-height:1.2;
+  font-size:12px;
+  border-radius:4px;
   z-index:10;
-  border-radius:3px;
+  pointer-events:none;
 }
-
 #vastClick01{
   position:absolute;
   inset:0;
@@ -1108,1324 +1173,457 @@ layout: null
   display:none;
   cursor:pointer;
 }
-
-#serverVideo01{
-  display:none;
-  width:100%;
-  aspect-ratio:16/9;
-  background:#000;
-}
-
-#serverVideo01 iframe{
-  display:block;
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-#serverPanel01{
-  display:none;
-  width:100%;
-  margin-top:10px;
-}
-
-#serverNotice01{
-  margin-bottom:10px;
-  font-size:14px;
-  line-height:1.5;
-}
-
-#serverButtons01{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.serverButton01{
-  padding:8px 14px;
-  border:1px solid #ccc;
-  background:#f5f5f5;
-  color:#222;
-  border-radius:4px;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.serverButton01.active{
-  background:#222;
-  color:#fff;
-  border-color:#222;
-}
-
 </style>
 
-
 <script>
-
 (function(){
-
   "use strict";
 
-
-  /* =========================================
-     VAST URL
-  ========================================= */
-
-  var vastUrl01 =
-    "https://unsightlystrain.com/d.moFzz/dpGBNWvTZDGoUY/_eZm/9/ubZOUvlNk/P/Trcv0YORDIQp1/OXT_MetKNhzeQE4_NiDCUO5BN/wF";
-
-
-  /* =========================================
-     SERVER VIDEO
-  ========================================= */
-
-  var serverUrls01 = [
-
-    {{ content }}
-
+  /* ==========================================================
+     KONFIGURASI
+  ========================================================== */
+  var VAST_URLS = [
+    "https://unsightlystrain.com/d.moFzz/dpGBNWvTZDGoUY/_eZm/9/ubZOUvlNk/P/Trcv0YORDIQp1/OXT_MetKNhzeQE4_NiDCUO5BN/wF",
+    "https://unsightlystrain.com/dmmrFAz.dWGmNMvQZqGyUw/Ieimd9IufZvU/l/k/PqT/cM0VORDzQI1/OITXM_tRNnzLQW4KNBD/UJ5lN/ybZ-shaVW/1tp/dCD/0zx_"
   ];
 
-
-  /* =========================================
-     ELEMENTS
-  ========================================= */
-
-  var vastBox01 =
-    document.getElementById("vastBox01");
-
-  var vastVideo01 =
-    document.getElementById("vastVideo01");
-
-  var vastAdLabel01 =
-    document.getElementById("vastAdLabel01");
-
-  var vastClick01 =
-    document.getElementById("vastClick01");
-
-  var serverVideo01 =
-    document.getElementById("serverVideo01");
-
-  var serverPanel01 =
-    document.getElementById("serverPanel01");
-
-  var serverButtons01 =
-    document.getElementById("serverButtons01");
-
-
-  /* =========================================
-     VARIABLES
-  ========================================= */
-
-  var ads01 = [];
-
-  var adIndex01 = 0;
-
-  var currentAd01 = null;
-
-  var quartile25Sent01 = false;
-
-  var quartile50Sent01 = false;
-
-  var quartile75Sent01 = false;
-
-  var adPlaying01 = false;
-
-
-  /* =========================================
-     TIME PARSER
-  ========================================= */
-
-  function parseTime01(value){
-
-    if(!value){
-      return 0;
-    }
-
-    value =
-      String(value).trim();
-
-
-    if(
-      value.indexOf("%") !== -1
-    ){
-
-      return {
-        percentage:
-          parseFloat(
-            value.replace("%","")
-          )
-      };
-
-    }
-
-
-    var parts =
-      value.split(":");
-
-
-    if(parts.length === 3){
-
-      return (
-
-        parseFloat(parts[0]) * 3600 +
-
-        parseFloat(parts[1]) * 60 +
-
-        parseFloat(parts[2])
-
-      );
-
-    }
-
-
-    if(parts.length === 2){
-
-      return (
-
-        parseFloat(parts[0]) * 60 +
-
-        parseFloat(parts[1])
-
-      );
-
-    }
-
-
-    return (
-      parseFloat(value) || 0
-    );
-
-  }
-
-
-  /* =========================================
-     VAST NODE
-  ========================================= */
-
-  function nodes01(
-    parent,
-    name
-  ){
-
-    return parent.getElementsByTagNameNS(
-      "*",
-      name
-    );
-
-  }
-
-
-  /* =========================================
-     PARSE VAST
-  ========================================= */
-
-  function parseVast01(
-    xmlText01
-  ){
-
-    var parser01 =
-      new DOMParser();
-
-
-    var xml01 =
-      parser01.parseFromString(
-        xmlText01,
-        "text/xml"
-      );
-
-
-    var adNodes01 =
-      nodes01(
-        xml01,
-        "Ad"
-      );
-
-
-    var result01 = [];
-
-
-    for(
-      var i01 = 0;
-      i01 < adNodes01.length;
-      i01++
-    ){
-
-      var adNode01 =
-        adNodes01[i01];
-
-
-      var linearNodes01 =
-        nodes01(
-          adNode01,
-          "Linear"
-        );
-
-
-      if(
-        !linearNodes01.length
-      ){
-
-        continue;
-
-      }
-
-
-      var linear01 =
-        linearNodes01[0];
-
-
-      /* Duration */
-
-      var durationNodes01 =
-        nodes01(
-          linear01,
-          "Duration"
-        );
-
-
-      if(
-        !durationNodes01.length
-      ){
-
-        continue;
-
-      }
-
-
-      var duration01 =
-        parseTime01(
-          durationNodes01[0]
-          .textContent
-        );
-
-
-      /* MediaFile */
-
-      var mediaNodes01 =
-        nodes01(
-          linear01,
-          "MediaFile"
-        );
-
-
-      var mediaUrl01 = "";
-
-
-      for(
-        var m01 = 0;
-        m01 < mediaNodes01.length;
-        m01++
-      ){
-
-        var media01 =
-          mediaNodes01[m01];
-
-
-        var type01 =
-          media01.getAttribute(
-            "type"
-          ) || "";
-
-
-        if(
-          type01.toLowerCase() ===
-          "video/mp4"
-        ){
-
-          mediaUrl01 =
-            media01
-            .textContent
-            .trim();
-
-          break;
-
-        }
-
-      }
-
-
-      if(
-        !mediaUrl01 &&
-        mediaNodes01.length
-      ){
-
-        mediaUrl01 =
-          mediaNodes01[0]
-          .textContent
-          .trim();
-
-      }
-
-
-      if(!mediaUrl01){
-
-        continue;
-
-      }
-
-
-      /* Impression */
-
-      var impression01 = "";
-
-
-      var impressionNodes01 =
-        nodes01(
-          adNode01,
-          "Impression"
-        );
-
-
-      if(
-        impressionNodes01.length
-      ){
-
-        impression01 =
-          impressionNodes01[0]
-          .textContent
-          .trim();
-
-      }
-
-
-      /* ClickThrough */
-
-      var clickThrough01 = "";
-
-
-      var clickNodes01 =
-        nodes01(
-          linear01,
-          "ClickThrough"
-        );
-
-
-      if(
-        clickNodes01.length
-      ){
-
-        clickThrough01 =
-          clickNodes01[0]
-          .textContent
-          .trim();
-
-      }
-
-
-      /* Tracking */
-
-      var tracking01 = {};
-
-
-      var trackingNodes01 =
-        nodes01(
-          linear01,
-          "Tracking"
-        );
-
-
-      for(
-        var t01 = 0;
-        t01 < trackingNodes01.length;
-        t01++
-      ){
-
-        var trackingNode01 =
-          trackingNodes01[t01];
-
-
-        var event01 =
-          trackingNode01.getAttribute(
-            "event"
-          );
-
-
-        var trackingUrl01 =
-          trackingNode01
-          .textContent
-          .trim();
-
-
-        if(
-          event01 &&
-          trackingUrl01
-        ){
-
-          tracking01[event01] =
-            trackingUrl01;
-
-        }
-
-      }
-
-
-      result01.push({
-
-        id:
-          adNode01.getAttribute("id")
-          || "",
-
-        url:
-          mediaUrl01,
-
-        duration:
-          duration01,
-
-        impression:
-          impression01,
-
-        clickThrough:
-          clickThrough01,
-
-        tracking:
-          tracking01
-
+  var SERVERS = [
+{{ content }}
+  ];
+
+  /* ==========================================================
+     ELEMEN
+  ========================================================== */
+  var serverVideo01   = document.getElementById("serverVideo01");
+  var serverButtons01 = document.getElementById("serverButtons01");
+  var vastBox01       = document.getElementById("vastBox01");
+  var vastVideo01     = document.getElementById("vastVideo01");
+  var vastAdLabel01   = document.getElementById("vastAdLabel01");
+  var vastAdTime      = document.getElementById("vastAdTime");
+  var vastClick01     = document.getElementById("vastClick01");
+
+  /* ==========================================================
+     STATE
+  ========================================================== */
+  var ads = [];
+  var adIndex = 0;
+  var currentAd = null;
+  var adPlaying = false;
+  var vastSourceIndex = 0;
+
+  /* ==========================================================
+     BAGIAN 1: SERVER
+  ========================================================== */
+
+  function buildButtons(){
+    serverButtons01.innerHTML = "";
+    SERVERS.forEach(function(url, i){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "serverButton01";
+      btn.textContent = "Server " + String(i+1).padStart(2, "0");
+      btn.addEventListener("click", function(){
+        loadServer(i);
       });
-
-    }
-
-
-    return result01;
-
+      serverButtons01.appendChild(btn);
+    });
   }
 
-
-  /* =========================================
-     TRACKING URL
-  ========================================= */
-
-  function sendTrackingUrl01(
-    url
-  ){
-
-    if(!url){
-      return;
-    }
-
-
-    var img01 =
-      new Image();
-
-
-    img01.src =
-      url +
-      (
-        url.indexOf("?") === -1
-          ? "?"
-          : "&"
-      ) +
-      "cachebuster=" +
-      Date.now();
-
-  }
-
-
-  /* =========================================
-     SEND TRACKING
-  ========================================= */
-
-  function sendTracking01(
-    type01
-  ){
-
-    if(
-      !currentAd01 ||
-      !currentAd01.tracking
-    ){
-
-      return;
-
-    }
-
-
-    sendTrackingUrl01(
-      currentAd01.tracking[type01]
-    );
-
-  }
-
-
-  /* =========================================
-     FORMAT TIME
-  ========================================= */
-
-  function formatTime01(
-    seconds01
-  ){
-
-    seconds01 =
-      Math.max(
-        0,
-        Math.floor(
-          seconds01 || 0
-        )
-      );
-
-
-    var minutes01 =
-      Math.floor(
-        seconds01 / 60
-      );
-
-
-    var seconds02 =
-      seconds01 % 60;
-
-
-    return (
-
-      String(minutes01)
-        .padStart(2,"0") +
-
-      ":" +
-
-      String(seconds02)
-        .padStart(2,"0")
-
-    );
-
-  }
-
-
-  /* =========================================
-     UPDATE LABEL
-  ========================================= */
-
-  function updateLabel01(){
-
-    if(!currentAd01){
-      return;
-    }
-
-
-    var currentTime01 =
-      vastVideo01.currentTime || 0;
-
-
-    var duration01 =
-      vastVideo01.duration;
-
-
-    if(
-      !duration01 ||
-      !isFinite(duration01)
-    ){
-
-      duration01 =
-        currentAd01.duration;
-
-    }
-
-
-    vastAdLabel01.textContent =
-
-      "Advertisement • " +
-
-      adIndex01 +
-
-      "/" +
-
-      ads01.length +
-
-      " • " +
-
-      formatTime01(
-        currentTime01
-      ) +
-
-      " / " +
-
-      formatTime01(
-        duration01
-      );
-
-  }
-
-
-  /* =========================================
-     PLAY AD
-  ========================================= */
-
-  function playAd01(){
-
-    if(
-      adIndex01 >= ads01.length
-    ){
-
-      showServers01();
-
-      return;
-
-    }
-
-
-    currentAd01 =
-      ads01[adIndex01];
-
-
-    adIndex01++;
-
-
-    quartile25Sent01 =
-      false;
-
-    quartile50Sent01 =
-      false;
-
-    quartile75Sent01 =
-      false;
-
-
-    adPlaying01 =
-      true;
-
-
-    vastAdLabel01.style.display =
-      "block";
-
-
-    if(
-      currentAd01.clickThrough
-    ){
-
-      vastClick01.style.display =
-        "block";
-
-    }else{
-
-      vastClick01.style.display =
-        "none";
-
-    }
-
-
-    /*
-     * Reset video
-     */
-
-    vastVideo01.pause();
-
-    vastVideo01.removeAttribute(
-      "src"
-    );
-
-    vastVideo01.load();
-
-
-    /*
-     * Autoplay muted
-     */
-
-    vastVideo01.muted =
-      true;
-
-    vastVideo01.autoplay =
-      true;
-
-    vastVideo01.playsInline =
-      true;
-
-
-    /*
-     * Load advertisement
-     */
-
-    vastVideo01.src =
-      currentAd01.url;
-
-
-    /*
-     * Impression
-     */
-
-    if(
-      currentAd01.impression
-    ){
-
-      sendTrackingUrl01(
-        currentAd01.impression
-      );
-
-    }
-
-
-    updateLabel01();
-
-
-    /*
-     * Play
-     */
-
-    var playPromise01 =
-      vastVideo01.play();
-
-
-    if(
-      playPromise01 &&
-      playPromise01.catch
-    ){
-
-      playPromise01.catch(
-        function(){
-
-          vastAdLabel01.textContent =
-            "Advertisement • Tap to play";
-
-        }
-      );
-
-    }
-
-  }
-
-
-  /* =========================================
-     PLAY TRACKING
-  ========================================= */
-
-  vastVideo01.addEventListener(
-    "play",
-    function(){
-
-      if(!adPlaying01){
-        return;
-      }
-
-
-      sendTracking01(
-        "start"
-      );
-
-    }
-  );
-
-
-  /* =========================================
-     TIME UPDATE
-  ========================================= */
-
-  vastVideo01.addEventListener(
-    "timeupdate",
-    function(){
-
-      if(
-        !adPlaying01 ||
-        !currentAd01
-      ){
-
-        return;
-
-      }
-
-
-      updateLabel01();
-
-
-      var currentTime01 =
-        vastVideo01.currentTime || 0;
-
-
-      var duration01 =
-        vastVideo01.duration;
-
-
-      if(
-        !duration01 ||
-        !isFinite(duration01)
-      ){
-
-        duration01 =
-          currentAd01.duration;
-
-      }
-
-
-      if(!duration01){
-        return;
-      }
-
-
-      var percent01 =
-        currentTime01 /
-        duration01;
-
-
-      /*
-       * 25%
-       */
-
-      if(
-        percent01 >= 0.25 &&
-        !quartile25Sent01
-      ){
-
-        quartile25Sent01 =
-          true;
-
-
-        sendTracking01(
-          "firstQuartile"
-        );
-
-      }
-
-
-      /*
-       * 50%
-       */
-
-      if(
-        percent01 >= 0.50 &&
-        !quartile50Sent01
-      ){
-
-        quartile50Sent01 =
-          true;
-
-
-        sendTracking01(
-          "midpoint"
-        );
-
-      }
-
-
-      /*
-       * 75%
-       */
-
-      if(
-        percent01 >= 0.75 &&
-        !quartile75Sent01
-      ){
-
-        quartile75Sent01 =
-          true;
-
-
-        sendTracking01(
-          "thirdQuartile"
-        );
-
-      }
-
-    }
-  );
-
-
-  /* =========================================
-     AD ENDED
-  ========================================= */
-
-  vastVideo01.addEventListener(
-    "ended",
-    function(){
-
-      if(!adPlaying01){
-        return;
-      }
-
-
-      /*
-       * COMPLETE DIKIRIM
-       * SETELAH IKLAN SELESAI
-       */
-
-      sendTracking01(
-        "complete"
-      );
-
-
-      vastClick01.style.display =
-        "none";
-
-
-      /*
-       * Masih ada iklan berikutnya
-       */
-
-      if(
-        adIndex01 < ads01.length
-      ){
-
-        setTimeout(
-          function(){
-
-            playAd01();
-
-          },
-          300
-        );
-
-      }else{
-
-        /*
-         * Semua iklan selesai
-         */
-
-        setTimeout(
-          function(){
-
-            showServers01();
-
-          },
-          300
-        );
-
-      }
-
-    }
-  );
-
-
-  /* =========================================
-     CLICK THROUGH
-  ========================================= */
-
-  vastClick01.addEventListener(
-    "click",
-    function(){
-
-      if(
-        !currentAd01 ||
-        !currentAd01.clickThrough
-      ){
-
-        return;
-
-      }
-
-
-      window.open(
-        currentAd01.clickThrough,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-    }
-  );
-
-
-  /* =========================================
-     ERROR
-  ========================================= */
-
-  vastVideo01.addEventListener(
-    "error",
-    function(){
-
-      if(!adPlaying01){
-        return;
-      }
-
-
-      sendTracking01(
-        "error"
-      );
-
-
-      /*
-       * Coba iklan berikutnya
-       */
-
-      if(
-        adIndex01 < ads01.length
-      ){
-
-        playAd01();
-
-      }else{
-
-        adPlaying01 =
-          false;
-
-        showServers01();
-
-      }
-
-    }
-  );
-
-
-  /* =========================================
-     SHOW SERVERS
-  ========================================= */
-
-  function showServers01(){
-
-    adPlaying01 =
-      false;
-
-
-    vastVideo01.pause();
-
-    vastVideo01.removeAttribute(
-      "src"
-    );
-
-    vastVideo01.load();
-
-
-    vastBox01.style.display =
-      "none";
-
-
-    serverVideo01.style.display =
-      "block";
-
-
-    serverPanel01.style.display =
-      "block";
-
-
-    serverButtons01.innerHTML =
-      "";
-
-
-    /*
-     * Buat tombol server
-     */
-
-    for(
-      var i01 = 0;
-      i01 < serverUrls01.length;
-      i01++
-    ){
-
-      (function(index01){
-
-        var button01 =
-          document.createElement(
-            "button"
-          );
-
-
-        button01.type =
-          "button";
-
-
-        button01.className =
-          "serverButton01";
-
-
-        button01.textContent =
-          "Server " +
-          String(
-            index01 + 1
-          ).padStart(2,"0");
-
-
-        button01.addEventListener(
-          "click",
-          function(){
-
-            loadServer01(
-              index01
-            );
-
-          }
-        );
-
-
-        serverButtons01.appendChild(
-          button01
-        );
-
-
-      })(i01);
-
-    }
-
-
-    /*
-     * Otomatis Server 01
-     */
-
-    loadServer01(0);
-
-  }
-
-
-  /* =========================================
-     LOAD SERVER
-  ========================================= */
-
-  function loadServer01(
-    index01
-  ){
-
-    /*
-     * Hapus iframe lama
-     */
-
+  function loadServer(index){
     serverVideo01.innerHTML =
-      "";
+      '<div class="svg-loading">' +
+        '<div class="spinner"></div>' +
+        '<span>Loading Server ' + String(index+1).padStart(2,"0") + '...</span>' +
+      '</div>';
 
+    var iframe = document.createElement("iframe");
+    iframe.src = SERVERS[index];
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+    iframe.setAttribute("loading", "eager");
+    iframe.setAttribute("referrerpolicy", "no-referrer");
 
-    /*
-     * Buat iframe baru
-     */
+    iframe.addEventListener("load", function(){
+      var loading = serverVideo01.querySelector(".svg-loading");
+      if (loading) loading.remove();
+    });
 
-    var iframe01 =
-      document.createElement(
-        "iframe"
-      );
+    setTimeout(function(){
+      var loading = serverVideo01.querySelector(".svg-loading");
+      if (loading) loading.remove();
+    }, 3000);
 
+    serverVideo01.appendChild(iframe);
 
-    iframe01.src =
-      serverUrls01[index01];
-
-
-    iframe01.setAttribute(
-      "allowfullscreen",
-      ""
-    );
-
-
-    iframe01.setAttribute(
-      "allow",
-      "autoplay; fullscreen; picture-in-picture"
-    );
-
-
-    iframe01.setAttribute(
-      "loading",
-      "eager"
-    );
-
-
-    iframe01.referrerPolicy =
-      "no-referrer";
-
-
-    serverVideo01.appendChild(
-      iframe01
-    );
-
-
-    /*
-     * Update tombol aktif
-     */
-
-    var buttons01 =
-      serverButtons01.querySelectorAll(
-        ".serverButton01"
-      );
-
-
-    for(
-      var b01 = 0;
-      b01 < buttons01.length;
-      b01++
-    ){
-
-      buttons01[b01]
-        .classList
-        .remove(
-          "active"
-        );
-
+    var buttons = serverButtons01.querySelectorAll(".serverButton01");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("active");
     }
-
-
-    if(
-      buttons01[index01]
-    ){
-
-      buttons01[index01]
-        .classList
-        .add(
-          "active"
-        );
-
-    }
-
+    if (buttons[index]) buttons[index].classList.add("active");
   }
 
+  buildButtons();
+  loadServer(0);
 
-  /* =========================================
-     LOAD VAST
-  ========================================= */
+  /* ==========================================================
+     BAGIAN 2: IKLAN VAST (2 SUMBER)
+  ========================================================== */
 
-  var xhr01 =
-    new XMLHttpRequest();
+  function parseVast(xmlText){
+    var xml;
+    try {
+      xml = new DOMParser().parseFromString(xmlText, "text/xml");
+    } catch(e){
+      return [];
+    }
 
+    if (xml.querySelector("parsererror")) return [];
 
-  xhr01.open(
-    "GET",
-    vastUrl01,
-    true
-  );
+    var adNodes = xml.getElementsByTagNameNS("*", "Ad");
+    var result = [];
 
+    for (var i = 0; i < adNodes.length; i++){
+      var ad = adNodes[i];
+      var linear = ad.getElementsByTagNameNS("*", "Linear")[0];
+      if (!linear) continue;
 
-  xhr01.timeout =
-    15000;
+      var durationNode = linear.getElementsByTagNameNS("*", "Duration")[0];
+      var duration = durationNode ? parseTime(durationNode.textContent) : 0;
 
-
-  xhr01.onreadystatechange =
-    function(){
-
-      if(
-        xhr01.readyState !== 4
-      ){
-
-        return;
-
-      }
-
-
-      if(
-        xhr01.status >= 200 &&
-        xhr01.status < 300
-      ){
-
-        ads01 =
-          parseVast01(
-            xhr01.responseText
-          );
-
-
-        if(
-          ads01.length
-        ){
-
-          playAd01();
-
-        }else{
-
-          showServers01();
-
+      var mediaFiles = linear.getElementsByTagNameNS("*", "MediaFile");
+      var videoUrl = "";
+      for (var m = 0; m < mediaFiles.length; m++){
+        var type = (mediaFiles[m].getAttribute("type") || "").toLowerCase();
+        if (type === "video/mp4"){
+          videoUrl = mediaFiles[m].textContent.trim();
+          break;
         }
+      }
+      if (!videoUrl && mediaFiles.length){
+        videoUrl = mediaFiles[0].textContent.trim();
+      }
+      if (!videoUrl) continue;
 
-      }else{
+      var impNodes = ad.getElementsByTagNameNS("*", "Impression");
+      var impression = impNodes.length ? impNodes[0].textContent.trim() : "";
 
-        showServers01();
+      var clickNodes = linear.getElementsByTagNameNS("*", "ClickThrough");
+      var clickThrough = clickNodes.length ? clickNodes[0].textContent.trim() : "";
 
+      var tracking = {};
+      var trackNodes = linear.getElementsByTagNameNS("*", "Tracking");
+      for (var t = 0; t < trackNodes.length; t++){
+        var ev = trackNodes[t].getAttribute("event");
+        var url = trackNodes[t].textContent.trim();
+        if (ev && url) tracking[ev] = url;
       }
 
+      result.push({
+        url: videoUrl,
+        duration: duration,
+        impression: impression,
+        clickThrough: clickThrough,
+        tracking: tracking
+      });
+    }
+    return result;
+  }
+
+  function parseTime(val){
+    if (!val) return 0;
+    val = String(val).trim();
+    var parts = val.split(":");
+    if (parts.length === 3) {
+      return parseFloat(parts[0])*3600 + parseFloat(parts[1])*60 + parseFloat(parts[2]);
+    }
+    if (parts.length === 2) {
+      return parseFloat(parts[0])*60 + parseFloat(parts[1]);
+    }
+    return parseFloat(val) || 0;
+  }
+
+  function fmtTime(sec){
+    sec = Math.max(0, Math.floor(sec || 0));
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function fireTracking(url){
+    if (!url) return;
+    try {
+      var img = new Image();
+      img.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "_=" + Date.now();
+    } catch(e){}
+  }
+
+  function fireAdTracking(event){
+    if (!currentAd || !currentAd.tracking) return;
+    fireTracking(currentAd.tracking[event]);
+  }
+
+  function playAd(){
+    if (!ads.length || adIndex >= ads.length){
+      hideAdBox();
+      return;
+    }
+
+    currentAd = ads[adIndex++];
+    adPlaying = true;
+
+    vastAdLabel01.style.display = "block";
+    vastAdTime.textContent = "Loading...";
+
+    if (currentAd.clickThrough) {
+      vastClick01.style.display = "block";
+    } else {
+      vastClick01.style.display = "none";
+    }
+
+    vastVideo01.muted = true;
+    vastVideo01.autoplay = true;
+    vastVideo01.playsInline = true;
+    vastVideo01.setAttribute("playsinline", "");
+    vastVideo01.setAttribute("webkit-playsinline", "");
+    vastVideo01.src = currentAd.url;
+
+    if (currentAd.impression) {
+      fireTracking(currentAd.impression);
+    }
+
+    var p = vastVideo01.play();
+    if (p && p.catch) {
+      p.catch(function(){
+        vastAdTime.textContent = "Tap to play";
+        vastAdLabel01.style.cursor = "pointer";
+        vastAdLabel01.style.pointerEvents = "auto";
+        vastAdLabel01.onclick = function(){
+          vastVideo01.muted = true;
+          var p2 = vastVideo01.play();
+          if (p2 && p2.catch) {
+            p2.catch(function(){ skipAd(); });
+          }
+          vastAdLabel01.onclick = null;
+          vastAdLabel01.style.cursor = "none";
+          vastAdLabel01.style.pointerEvents = "none";
+        };
+      });
+    }
+  }
+
+  function skipAd(){
+    adPlaying = false;
+    vastClick01.style.display = "none";
+    if (adIndex < ads.length) {
+      setTimeout(playAd, 200);
+    } else {
+      nextVastSource();
+    }
+  }
+
+  function hideAdBox(){
+    adPlaying = false;
+    try {
+      vastVideo01.pause();
+      vastVideo01.removeAttribute("src");
+      vastVideo01.load();
+    } catch(e){}
+    vastBox01.style.display = "none";
+  }
+
+  vastVideo01.addEventListener("play", function(){
+    if (!adPlaying) return;
+    fireAdTracking("start");
+  });
+
+  vastVideo01.addEventListener("timeupdate", function(){
+    if (!adPlaying || !currentAd) return;
+
+    var cur = vastVideo01.currentTime || 0;
+    var dur = vastVideo01.duration || currentAd.duration || 0;
+
+    vastAdTime.textContent = fmtTime(cur) + " / " + fmtTime(dur);
+
+    if (!dur) return;
+    var pct = cur / dur;
+    if (pct >= 0.25 && !currentAd._q25) {
+      currentAd._q25 = true;
+      fireAdTracking("firstQuartile");
+    }
+    if (pct >= 0.50 && !currentAd._q50) {
+      currentAd._q50 = true;
+      fireAdTracking("midpoint");
+    }
+    if (pct >= 0.75 && !currentAd._q75) {
+      currentAd._q75 = true;
+      fireAdTracking("thirdQuartile");
+    }
+  });
+
+  vastVideo01.addEventListener("ended", function(){
+    if (!adPlaying) return;
+    fireAdTracking("complete");
+    vastClick01.style.display = "none";
+
+    if (adIndex < ads.length) {
+      setTimeout(playAd, 300);
+    } else {
+      setTimeout(nextVastSource, 300);
+    }
+  });
+
+  vastVideo01.addEventListener("error", function(){
+    if (!adPlaying) return;
+    console.warn("[VAST] video error");
+    fireAdTracking("error");
+    skipAd();
+  });
+
+  vastClick01.addEventListener("click", function(){
+    if (!currentAd || !currentAd.clickThrough) return;
+    window.open(currentAd.clickThrough, "_blank", "noopener,noreferrer");
+  });
+
+  function fetchVastSource(index){
+    if (index >= VAST_URLS.length) {
+      console.warn("[VAST] all sources exhausted → hide box");
+      hideAdBox();
+      return;
+    }
+
+    vastSourceIndex = index;
+    var url = VAST_URLS[index];
+    console.log("[VAST] fetching #" + (index+1) + ":", url);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.timeout = 10000;
+
+    xhr.onreadystatechange = function(){
+      if (xhr.readyState !== 4) return;
+
+      console.log("[VAST] #" + (index+1) + " status:", xhr.status);
+      console.log("[VAST] #" + (index+1) + " preview:", (xhr.responseText || "").slice(0, 200));
+
+      var parsed = [];
+
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          parsed = parseVast(xhr.responseText);
+          console.log("[VAST] #" + (index+1) + " parsed:", parsed.length, "ads");
+        } catch(e){
+          console.error("[VAST] #" + (index+1) + " parse error:", e);
+          parsed = [];
+        }
+      } else {
+        console.warn("[VAST] #" + (index+1) + " HTTP error:", xhr.status);
+      }
+
+      if (parsed.length > 0) {
+        ads = parsed;
+        adIndex = 0;
+        vastBox01.style.display = "block";
+        playAd();
+      } else {
+        fetchVastSource(index + 1);
+      }
     };
 
-
-  xhr01.ontimeout =
-    function(){
-
-      showServers01();
-
+    xhr.ontimeout = function(){
+      console.warn("[VAST] #" + (index+1) + " timeout");
+      fetchVastSource(index + 1);
+    };
+    xhr.onerror = function(){
+      console.warn("[VAST] #" + (index+1) + " network error");
+      fetchVastSource(index + 1);
     };
 
+    xhr.send();
+  }
 
-  xhr01.onerror =
-    function(){
+  function nextVastSource(){
+    var next = vastSourceIndex + 1;
+    if (next < VAST_URLS.length) {
+      fetchVastSource(next);
+    } else {
+      hideAdBox();
+    }
+  }
 
-      showServers01();
-
-    };
-
-
-  xhr01.send();
+  fetchVastSource(0);
 
 })();
+</script>
 
+<!-- ============ VIDEO OBJECT SCHEMA (AUTO-SYNC dari player) ============ -->
+<script>
+(function(){
+  "use strict";
+
+  function injectSchema(){
+    var iframe = document.querySelector("#serverVideo01 iframe");
+    var embedUrl = iframe ? iframe.src : "";
+    if (!embedUrl) return false;
+
+    // Hapus schema lama (biar tidak duplikat)
+    var old = document.querySelector('script[data-video-schema]');
+    if (old) old.remove();
+
+    // Ambil judul dari h1
+    var h1 = document.querySelector(".info-title");
+    var title = (h1 && h1.textContent.trim()) || document.title;
+
+    var schema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": title,
+      "description": title,
+      "url": location.href,
+      "contentUrl": embedUrl,
+      "embedUrl": embedUrl,
+      "uploadDate": new Date().toISOString()
+    };
+
+    // Thumbnail dari og:image
+    var ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage && ogImage.content) {
+      schema.thumbnailUrl = ogImage.content;
+    }
+
+    // Upload date dari <time datetime="...">
+    var timeEl = document.querySelector("time[datetime]");
+    if (timeEl) {
+      schema.uploadDate = timeEl.getAttribute("datetime");
+    }
+
+    var ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.setAttribute("data-video-schema", "1");
+    ld.textContent = JSON.stringify(schema);
+    document.head.appendChild(ld);
+
+    console.log("[Schema] updated →", embedUrl);
+    return true;
+  }
+
+  // Coba inject berkali-kali sampai iframe siap
+  var tries = 0;
+  var iv = setInterval(function(){
+    tries++;
+    if (injectSchema() || tries > 20) {
+      clearInterval(iv);
+    }
+  }, 500);
+
+  // Update schema tiap kali server diganti
+  var target = document.getElementById("serverVideo01");
+  if (target && window.MutationObserver) {
+    var mo = new MutationObserver(function(){
+      setTimeout(injectSchema, 100);
+    });
+    mo.observe(target, { childList: true, subtree: true });
+  }
+})();
 </script>
             </div>
         </div>
@@ -2535,7 +1733,7 @@ layout: null
             {% endif %}
         </nav>
 
-        <!-- RELATED (multi kategori, minimal 1 sama, unik, 2 baris + load more) -->
+        <!-- RELATED -->
         <section class="related-section" id="relatedSection" style="display:none">
             <h2 class="sidebar-title">
                 Related Videos
@@ -2603,7 +1801,7 @@ layout: null
         </button>
     </div>
 
-    <!-- ============ DATA: RELATED (multi kategori, slice 30) ============ -->
+    <!-- ============ DATA: RELATED ============ -->
     {% assign current_categories = page.categories | default: empty %}
     {% assign related_posts = "" | split: "" %}
 
@@ -2638,7 +1836,6 @@ layout: null
 
     <!-- ============ MAIN SCRIPT ============ -->
     <script>
-    // ===== Auto-detect vertical =====
     (function(){
         var playerContent = document.getElementById("playerContent");
         if (!playerContent) return;
@@ -2651,7 +1848,6 @@ layout: null
         }
     })();
 
-    // ===== Share (multi platform) =====
     (function(){
         var url = window.location.href;
         var titleEl = document.querySelector(".info-title");
@@ -2715,7 +1911,6 @@ layout: null
         }
     })();
 
-    // ===== Related (multi kategori, minimal 1 sama, unik, 2 baris + load more) =====
     (function(){
         var grid = document.getElementById("relatedGrid");
         var section = document.getElementById("relatedSection");
@@ -2724,11 +1919,7 @@ layout: null
         var lmCount = document.getElementById("lmCount");
 
         if (!grid || !section) return;
-
-        // Tidak ada post sekategori → jangan tampilkan section
-        if (!hasRelated || relatedPosts.length === 0) {
-            return;
-        }
+        if (!hasRelated || relatedPosts.length === 0) { return; }
 
         function hashCode(str) {
             var h = 0;
@@ -2745,15 +1936,12 @@ layout: null
                 return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
             });
         }
-
-        // Helper: hitung jumlah kolom dari CSS computed style
         function getColumns() {
             var cols = getComputedStyle(grid).gridTemplateColumns;
             if (!cols || cols === "none") return 1;
             return cols.trim().split(/\s+/).length;
         }
 
-        // Render semua related post ke DOM (semua tersembunyi dulu)
         grid.innerHTML = relatedPosts.map(function(p){
             var img = p.image
                 ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title) + '" loading="lazy">'
@@ -2777,23 +1965,18 @@ layout: null
         var visibleCount = 0;
         var hasExpanded = false;
 
-        // Tampilkan 2 baris pertama
         function showInitial() {
             var cols = getColumns();
             var twoRows = cols * 2;
-
             allCards.forEach(function(c){ c.classList.add("hidden"); });
             visibleCount = 0;
-
             for (var i = 0; i < allCards.length && i < twoRows; i++) {
                 allCards[i].classList.remove("hidden");
                 visibleCount++;
             }
-
             updateLoadMore();
         }
 
-        // Tampilkan semua
         function showAll() {
             allCards.forEach(function(c){ c.classList.remove("hidden"); });
             visibleCount = allCards.length;
@@ -2801,12 +1984,9 @@ layout: null
             if (loadBtn) loadBtn.classList.add("expanded");
         }
 
-        // Update tombol Load More
         function updateLoadMore() {
             if (!loadWrap || !loadBtn) return;
-
             var remaining = allCards.length - visibleCount;
-
             if (remaining > 0) {
                 loadWrap.style.display = "";
                 lmCount.textContent = "(" + remaining + ")";
@@ -2815,24 +1995,17 @@ layout: null
             }
         }
 
-        // Tampilkan section
         section.style.display = "";
-
-        // Init
         showInitial();
 
-        // Resize: reset ke 2 baris baru (kalau belum load more)
         var resizeTimer;
         window.addEventListener("resize", function(){
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function(){
-                if (!hasExpanded) {
-                    showInitial();
-                }
+                if (!hasExpanded) { showInitial(); }
             }, 150);
         });
 
-        // Klik Load More
         if (loadBtn) {
             loadBtn.addEventListener("click", function(){
                 hasExpanded = true;
@@ -2841,7 +2014,6 @@ layout: null
         }
     })();
 
-    // ===== Footer year + brand + js-year =====
     (function(){
         var y = document.getElementById("footYear");
         if (y) y.textContent = new Date().getFullYear();
@@ -2852,7 +2024,6 @@ layout: null
         });
     })();
 
-    // ===== Cookie =====
     (function(){
         var KEY = "cookie-accepted-v1";
         var banner = document.getElementById("cookieBanner");
@@ -2867,21 +2038,6 @@ layout: null
         });
     })();
     </script>
-
-    <!-- ============ JSON-LD ============ -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoObject",
-        "name": {{ page.title | jsonify }},
-        "description": {{ page.title | jsonify }},
-        {% if page.image %}"thumbnailUrl": "{{ page.image | relative_url | absolute_url }}",{% endif %}
-        {% if page.date %}"uploadDate": "{{ page.date | date_to_xmlschema }}",{% endif %}
-        "url": "{{ page.url | absolute_url }}"
-    }
-    </script>
-
-    
 
 </body>
 </html>
