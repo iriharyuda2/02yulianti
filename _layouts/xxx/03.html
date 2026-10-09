@@ -1,0 +1,1467 @@
+---
+layout: null
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <script>
+    (function() {
+        var hostname = location.hostname;
+        var parts = hostname.split(".");
+        var fullName = parts[0];
+        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
+        var formatText = function(str) {
+            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        };
+        var displayDomain = formatText(fullName);
+        window.__SITE_NAME__ = displayDomain;
+        document.title = displayDomain + " · Indonesian & Asian Amateur";
+        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
+        metaDesc.name = "description";
+        metaDesc.content = "Curated amateur videos from Indonesia and across Asia. Real people, real moments. Updated daily. 18+ only.";
+        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
+        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
+        canonical.setAttribute("rel", "canonical");
+        canonical.setAttribute("href", location.href);
+        if (!canonical.parentNode) document.head.appendChild(canonical);
+    })();
+    </script>
+
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <meta name="rating" content="adult">
+    <meta name="rating" content="mature">
+    <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
+    <meta name="content-rating" content="adult">
+    <meta name="audience" content="adult">
+
+    <style>
+        *,*::before,*::after{box-sizing:border-box}
+
+        :root {
+            --bg: #0a0a0f;
+            --bg-2: #12121a;
+            --surface: #16161f;
+            --surface-2: #1d1d29;
+            --text: #f0f0f5;
+            --text-dim: #8a8a9a;
+            --text-muted: #6a6a78;
+            --border: rgba(255,255,255,.06);
+            --border-strong: rgba(255,255,255,.12);
+            --accent: #a855f7;
+            --accent-2: #06b6d4;
+            --accent-soft: rgba(168,85,247,.15);
+            --shadow: 0 8px 32px rgba(0,0,0,.5);
+            --ad-bg: #0e0e15;
+            --play-bg: rgba(0,0,0,.45);
+            --play-fg: rgba(255,255,255,.85);
+            --dur-bg: rgba(10,10,15,.85);
+            --dur-fg: #a855f7;
+            --header-bg: rgba(10,10,15,.85);
+            --menu-bg: #0d0d14;
+            --menu-hover: #1d1d29;
+            --menu-text: #b0b0c0;
+        }
+
+        body.light-mode {
+            --bg: #fafaf9;
+            --bg-2: #f0f0ee;
+            --surface: #ffffff;
+            --surface-2: #f5f5f3;
+            --text: #14141a;
+            --text-dim: #6b6b76;
+            --text-muted: #9a9aa3;
+            --border: rgba(0,0,0,.06);
+            --border-strong: rgba(0,0,0,.12);
+            --accent: #7c3aed;
+            --accent-2: #0891b2;
+            --accent-soft: rgba(124,58,237,.1);
+            --shadow: 0 8px 32px rgba(0,0,0,.08);
+            --ad-bg: #eeeee9;
+            --play-bg: rgba(0,0,0,.4);
+            --play-fg: rgba(255,255,255,.9);
+            --dur-bg: rgba(20,20,26,.9);
+            --dur-fg: #ffffff;
+            --header-bg: rgba(250,250,249,.9);
+            --menu-bg: #fafaf9;
+            --menu-hover: #f5f5f3;
+            --menu-text: #4a4a52;
+        }
+
+        html{overflow-x:hidden;background:var(--bg);scroll-behavior:smooth}
+        body{
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
+            background:var(--bg);color:var(--text);
+            font-family:'Inter',system-ui,-apple-system,sans-serif;
+            line-height:1.4;-webkit-font-smoothing:antialiased;
+            transition:background .3s ease,color .3s ease;
+        }
+
+        /* Global SVG defaults */
+        svg{display:block}
+        .ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .ico-sm{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .ico-lg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+        /* ============ HEADER ============ */
+        .site-header{
+            position:fixed;top:0;left:0;right:0;z-index:1000;
+            background:var(--header-bg);
+            backdrop-filter:blur(24px) saturate(1.8);
+            -webkit-backdrop-filter:blur(24px) saturate(1.8);
+            border-bottom:1px solid var(--border);
+            padding:10px 14px;
+        }
+        .header-inner{
+            display:flex;align-items:center;gap:12px;
+            max-width:1400px;margin:0 auto;
+        }
+        .brand{
+            display:flex;align-items:center;gap:10px;
+            flex:1;min-width:0;
+        }
+        .brand-mark{
+            width:34px;height:34px;flex-shrink:0;
+            border-radius:9px;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-weight:900;font-size:15px;
+            font-family:'Playfair Display',serif;
+            box-shadow:0 4px 16px var(--accent-soft);
+        }
+        .brand-text{
+            display:flex;flex-direction:column;min-width:0;
+        }
+        .brand-name{
+            font-size:15px;
+            font-weight:800;
+            letter-spacing:-.02em;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+            -webkit-background-clip:text;
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+            color:var(--accent);
+        }
+        .brand-tagline{
+            font-size:9px;
+            font-weight:500;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+            color:var(--text-dim);
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .icon-btn{
+            width:36px;height:36px;flex-shrink:0;
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:9px;cursor:pointer;padding:0;
+            display:flex;align-items:center;justify-content:center;
+            color:var(--text);transition:all .2s ease;
+        }
+        .icon-btn:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .icon-btn:active{transform:scale(.94)}
+        .icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+        /* ============ FULLSCREEN MENU ============ */
+        .menu-panel{
+            position:fixed;inset:0;z-index:1100;
+            background:var(--menu-bg);
+            transform:translateY(-100%);
+            transition:transform .38s cubic-bezier(.4,0,.2,1);
+            display:flex;flex-direction:column;
+            overflow:hidden;
+        }
+        .menu-panel.open{transform:translateY(0)}
+
+        .menu-head{
+            flex-shrink:0;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:14px 16px;
+            border-bottom:1px solid var(--border);
+            background:var(--menu-bg);
+        }
+        .menu-head-title{
+            display:flex;align-items:center;gap:10px;
+        }
+        .menu-head-mark{
+            width:32px;height:32px;flex-shrink:0;
+            border-radius:8px;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-weight:900;font-size:14px;
+            font-family:'Playfair Display',serif;
+        }
+        .menu-head-text{
+            display:flex;flex-direction:column;
+        }
+        .menu-head-name{
+            font-size:14px;font-weight:800;color:var(--text);
+            letter-spacing:-.02em;
+            line-height:1.2;
+        }
+        .menu-head-sub{
+            font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+            color:var(--text-dim);
+            line-height:1.2;
+            margin-top:2px;
+        }
+        .menu-close{
+            width:36px;height:36px;border-radius:9px;
+            background:var(--surface);border:1px solid var(--border);
+            cursor:pointer;display:flex;align-items:center;justify-content:center;
+            color:var(--text);padding:0;
+            transition:all .2s ease;
+        }
+        .menu-close:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .menu-close:active{transform:scale(.94)}
+        .menu-close svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+        .menu-body{
+            flex:1;
+            overflow-y:auto;
+            padding:20px 16px 40px;
+            -webkit-overflow-scrolling:touch;
+        }
+        .menu-content{
+            max-width:680px;
+            margin:0 auto;
+        }
+
+        .menu-divider{
+            height:1px;
+            background:var(--border);
+            margin:18px 4px 14px;
+            pointer-events:none;
+        }
+        .menu-section-label{
+            font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+            color:var(--text-dim);
+            padding:0 14px 8px;
+            display:flex;align-items:center;gap:8px;
+        }
+        .menu-section-label svg{
+            width:12px;height:12px;
+            stroke:currentColor;fill:none;stroke-width:2.2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.75;
+        }
+
+        /* Accordion */
+        .menu-legal{
+            display:flex;flex-direction:column;gap:6px;
+        }
+        .menu-legal details{
+            border:1px solid var(--border);
+            border-radius:9px;
+            background:var(--surface);
+            overflow:hidden;
+        }
+        .menu-legal summary{
+            padding:14px 16px;cursor:pointer;
+            font-size:12px;font-weight:700;letter-spacing:.08em;
+            color:var(--text);list-style:none;
+            display:flex;align-items:center;gap:12px;
+            user-select:none;text-transform:uppercase;
+            transition:color .2s ease;
+        }
+        .menu-legal summary::-webkit-details-marker{display:none}
+        .menu-legal summary .summary-ico{
+            width:16px;height:16px;flex-shrink:0;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            opacity:.9;
+        }
+        .menu-legal summary .summary-text{
+            flex:1;
+        }
+        .menu-legal summary .chev{
+            width:8px;height:8px;
+            border-right:2px solid var(--text-dim);
+            border-bottom:2px solid var(--text-dim);
+            transform:rotate(45deg);transition:transform .25s ease;
+            flex-shrink:0;
+            margin-top:-3px;
+        }
+        .menu-legal details[open] summary .chev{transform:rotate(-135deg);margin-top:3px}
+        .menu-legal details[open] summary{color:var(--accent)}
+        .menu-legal-body{
+            padding:4px 16px 16px;
+            border-top:1px solid var(--border);
+            font-size:12.5px;line-height:1.65;color:var(--text-dim);
+        }
+        .menu-legal-body p{margin:10px 0}
+        .menu-legal-body p strong{color:var(--text)}
+        .menu-legal-body ul{margin:10px 0;padding-left:20px}
+        .menu-legal-body li{margin-bottom:6px}
+        .menu-legal-body a{color:var(--accent);text-decoration:none;font-weight:500}
+        .menu-legal-body a:hover{text-decoration:underline}
+
+        /* Home button */
+        .menu-home{
+            display:flex;align-items:center;gap:12px;
+            padding:13px 14px;border-radius:9px;
+            color:var(--menu-text);text-decoration:none;
+            font-size:14px;font-weight:600;
+            transition:all .15s ease;
+            background:var(--surface);
+            border:1px solid var(--border);
+            margin-bottom:14px;
+        }
+        .menu-home:hover{background:var(--surface-2);color:var(--text);border-color:var(--border-strong)}
+        .menu-home svg{
+            width:18px;height:18px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            flex-shrink:0;
+        }
+        .menu-home .arrow{
+            margin-left:auto;
+            width:14px;height:14px;
+            opacity:.5;
+        }
+
+        /* Contact list */
+        .menu-contact-list{
+            list-style:none;
+            padding:0;
+            margin:0;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .menu-contact-list li{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-size:13px;
+            line-height:1.5;
+            padding:11px 14px;
+            border-radius:9px;
+            background:var(--surface);
+            border:1px solid var(--border);
+            transition:all .15s ease;
+        }
+        .menu-contact-list li:hover{background:var(--surface-2);border-color:var(--border-strong)}
+        .menu-contact-list .contact-ico{
+            flex-shrink:0;
+            width:32px;height:32px;
+            border-radius:8px;
+            display:flex;align-items:center;justify-content:center;
+            background:linear-gradient(135deg,var(--accent-soft),transparent);
+            border:1px solid var(--accent-soft);
+            color:var(--accent);
+        }
+        .menu-contact-list .contact-ico svg{
+            width:16px;height:16px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
+        .menu-contact-list .contact-meta{
+            display:flex;flex-direction:column;
+            min-width:0;
+            flex:1;
+        }
+        .menu-contact-list .contact-label{
+            color:var(--text-dim);
+            font-weight:600;
+            font-size:10px;
+            text-transform:uppercase;
+            letter-spacing:.1em;
+            line-height:1.2;
+        }
+        .menu-contact-list a{
+            color:var(--text);
+            text-decoration:none;
+            font-weight:600;
+            font-size:13px;
+            line-height:1.3;
+            word-break:break-all;
+            margin-top:2px;
+        }
+        .menu-contact-list a:hover{color:var(--accent)}
+
+        /* ============ ADS ============ */
+        .ad-box{
+            display:flex;justify-content:center;align-items:center;
+            margin:0 auto;max-width:100%;overflow:hidden;
+            background:var(--ad-bg);min-height:50px;
+        }
+        .ad-break{
+            padding:8px 0;background:var(--ad-bg);
+            border-bottom:1px solid var(--border);
+        }
+        .ad-break:first-child{margin-top:54px}
+        .ad-break.bottom{border-top:1px solid var(--border);border-bottom:none;margin-top:20px}
+        .ad-inline{
+            margin:20px 0;padding:8px 0;
+            background:var(--ad-bg);
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+        }
+
+        /* ============ LAYOUT ============ */
+        .page-wrap{
+            max-width:1400px;margin:0 auto;padding:0 12px;
+        }
+
+        /* ============ SECTION ============ */
+        .section{margin:24px 0}
+        .section:first-child{margin-top:16px}
+        .section-head{
+            margin-bottom:10px;
+        }
+        .section-title{
+            font-family:'Playfair Display',Georgia,serif;
+            font-size:18px;font-weight:900;letter-spacing:-.02em;
+            color:var(--text);margin:0;
+            display:flex;align-items:center;gap:10px;
+        }
+        .section-title::before{
+            content:'';width:3px;height:18px;border-radius:2px;
+            background:linear-gradient(180deg,var(--accent),var(--accent-2));
+            flex-shrink:0;
+        }
+        .section-title.featured-style::before{
+            background:linear-gradient(180deg,#f43f5e,#f59e0b);
+        }
+        .section-title .section-ico{
+            width:16px;height:16px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+            opacity:.85;
+            flex-shrink:0;
+            margin-left:auto;
+        }
+
+        /* ============ GRID ============ */
+        .grid{
+            display:grid;gap:6px;
+            grid-template-columns:repeat(2,1fr);
+        }
+        @media(min-width:600px){
+            .grid{grid-template-columns:repeat(3,1fr);gap:8px}
+        }
+        @media(min-width:900px){
+            .grid{grid-template-columns:repeat(5,1fr);gap:10px}
+        }
+        @media(min-width:1200px){
+            .grid{grid-template-columns:repeat(6,1fr);gap:10px}
+        }
+
+        /* ============ CARD ============ */
+        .card{
+            position:relative;display:block;
+            border-radius:6px;overflow:hidden;
+            background:var(--surface);
+            text-decoration:none;
+            transition:transform .3s cubic-bezier(.4,0,.2,1);
+        }
+        .card:hover{transform:translateY(-2px)}
+        .card-media{
+            position:relative;
+            width:100%;aspect-ratio:9/16;
+            overflow:hidden;background:var(--surface-2);
+        }
+        .card-media img{
+            width:100%;height:100%;object-fit:cover;display:block;
+            transition:transform .5s cubic-bezier(.4,0,.2,1);
+        }
+        .card:hover .card-media img{transform:scale(1.05)}
+
+        .card-play{
+            position:absolute;
+            top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:52px;height:52px;
+            background:var(--play-bg);
+            backdrop-filter:blur(4px);
+            -webkit-backdrop-filter:blur(4px);
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            color:var(--play-fg);
+            z-index:2;pointer-events:none;
+            transition:all .25s ease;
+            border:1px solid rgba(255,255,255,.15);
+        }
+        .card-play svg{width:20px;height:20px;fill:currentColor;margin-left:3px}
+        .card:hover .card-play{
+            background:rgba(0,0,0,.7);
+            color:#fff;
+            transform:translate(-50%,-50%) scale(1.1);
+        }
+
+        .card-dur{
+            position:absolute;top:6px;right:6px;
+            background:var(--dur-bg);
+            color:var(--dur-fg);
+            font-size:10px;font-weight:700;
+            letter-spacing:.04em;
+            padding:3px 7px 3px 5px;
+            border-radius:999px;
+            z-index:3;pointer-events:none;
+            font-variant-numeric:tabular-nums;
+            border:1px solid var(--accent-soft);
+            display:flex;align-items:center;gap:3px;
+        }
+        .card-dur svg{
+            width:9px;height:9px;
+            stroke:currentColor;fill:currentColor;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.9;
+        }
+
+        .card-title{
+            position:absolute;
+            bottom:0;
+            left:0;
+            right:0;
+            font-family:'Inter',system-ui,sans-serif;
+            font-size:10.5px;
+            font-weight:400;
+            line-height:1.35;
+            color:#fff;
+            opacity:.7;
+            padding:22px 10px 8px;
+            margin:0;
+            overflow:hidden;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            text-overflow:ellipsis;
+            background:linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,0) 100%);
+            z-index:2;
+            pointer-events:none;
+            transition:opacity .2s ease;
+        }
+        .card:hover .card-title{opacity:1}
+
+        /* ============ PAGINATION ============ */
+        .pagination{
+            display:flex;justify-content:center;align-items:center;
+            gap:6px;margin:32px 0 16px;flex-wrap:wrap;
+        }
+        .pagination a,
+        .pagination span{
+            display:inline-flex;align-items:center;justify-content:center;
+            min-width:38px;height:38px;padding:0 12px;
+            background:var(--surface);color:var(--text);
+            border:1px solid var(--border);border-radius:8px;
+            font-size:13px;font-weight:600;text-decoration:none;
+            transition:all .15s ease;cursor:pointer;
+        }
+        .pagination a:hover{
+            background:var(--surface-2);
+            border-color:var(--border-strong);
+            transform:translateY(-1px);
+        }
+        .pagination .active{
+            background:var(--accent);color:#fff;
+            border-color:var(--accent);
+            box-shadow:0 4px 16px var(--accent-soft);
+        }
+        .pagination .disabled{
+            opacity:.35;cursor:not-allowed;pointer-events:none;
+        }
+        .pagination .dots{
+            background:transparent;border:none;
+            cursor:default;color:var(--text-dim);
+            min-width:auto;padding:0 4px;
+        }
+        .pagination .chev-btn svg{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2.5;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
+
+        /* ============ COOKIE BANNER ============ */
+        .cookie-banner{
+            position:fixed;
+            bottom:16px;
+            left:50%;
+            transform:translateX(-50%) translateY(20px);
+            max-width:520px;
+            width:calc(100% - 32px);
+            background:var(--surface);
+            color:var(--text);
+            border:1px solid var(--border-strong);
+            border-radius:12px;
+            padding:14px 16px;
+            box-shadow:0 12px 40px rgba(0,0,0,.5);
+            font-size:13px;
+            line-height:1.5;
+            z-index:1200;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            opacity:0;
+            transition:opacity .3s ease,transform .3s ease;
+        }
+        .cookie-banner.show{
+            opacity:1;
+            transform:translateX(-50%) translateY(0);
+        }
+        .cookie-banner .cookie-ico{
+            flex-shrink:0;
+            width:32px;height:32px;
+            border-radius:8px;
+            display:flex;align-items:center;justify-content:center;
+            background:var(--accent-soft);
+            color:var(--accent);
+        }
+        .cookie-banner .cookie-ico svg{
+            width:18px;height:18px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
+        .cookie-banner p{
+            margin:0;
+            flex:1;
+            color:var(--text);
+        }
+        .cookie-ok{
+            background:var(--accent);
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            padding:8px 18px;
+            cursor:pointer;
+            font-size:13px;
+            font-weight:600;
+            font-family:'Inter',sans-serif;
+            flex-shrink:0;
+            transition:all .15s ease;
+            display:inline-flex;align-items:center;gap:6px;
+        }
+        .cookie-ok svg{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2.5;
+            stroke-linecap:round;stroke-linejoin:round;
+        }
+        .cookie-ok:hover{
+            filter:brightness(1.1);
+            transform:translateY(-1px);
+        }
+        .cookie-ok:active{transform:translateY(0)}
+
+        /* ============ FOOTER (bersih, tanpa link) ============ */
+        footer.site-footer{
+            max-width:1400px;margin:40px auto 0;
+            padding:24px 16px 32px;
+            border-top:1px solid var(--border);
+            text-align:center;
+        }
+        .foot-copy{
+            font-size:12px;
+            color:var(--text-dim);
+            margin:0;
+            line-height:1.6;
+            display:flex;align-items:center;justify-content:center;
+            gap:8px;flex-wrap:wrap;
+        }
+        .foot-copy .copy-ico{
+            width:14px;height:14px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            opacity:.7;
+        }
+        .foot-copy strong{
+            color:var(--text);
+            font-weight:600;
+        }
+        .foot-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            margin-top:12px;
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.15em;
+            text-transform:uppercase;
+            color:var(--text-dim);
+            padding:5px 12px;
+            border:1px solid var(--border-strong);
+            border-radius:999px;
+        }
+        .foot-badge svg{
+            width:12px;height:12px;
+            stroke:currentColor;fill:none;stroke-width:2;
+            stroke-linecap:round;stroke-linejoin:round;
+            color:var(--accent);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media(min-width:600px){
+            .site-header{padding:10px 20px}
+            .page-wrap{padding:0 16px}
+            .section-title{font-size:20px}
+            .section-title::before{height:20px}
+            .section-title .section-ico{width:18px;height:18px}
+            .brand-name{font-size:16px}
+            .menu-head{padding:16px 24px}
+            .menu-body{padding:24px 24px 48px}
+        }
+
+        @media(min-width:900px){
+            .site-header{padding:10px 28px}
+            .page-wrap{padding:0 20px}
+            .section{margin:32px 0}
+            .section-title{font-size:22px}
+            .section-title::before{height:22px;width:4px}
+            .card-play{width:60px;height:60px}
+            .card-play svg{width:24px;height:24px}
+            .card-title{font-size:11.5px;padding:24px 12px 10px}
+            .brand-name{font-size:17px}
+            .menu-head{padding:18px 32px}
+            .menu-body{padding:28px 32px 56px}
+            .menu-content{max-width:760px}
+        }
+
+        @media(max-width:600px){
+            .cookie-banner{
+                bottom:12px;
+                width:calc(100% - 24px);
+                padding:12px 14px;
+                font-size:12.5px;
+            }
+            .cookie-ok{padding:7px 14px;font-size:12.5px}
+            .menu-contact-list li{font-size:12.5px;padding:10px 12px}
+            .foot-copy{font-size:11.5px}
+        }
+    </style>
+
+{% include head.html %}
+
+
+</head>
+<body>
+<details><summary>models list</summary>
+{{ content }}
+</details>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark" id="brandMark">Y</div>
+                <div class="brand-text">
+                    <span class="brand-name" id="brandName">Yulianti</span>
+                    <span class="brand-tagline">Indonesia &amp; Asia · Real &amp; Amateur</span>
+                </div>
+            </div>
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <!-- Sun (light indicator) -->
+                <svg id="sunIcon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2"/>
+                    <path d="M12 20v2"/>
+                    <path d="M4.93 4.93l1.41 1.41"/>
+                    <path d="M17.66 17.66l1.41 1.41"/>
+                    <path d="M2 12h2"/>
+                    <path d="M20 12h2"/>
+                    <path d="M6.34 17.66l-1.41 1.41"/>
+                    <path d="M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <!-- Moon (dark indicator) -->
+                <svg id="moonIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <button class="icon-btn" id="menuOpen" aria-label="Open menu">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 7h16"/>
+                    <path d="M4 12h16"/>
+                    <path d="M4 17h10"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <aside class="menu-panel" id="menuPanel" role="dialog" aria-label="Navigation and information" aria-modal="true">
+        <div class="menu-head">
+            <div class="menu-head-title">
+                <div class="menu-head-mark" id="menuHeadMark">Y</div>
+                <div class="menu-head-text">
+                    <span class="menu-head-name" id="menuHeadName">Yulianti</span>
+                    <span class="menu-head-sub">Menu &amp; Info</span>
+                </div>
+            </div>
+            <button class="menu-close" id="menuClose" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="menu-body">
+            <div class="menu-content">
+
+                <!-- HOME -->
+                <a href="/" class="menu-home">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <path d="M9 22V12h6v10"/>
+                    </svg>
+                    <span>Back to Home</span>
+                    <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </a>
+
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- ABOUT -->
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                    About
+                </div>
+                <div class="menu-legal" style="margin-bottom:18px">
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <path d="M9 22V12h6v10"/>
+                            </svg>
+                            <span class="summary-text">About This Site</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p><strong id="aboutBrandName">Yulianti</strong> is a curated gallery featuring authentic amateur videos from Indonesia and across Asia. We highlight real people and real moments — no studios, no scripts, just genuine content shared by creators from the region.</p>
+                            <p>Every video is hand-picked for quality and authenticity. New content is added daily.</p>
+                            <p>This site is intended for adults only (18+).</p>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- POLICIES -->
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                    </svg>
+                    Policies
+                </div>
+                <div class="menu-legal" style="margin-bottom:18px">
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span class="summary-text">Privacy Policy</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p><strong>Effective date:</strong> <span class="js-year">2025</span></p>
+                            <p>We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we handle information when you visit our site.</p>
+
+                            <p><strong>Information We Collect</strong></p>
+                            <p>We do <strong>not</strong> collect personal information such as names, email addresses, or payment data. We do <strong>not</strong> require registration to browse content.</p>
+                            <ul>
+                                <li><strong>Local storage</strong> — theme preference, cookie consent, and age verification are stored locally in your browser only, never transmitted to our servers.</li>
+                                <li><strong>Server logs</strong> — standard access logs (IP address, browser, timestamp) may be recorded by our hosting provider for security and abuse prevention, retained for up to 30 days.</li>
+                            </ul>
+
+                            <p><strong>Third-Party Content</strong></p>
+                            <p>All videos displayed on this site are embedded from third-party platforms. These platforms may set their own cookies and collect data according to their own privacy policies. We have no control over their practices and encourage you to review their policies.</p>
+
+                            <p><strong>Cookies</strong></p>
+                            <p>We use only essential and functional cookies stored locally in your browser. No analytics or advertising cookies are set by us directly. See the Cookie Policy section for details.</p>
+
+                            <p><strong>Children's Privacy</strong></p>
+                            <p>This site is strictly for adults (18+). We do not knowingly collect any information from minors. If you are under 18, please leave this site immediately.</p>
+
+                            <p><strong>Your Rights</strong></p>
+                            <p>Since we do not collect personal data, there is no personal information to access, correct, or delete. You can clear all local storage at any time through your browser settings.</p>
+
+                            <p><strong>Changes to This Policy</strong></p>
+                            <p>We may update this Privacy Policy from time to time. Changes take effect when posted on this page.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                <path d="M14 3v6h6"/>
+                                <path d="M8 13h8"/>
+                                <path d="M8 17h5"/>
+                            </svg>
+                            <span class="summary-text">Terms &amp; Conditions</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p><strong>Effective date:</strong> <span class="js-year">2025</span></p>
+                            <p>By accessing or using this website, you agree to be bound by these Terms &amp; Conditions. If you do not agree, please do not use this site.</p>
+
+                            <p><strong>1. Eligibility</strong></p>
+                            <p>You must be at least 18 years of age (or the age of majority in your jurisdiction) to access this site. By using this site, you represent and warrant that you meet this requirement.</p>
+
+                            <p><strong>2. Content</strong></p>
+                            <p>All content on this site is provided for informational and entertainment purposes only. Content is embedded from third-party platforms; we do not host, upload, or own the videos displayed. We make no warranties regarding the accuracy, legality, or completeness of any third-party content.</p>
+
+                            <p><strong>3. Acceptable Use</strong></p>
+                            <p>You agree not to:</p>
+                            <ul>
+                                <li>Use this site for any unlawful purpose</li>
+                                <li>Attempt to gain unauthorized access to any part of the site</li>
+                                <li>Interfere with the proper functioning of the site</li>
+                                <li>Scrape, copy, or redistribute content without permission</li>
+                                <li>Access the site if you are under 18 years of age</li>
+                            </ul>
+
+                            <p><strong>4. Intellectual Property</strong></p>
+                            <p>All trademarks, logos, and site design are the property of their respective owners. Embedded videos remain the property of their original creators and platforms.</p>
+
+                            <p><strong>5. Third-Party Links</strong></p>
+                            <p>This site contains embedded content and links to third-party websites. We are not responsible for the content, privacy practices, or availability of those external sites.</p>
+
+                            <p><strong>6. Disclaimer of Warranties</strong></p>
+                            <p>This site is provided "as is" without warranties of any kind, express or implied. We do not guarantee uninterrupted, error-free, or secure access.</p>
+
+                            <p><strong>7. Limitation of Liability</strong></p>
+                            <p>To the fullest extent permitted by law, we shall not be liable for any damages arising from your use of this site or inability to use it.</p>
+
+                            <p><strong>8. Changes to Terms</strong></p>
+                            <p>We may revise these Terms at any time. Continued use of the site after changes constitutes acceptance of the new Terms.</p>
+
+                            <p><strong>9. Governing Law</strong></p>
+                            <p>These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- LEGAL -->
+                <div class="menu-section-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    Legal
+                </div>
+                <div class="menu-legal" style="margin-bottom:18px">
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <path d="M12 9v4"/>
+                                <path d="M12 17h.01"/>
+                            </svg>
+                            <span class="summary-text">18+ Disclaimer</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p><strong>18+ ONLY.</strong> This website contains adult material intended for adults only. By accessing this site, you confirm that you are at least 18 years old (or the age of majority in your jurisdiction), that viewing adult content is legal where you are located, and that you consent to viewing such material.</p>
+                            <p>All content is fictional and for entertainment purposes only. Any resemblance to actual persons, living or dead, is coincidental. All characters depicted are 18 years of age or older. We do not condone illegal activity.</p>
+                            <p>This site is not intended for users in jurisdictions where adult content is prohibited. It is your responsibility to ensure access is legal in your country, state, or region.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="8.5" cy="10.5" r="1"/>
+                                <circle cx="15.5" cy="10.5" r="1"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M12 2a10 10 0 0 0 0 20"/>
+                            </svg>
+                            <span class="summary-text">Cookie Policy</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p>This site uses the following cookies:</p>
+                            <ul>
+                                <li><strong>age-verified</strong> — remembers your age verification (essential, 30 days)</li>
+                                <li><strong>cookie-consent</strong> — remembers your cookie choice (essential, 1 year)</li>
+                                <li><strong>theme</strong> — remembers your dark/light mode preference (functional, 1 year)</li>
+                            </ul>
+                            <p>No third-party tracking cookies are used. No analytics services are integrated.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M9 9h.01"/>
+                                <path d="M15 15h.01"/>
+                                <path d="M9.5 14.5a4 4 0 0 0 5 0"/>
+                                <path d="M12 3v3"/>
+                            </svg>
+                            <span class="summary-text">DMCA / Copyright</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p>We respect the intellectual property rights of others. If you believe your copyrighted work has been used on this site without authorization, you may submit a DMCA takedown notice.</p>
+                            <p><strong>How to submit:</strong></p>
+                            <ul>
+                                <li>Identification of the copyrighted work</li>
+                                <li>URL of the allegedly infringing material</li>
+                                <li>Your full name and contact information</li>
+                                <li>A statement of good faith belief that the use is not authorized</li>
+                                <li>A statement under penalty of perjury that the information is accurate</li>
+                                <li>Your physical or electronic signature</li>
+                            </ul>
+                            <p>Send your notice via any channel listed in the <a href="#menu-contact">Contact</a> section. We respond to valid DMCA notices within 72 hours.</p>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <svg class="summary-ico" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span class="summary-text">18 U.S.C. § 2257 Statement</span>
+                            <span class="chev" aria-hidden="true"></span>
+                        </summary>
+                        <div class="menu-legal-body">
+                            <p><strong>Records-Keeping Requirements Compliance Statement</strong></p>
+
+                            <p>This website is <strong>not a primary or secondary producer</strong> of any sexually explicit content. All visual depictions of actual sexually explicit conduct that appear on this website are <strong>embedded from third-party platforms</strong> that are solely responsible for compliance with 18 U.S.C. § 2257 and 28 C.F.R. Part 75.</p>
+
+                            <p>We do not host, upload, store, or transmit any sexually explicit media on our servers. All video content is displayed via embedded players provided by third-party platforms. The original producers and hosting platforms of this content are responsible for maintaining all required records.</p>
+
+                            <p><strong>Age Verification of Performers</strong></p>
+                            <p>We require all third-party sources from which we embed content to confirm that all performers depicted were <strong>18 years of age or older</strong> at the time of production. We do not knowingly embed, publish, or link to content involving minors or non-consensual activity. Any such content that comes to our attention will be removed immediately and reported to the appropriate authorities.</p>
+
+                            <p><strong>Exemption Statement</strong></p>
+                            <p>Because this website does not produce any sexually explicit content, we are exempt from the record-keeping requirements of 18 U.S.C. § 2257 and 28 C.F.R. Part 75. This exemption applies under 28 C.F.R. § 75.1(c) (persons who are not primary or secondary producers).</p>
+
+                            <p>For compliance-related questions, takedown requests, or legal inquiries, see the <a href="#menu-contact">Contact</a> section below.</p>
+
+                            <p style="font-size:11px;opacity:.7;margin-top:10px">If you believe any content on this website violates applicable laws or involves non-consensual or underage activity, please contact us immediately. We cooperate fully with law enforcement.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="menu-divider" role="presentation"></div>
+
+                <!-- CONTACT -->
+                <div class="menu-section-label" id="menu-contact">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    Reach Us
+                </div>
+                <ul class="menu-contact-list">
+                    <li>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">WhatsApp</span>
+                            <a href="https://wa.me/6285770366055" target="_blank" rel="noopener noreferrer">+62 857-7036-6055</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M22 2 11 13"/>
+                                <path d="M22 2l-7 20-4-9-9-4z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">Telegram</span>
+                            <a href="https://t.me/yl4t1" target="_blank" rel="noopener noreferrer">@yl4t1</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="contact-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                <path d="m3 7 9 6 9-6"/>
+                            </svg>
+                        </span>
+                        <span class="contact-meta">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:admin@yulianti.xyz">admin@yulianti.xyz</a>
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    (function() {
+        var host = window.location.hostname.split(".");
+        var sub = host[0];
+        if (sub.toLowerCase() === "www") sub = host[1] || "";
+        var clean = sub.replace(/-/g, " ");
+        var display = clean.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+
+        document.getElementById("brandName").textContent = display;
+        document.getElementById("brandMark").textContent = display.charAt(0).toUpperCase();
+        document.getElementById("menuHeadName").textContent = display;
+        document.getElementById("menuHeadMark").textContent = display.charAt(0).toUpperCase();
+        var about = document.getElementById("aboutBrandName");
+        if (about) about.textContent = display;
+
+        var panel = document.getElementById("menuPanel");
+        document.getElementById("menuOpen").addEventListener("click", function(){
+            panel.classList.add("open");
+            document.body.style.overflow = "hidden";
+        });
+        function closeMenu(){
+            panel.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+        document.getElementById("menuClose").addEventListener("click", closeMenu);
+        document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
+
+        panel.querySelectorAll('a[href^="#"]').forEach(function(link){
+            link.addEventListener("click", function(){
+                setTimeout(closeMenu, 100);
+            });
+        });
+        panel.querySelectorAll('a[href]:not([href^="#"])').forEach(function(link){
+            link.addEventListener("click", function(){
+                closeMenu();
+            });
+        });
+    })();
+
+    (function() {
+        var body = document.body;
+        var btn = document.getElementById("themeToggle");
+        var sun = document.getElementById("sunIcon");
+        var moon = document.getElementById("moonIcon");
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            sun.style.display = "none";
+            moon.style.display = "block";
+        }
+        btn.addEventListener("click", function() {
+            body.classList.toggle("light-mode");
+            var isLight = body.classList.contains("light-mode");
+            sun.style.display = isLight ? "none" : "block";
+            moon.style.display = isLight ? "block" : "none";
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+        });
+    })();
+    </script>
+
+<br /><br /><br />
+    <div class="ad-break">
+        <div class="ad-box">{% include /ads/banner/01.html %}</div>
+    </div>
+
+    <div class="page-wrap">
+
+        {% assign category_posts = site.categories['x03'] %}
+        {% if category_posts == nil or category_posts.size == 0 %}
+          {% assign category_posts = site.posts %}
+        {% endif %}
+
+        <div id="ad-slots" style="display:none">
+            <div data-ad="1">{% include /ads/banner/02.html %}</div>
+            <div data-ad="2">{% include /ads/banner/03.html %}</div>
+            <div data-ad="3">{% include /ads/banner/04.html %}</div>
+            <div data-ad="4">{% include /ads/banner/05.html %}</div>
+        </div>
+
+        <div id="sections-container"></div>
+
+        <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
+    </div>
+
+    <div class="ad-break bottom">
+        <div class="ad-box">{% include /ads/banner/06.html %}</div>
+    </div>
+
+{% include paginasi.html %}
+    {% include /ads/gobloggugel/umum.html %}
+
+
+    <footer class="site-footer">
+        <p class="foot-copy">
+            <svg class="copy-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M14.5 9.5a3 3 0 1 0 0 5"/>
+            </svg>
+            <span>&copy; <span id="footYear">2025</span> <strong id="footBrand">Yulianti</strong> — All rights reserved</span>
+        </p>
+        <div class="foot-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <path d="M12 9v4"/>
+                <path d="M12 17h.01"/>
+            </svg>
+            18+ Only
+        </div>
+    </footer>
+
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice">
+        <span class="cookie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="8.5" cy="10.5" r="1"/>
+                <circle cx="15.5" cy="10.5" r="1"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M12 2a10 10 0 0 0 0 20"/>
+            </svg>
+        </span>
+        <p>This site uses cookies to improve your experience.</p>
+        <button class="cookie-ok" id="cookieOk" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12l5 5L20 7"/>
+            </svg>
+            OK
+        </button>
+    </div>
+
+    <script>
+    (function(){
+        var y = document.getElementById("footYear");
+        if (y) y.textContent = new Date().getFullYear();
+        var fb = document.getElementById("footBrand");
+        if (fb && window.__SITE_NAME__) fb.textContent = window.__SITE_NAME__;
+        document.querySelectorAll(".js-year").forEach(function(el){
+            el.textContent = new Date().getFullYear();
+        });
+    })();
+
+    (function(){
+        var allPosts = [
+            {% for post in category_posts %}
+            {
+                url: "{{ post.url }}",
+                image: "{{ post.image | relative_url }}",
+                title: {{ post.title | jsonify }}
+            }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        ];
+
+        var sectionNames = ["Featured","Latest","Stories","Popular","Archive"];
+        var perSection = 10;
+        var totalPerPage = 50;
+        var totalPages = Math.ceil(allPosts.length / totalPerPage);
+        var currentPage = 1;
+
+        var container = document.getElementById("sections-container");
+        var nav = document.getElementById("pagination");
+
+        if (!nav) return;
+        if (totalPages <= 1) nav.remove();
+
+        var adSlots = {};
+        document.querySelectorAll("#ad-slots > div").forEach(function(el){
+            adSlots[el.getAttribute("data-ad")] = el.innerHTML;
+        });
+
+        function pageURL(n) {
+            var base = window.location.origin + window.location.pathname;
+            return n === 1 ? base : base + "?pag=" + n;
+        }
+        function getPageFromURL() {
+            var params = new URLSearchParams(window.location.search);
+            var p = parseInt(params.get("pag"), 10);
+            if (isNaN(p) || p < 1) return 1;
+            if (p > totalPages) return totalPages;
+            return p;
+        }
+        function hashCode(str) {
+            var h = 0;
+            for (var i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+            return Math.abs(h);
+        }
+        function formatDuration(seconds) {
+            var m = Math.floor(seconds / 60);
+            var s = seconds % 60;
+            return m + ":" + (s < 10 ? "0" : "") + s;
+        }
+        function escapeHtml(str) {
+            return String(str || "").replace(/[&<>"']/g, function(c){
+                return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+            });
+        }
+        function buildCard(post) {
+            var img = post.image
+                ? '<img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '" loading="lazy">'
+                : '';
+            var dur = formatDuration(60 + (hashCode(post.url) % 841));
+            return '<a href="' + escapeHtml(post.url) + '" class="card">' +
+                       '<div class="card-media">' + img +
+                           '<span class="card-play" aria-hidden="true">' +
+                               '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+                           '</span>' +
+                           '<span class="card-dur">' +
+                               '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
+                               dur +
+                           '</span>' +
+                           '<h3 class="card-title">' + escapeHtml(post.title) + '</h3>' +
+                       '</div>' +
+                   '</a>';
+        }
+        function renderSection(name, posts, isFeatured) {
+            if (!posts.length) return "";
+            return '<section class="section">' +
+                       '<div class="section-head">' +
+                           '<h2 class="section-title' + (isFeatured ? ' featured-style' : '') + '">' + name +
+                               '<svg class="section-ico" viewBox="0 0 24 24" aria-hidden="true">' +
+                                   '<path d="M12 3l2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z"/>' +
+                               '</svg>' +
+                           '</h2>' +
+                       '</div>' +
+                       '<div class="grid">' + posts.map(buildCard).join("") + '</div>' +
+                   '</section>';
+        }
+        function renderAd(key) {
+            if (!adSlots[key]) return "";
+            return '<div class="ad-inline"><div class="ad-box">' + adSlots[key] + '</div></div>';
+        }
+        function renderPage(page) {
+            currentPage = page;
+            var start = (page - 1) * totalPerPage;
+            var pagePosts = allPosts.slice(start, start + totalPerPage);
+
+            var html = "";
+            var adKeys = ["1","2","3","4"];
+            var adIdx = 0;
+
+            for (var i = 0; i < sectionNames.length; i++) {
+                var sStart = i * perSection;
+                var sPosts = pagePosts.slice(sStart, sStart + perSection);
+                html += renderSection(sectionNames[i], sPosts, i === 0);
+                if (i < sectionNames.length - 1 && sPosts.length > 0) {
+                    html += renderAd(adKeys[adIdx % adKeys.length]);
+                    adIdx++;
+                }
+            }
+            container.innerHTML = html;
+
+            container.querySelectorAll("script").forEach(function(oldScript){
+                var newScript = document.createElement("script");
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                Array.from(oldScript.attributes).forEach(function(attr){
+                    if (attr.name !== "src") newScript.setAttribute(attr.name, attr.value);
+                });
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+
+            var baseName = window.__SITE_NAME__ || document.title.split(" · ")[0];
+            document.title = page === 1
+                ? baseName + " · Indonesian & Asian Amateur"
+                : baseName + " · Indonesian & Asian Amateur — Page " + page + " of " + totalPages;
+
+            var canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) canonical.setAttribute("href", pageURL(page));
+
+            drawPagination(page);
+        }
+        function makeLink(text, page, opts) {
+            opts = opts || {};
+            var el;
+            if (opts.disabled) { el = document.createElement("span"); el.className = "disabled"; }
+            else { el = document.createElement("a"); el.href = page === 1 ? "./" : "?pag=" + page; }
+            if (opts.active) el.classList.add("active");
+            if (opts.svg) {
+                el.classList.add("chev-btn");
+                el.innerHTML = opts.svg;
+            } else {
+                el.textContent = text;
+            }
+            return el;
+        }
+        var chevLeftSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+        var chevRightSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+
+        function drawPagination(current) {
+            if (totalPages <= 1) return;
+            nav.innerHTML = "";
+            nav.appendChild(makeLink("", current - 1, { disabled: current === 1, svg: chevLeftSVG }));
+            var pages = [];
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) pages.push(i);
+            } else {
+                pages.push(1);
+                if (current > 3) pages.push("...");
+                var from = Math.max(2, current - 1);
+                var to = Math.min(totalPages - 1, current + 1);
+                for (var j = from; j <= to; j++) pages.push(j);
+                if (current < totalPages - 2) pages.push("...");
+                pages.push(totalPages);
+            }
+            pages.forEach(function(p){
+                if (p === "...") {
+                    var span = document.createElement("span");
+                    span.className = "dots";
+                    span.textContent = "…";
+                    nav.appendChild(span);
+                } else {
+                    nav.appendChild(makeLink(p, p, { active: p === current }));
+                }
+            });
+            nav.appendChild(makeLink("", current + 1, { disabled: current === totalPages, svg: chevRightSVG }));
+        }
+
+        nav.addEventListener("click", function(e){
+            var link = e.target.closest("a[href]");
+            if (!link) return;
+            var href = link.getAttribute("href");
+            if (href.indexOf("?pag=") !== 0 && href !== "./") return;
+            e.preventDefault();
+            var url = href === "./" ? window.location.pathname : "?pag=" + href.split("=")[1];
+            history.pushState({}, "", url);
+            renderPage(getPageFromURL());
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("popstate", function(){
+            renderPage(getPageFromURL());
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        renderPage(getPageFromURL());
+    })();
+
+    (function(){
+        var KEY = "cookie-accepted-v1";
+        var banner = document.getElementById("cookieBanner");
+        var okBtn = document.getElementById("cookieOk");
+        if (!banner) return;
+        if (localStorage.getItem(KEY) === "1") { banner.remove(); return; }
+        setTimeout(function(){ banner.classList.add("show"); }, 300);
+        okBtn.addEventListener("click", function(){
+            localStorage.setItem(KEY, "1");
+            banner.classList.remove("show");
+            setTimeout(function(){ banner.remove(); }, 300);
+        });
+    })();
+    </script>
+
+
+</body>
+</html>
+
+    
