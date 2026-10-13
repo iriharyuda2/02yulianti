@@ -1,1 +1,0 @@
-(function(){var e=document.currentScript,t=document.createElement("div");t.setAttribute("data-banner-id","2029742"),e.parentNode.insertBefore(t,e);var s=document.createElement("script");s.async=!0,s.src="https://js.mbidadm.com/static/scripts.js",s.setAttribute("data-admpid","467974"),e.parentNode.insertBefore(s,e)})();
