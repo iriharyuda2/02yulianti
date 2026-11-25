@@ -1,0 +1,46 @@
+---
+layout: default
+---
+<article class="comparison-page">
+  <h1>{{ page.title }}</h1>
+  <p class="lead">{{ page.description }}</p>
+  <p class="meta">{{ page.reading_time }} min read · <a href="/categories/{{ page.category }}.html">{{ page.category | replace: '-', ' ' | capitalize }}</a></p>
+
+  {% if page.image %}
+  <figure class="post-hero">
+    <img src="{{ page.image }}" alt="{{ page.image_alt }}" width="{{ page.image_width | default: 1200 }}" height="{{ page.image_height | default: 630 }}" loading="eager">
+  </figure>
+  {% else %}
+  <figure class="post-hero">
+    <img src="/assets/icons/placeholder.svg" alt="Placeholder" width="1200" height="630">
+  </figure>
+  {% endif %}
+
+  <aside class="callout callout-verdict">
+    <svg class="icon"><use href="/assets/icons/sprite.svg#icon-check"/></svg>
+    <div>
+      <h2>Quick Verdict</h2>
+      <p>{{ page.verdict }}</p>
+    </div>
+  </aside>
+
+  {% include toc.html %}
+  {{ content }}
+  {% include faq.html %}
+  {% include related-comparisons.html %}
+  {% include disclosure.html %}
+</article>
+
+{% if page.faq %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in page.faq %}
+    {"@type":"Question","name":{{ item.q | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ item.a | jsonify }}}}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}

@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<h1>Tag: {{ page.tag }}</h1>
+{% assign all = site.pages | where: "layout", "comparison" %}
+{% assign items = all | where_exp: "c", "c.tags contains page.tag" %}
+<div class="card-grid">
+  {% for c in items %}
+    <a href="{{ c.url }}" class="card">
+      {% if c.image %}<img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">{% endif %}
+      <div class="card-body">
+        <h2>{{ c.title }}</h2>
+        <p>{{ c.verdict }}</p>
+      </div>
+    </a>
+  {% endfor %}
+</div>

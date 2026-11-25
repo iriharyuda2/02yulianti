@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{% include head-artikel.html %}
-	{% include head.html %}
-  </head>
+  {% include head.html %}
+</head>
 <body>
-<div loading="lazy">
-    {{ content }}
-    </div>
+  {% include header.html %}
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      {% include sidebar.html %}
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <main class="content">
+      {% include breadcrumb.html %}
+      {{ content }}
+    </main>
+  </div>
+  {% include footer.html %}
+  {% include back-to-top.html %}
+  {% include cookie-banner.html %}
+  <script src="/assets/nav.js"></script>
 </body>
 </html>

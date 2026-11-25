@@ -1,16 +1,7 @@
 ---
 layout: default
-disqus: false
-archive: true
-post_class: post-template
 ---
-
-
-<br />
-<main><article>
-{{content}}
-</article></main>
-<br />
-{% include /ads/gobloggugel/default.html %}
-{% include footer.html %}
-
+<article class="page">
+  <h1>{{ page.title }}</h1>
+  {{ content }}
+</article>
