@@ -22,7 +22,11 @@
     var end = start + perPage;
 
     for (var i = 0; i < items.length; i++) {
-      items[i].style.display = (i >= start && i < end) ? '' : 'none';
+      if (i >= start && i < end) {
+        items[i].style.setProperty('display', '', 'important');
+      } else {
+        items[i].style.setProperty('display', 'none', 'important');
+      }
     }
 
     nav.innerHTML = '';
