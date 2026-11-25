@@ -12,7 +12,7 @@ permalink: /
 {% assign all = site.pages | where: "layout", "comparison" %}
 {% assign sorted = all | sort: "date" | reverse %}
 
-<div class="card-grid ch-card-grid" id="ch-card-grid" data-ch-per-page="9">
+<div id="ch-card-grid" class="card-grid" data-ch-per-page="9">
   {% for c in sorted %}
     <a href="{{ c.url }}" class="card" data-ch-item>
       {% if c.image %}
@@ -28,11 +28,8 @@ permalink: /
   {% endfor %}
 </div>
 
-<nav class="ch-pagination" id="ch-pagination" aria-label="Pagination"></nav>
+<nav id="ch-pagination" class="ch-pagination" aria-label="Pagination"></nav>
 
-<br />
-
-
-
-
-
+<p style="text-align:center;margin-top:1.5rem;">
+  <a href="/comparisons.html">Browse all comparisons →</a>
+</p>
