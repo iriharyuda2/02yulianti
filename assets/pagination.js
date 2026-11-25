@@ -1,21 +1,21 @@
 (function () {
-  const grid = document.getElementById('card-grid');
+  const grid = document.getElementById('ch-card-grid');
   if (!grid) return;
 
-  const items = grid.querySelectorAll('[data-page-item]');
-  const pagination = document.getElementById('pagination');
+  const items = grid.querySelectorAll('[data-ch-item]');
+  const pagination = document.getElementById('ch-pagination');
   if (!pagination) return;
 
-  const perPage = parseInt(grid.dataset.perPage || '9', 10);
+  const perPage = parseInt(grid.dataset.chPerPage || '9', 10);
   const totalPages = Math.ceil(items.length / perPage);
   let current = 1;
 
   // ===== INJECT CSS =====
-  if (!document.getElementById('pagination-style')) {
+  if (!document.getElementById('ch-pagination-style')) {
     const style = document.createElement('style');
-    style.id = 'pagination-style';
+    style.id = 'ch-pagination-style';
     style.textContent = `
-      .pagination {
+      .ch-pagination {
         display: flex;
         gap: .35rem;
         justify-content: center;
@@ -25,7 +25,7 @@
         padding: 0;
         list-style: none;
       }
-      .pagination button {
+      .ch-pagination button {
         min-width: 38px;
         height: 38px;
         padding: 0 .6rem;
@@ -43,30 +43,30 @@
         transition: all 150ms ease;
         line-height: 1;
       }
-      .pagination button:hover:not(:disabled):not(.active) {
+      .ch-pagination button:hover:not(:disabled):not(.ch-active) {
         border-color: #0366d6;
         color: #0366d6;
         background: #f0f7ff;
       }
-      .pagination button.active {
+      .ch-pagination button.ch-active {
         background: #0366d6;
         color: #fff;
         border-color: #0366d6;
         font-weight: 600;
         cursor: default;
       }
-      .pagination button:disabled {
+      .ch-pagination button:disabled {
         opacity: .35;
         cursor: not-allowed;
         background: #f9fafb;
       }
-      .pagination button:focus-visible {
+      .ch-pagination button:focus-visible {
         outline: 2px solid #0366d6;
         outline-offset: 2px;
       }
       @media (max-width: 480px) {
-        .pagination { gap: .25rem; }
-        .pagination button {
+        .ch-pagination { gap: .25rem; }
+        .ch-pagination button {
           min-width: 34px;
           height: 34px;
           padding: 0 .4rem;
@@ -77,13 +77,11 @@
     document.head.appendChild(style);
   }
 
-  // ===== NO PAGINATION NEEDED =====
   if (totalPages <= 1) {
     pagination.style.display = 'none';
     return;
   }
 
-  // ===== RENDER =====
   function render() {
     const start = (current - 1) * perPage;
     const end = start + perPage;
@@ -94,7 +92,6 @@
 
     pagination.innerHTML = '';
 
-    // Prev
     const prev = document.createElement('button');
     prev.innerHTML = '‹';
     prev.disabled = current === 1;
@@ -102,18 +99,16 @@
     prev.onclick = () => go(current - 1);
     pagination.appendChild(prev);
 
-    // Numbers
     for (let p = 1; p <= totalPages; p++) {
       const btn = document.createElement('button');
       btn.textContent = p;
-      btn.className = p === current ? 'active' : '';
+      btn.className = p === current ? 'ch-active' : '';
       btn.setAttribute('aria-label', `Page ${p}`);
       if (p === current) btn.setAttribute('aria-current', 'page');
       btn.onclick = () => go(p);
       pagination.appendChild(btn);
     }
 
-    // Next
     const next = document.createElement('button');
     next.innerHTML = '›';
     next.disabled = current === totalPages;
