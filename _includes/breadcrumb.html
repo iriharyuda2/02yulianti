@@ -1,0 +1,11 @@
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  {% if page.layout == "comparison" %}
+    › <a href="/comparisons.html">Comparisons</a>
+    › <a href="/categories/{{ page.category }}.html">{{ page.category | replace: '-', ' ' | capitalize }}</a>
+    › <span>{{ page.title }}</span>
+  {% elsif page.layout == "category" %}
+    › <a href="/categories.html">Categories</a>
+    › <span>{{ page.title }}</span>
+  {% endif %}
+</nav>

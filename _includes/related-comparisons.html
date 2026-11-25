@@ -1,0 +1,43 @@
+{% assign all = site.pages | where: "layout", "comparison" %}
+{% if page.related %}
+<section class="related">
+  <h2>Related Comparisons</h2>
+  <div class="card-grid">
+    {% for url in page.related limit:4 %}
+      {% assign c = all | where: "url", url | first %}
+      {% if c %}
+      <a href="{{ c.url }}" class="card">
+        {% if c.image %}<img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">{% endif %}
+        <div class="card-body">
+          <h2>{{ c.title }}</h2>
+          <p>{{ c.verdict }}</p>
+        </div>
+      </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+  {% assign related = all | where: "category", page.category | where_exp: "c", "c.url != page.url" %}
+  {% if related.size > 0 %}
+  <section class="related">
+    <h2>Related Comparisons</h2>
+    <div class="card-grid">
+      {% for c in related limit:4 %}
+      <a href="{{ c.url }}" class="card">
+        {% if c.image %}<img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">{% endif %}
+        <div class="card-body">
+          <h2>{{ c.title }}</h2>
+          <p>{{ c.verdict }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <section class="related">
+    <h2>Explore More</h2>
+    <p><a href="/comparisons.html">Browse all comparisons →</a></p>
+  </section>
+  {% endif %}
+{% endif %}
