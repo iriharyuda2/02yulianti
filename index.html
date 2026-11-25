@@ -1,6 +1,23 @@
 ---
-layout: xxx/01
+layout: default
+title: "Compare Hub"
+description: "Deep, evergreen comparisons to help you make better decisions."
+permalink: /
 ---
+<h1>Compare Hub</h1>
+<p class="lead">Deep, evergreen comparisons to help you make better decisions.</p>
 
-{% include /kw/mentah/index/01.html %}
-
+<h2>Latest Comparisons</h2>
+{% assign all = site.pages | where: "layout", "comparison" %}
+<div class="card-grid">
+  {% for c in all limit:6 %}
+    <a href="{{ c.url }}" class="card">
+      {% if c.image %}<img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">{% endif %}
+      <div class="card-body">
+        <h2>{{ c.title }}</h2>
+        <p>{{ c.verdict }}</p>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+<p><a href="/comparisons.html">Browse all comparisons →</a></p>
