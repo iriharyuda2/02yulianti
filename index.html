@@ -9,10 +9,14 @@ permalink: /
 
 <h2>Latest Comparisons</h2>
 {% assign all = site.pages | where: "layout", "comparison" %}
-<div class="card-grid">
-  {% for c in all limit:6 %}
-    <a href="{{ c.url }}" class="card">
-      {% if c.image %}<img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">{% endif %}
+<div class="card-grid" id="card-grid" data-per-page="9">
+  {% for c in all %}
+    <a href="{{ c.url }}" class="card" data-page-item>
+      {% if c.image %}
+        <img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">
+      {% else %}
+        <img src="/assets/icons/placeholder.svg" alt="Placeholder" loading="lazy" width="400" height="225">
+      {% endif %}
       <div class="card-body">
         <h2>{{ c.title }}</h2>
         <p>{{ c.verdict }}</p>
@@ -20,4 +24,6 @@ permalink: /
     </a>
   {% endfor %}
 </div>
+<nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
 <p><a href="/comparisons.html">Browse all comparisons →</a></p>
