@@ -8,10 +8,13 @@ permalink: /
 <p class="lead">Deep, evergreen comparisons to help you make better decisions.</p>
 
 <h2>Latest Comparisons</h2>
+
 {% assign all = site.pages | where: "layout", "comparison" %}
-<div class="card-grid" id="card-grid" data-per-page="9">
-  {% for c in all %}
-    <a href="{{ c.url }}" class="card" data-page-item>
+{% assign sorted = all | sort: "date" | reverse %}
+
+<div class="card-grid ch-card-grid" id="ch-card-grid" data-ch-per-page="9">
+  {% for c in sorted %}
+    <a href="{{ c.url }}" class="card" data-ch-item>
       {% if c.image %}
         <img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">
       {% else %}
@@ -24,6 +27,12 @@ permalink: /
     </a>
   {% endfor %}
 </div>
-<nav class="pagination" id="pagination" aria-label="Pagination"></nav>
 
-<p><a href="/comparisons.html">Browse all comparisons →</a></p>
+<nav class="ch-pagination" id="ch-pagination" aria-label="Pagination"></nav>
+
+<br />
+
+
+
+
+
