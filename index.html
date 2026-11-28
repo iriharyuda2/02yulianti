@@ -1,33 +1,6 @@
 ---
-layout: default
-title: "Compare Hub"
-description: "Deep, evergreen comparisons to help you make better decisions."
-permalink: /
+layout: xxx/02
 ---
-<h1>Compare Hub</h1>
-<p class="lead">Deep, evergreen comparisons to help you make better decisions.</p>
 
-<h2>Latest Comparisons</h2>
+{% include /kw/mentah/index/02.html %}
 
-{% assign all = site.pages | where: "layout", "comparison" %}
-{% assign sorted = all | sort: "date" | reverse %}
-
-<div id="ch-card-grid" class="card-grid" data-ch-per-page="9">
-  {% for c in sorted %}
-    <a href="{{ c.url }}" class="card" data-ch-item>
-      {% if c.image %}
-        <img src="{{ c.image }}" alt="{{ c.image_alt }}" loading="lazy" width="400" height="225">
-      {% else %}
-        <img src="/assets/icons/placeholder.svg" alt="Placeholder" loading="lazy" width="400" height="225">
-      {% endif %}
-      <div class="card-body">
-        <h2>{{ c.title }}</h2>
-        <p>{{ c.verdict }}</p>
-      </div>
-    </a>
-  {% endfor %}
-</div>
-
-<nav id="ch-pagination" class="ch-pagination" aria-label="Pagination"></nav>
-
-<br />
